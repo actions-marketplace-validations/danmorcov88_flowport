@@ -9,9 +9,9 @@
 {% if report.migration %}
 ## Migration
 
-`flowport {{ report.migration.command }}` was applied to `{{ report.migration.input }}`{% if report.migration.keep_unused %} with `--keep-unused`{% endif %}. The findings below describe the migrated flow; see `changes.json` for every edit.
+`flowport {{ report.migration.command }}` was applied to `{{ report.migration.input }}`{% if report.migration.keep_unused %} with `--keep-unused`{% endif %}. {{ report.migration.note }}
 
-| Change | Count |
+| Item | Count |
 |---|---|
 {% for kind, count in report.migration.changes.items() %}
 | {{ kind }} | {{ count }} |

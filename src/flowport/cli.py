@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from enum import StrEnum
 from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Any
 
 import typer
 from rich.console import Console
@@ -246,6 +246,7 @@ def migrate_variables_command(
         "command": "migrate variables",
         "input": flow_file.name,
         "keep_unused": keep_unused,
+        "note": "The findings below describe the migrated flow; see `changes.json` for every edit.",
         "changes": counts,
     }
     changes_path = output.parent / "changes.json"
@@ -253,4 +254,146 @@ def migrate_variables_command(
     changes_path.write_text(render_changes(result.changes), encoding="utf-8", newline="\n")
     report_path.write_text(render(report, "markdown"), encoding="utf-8", newline="\n")
     console.print(f"Wrote {output}, {changes_path} and {report_path}")
+    raise typer.Exit(EXIT_OK)
+
+
+def _write_converted_template(
+    converted: Any, output: Path, source_name: str, catalog: Any, console: Console
+) -> None:
+    """Write the definition and its report next to it (``<stem>.report.md``)."""
+    from flowport.reports import build_report, render
+    from flowport.writers import write_document
+
+    write_document(converted.document, output)
+    converted.flow.source_name = output.name
+    report = build_report(converted.flow, converted.findings, catalog, output)
+    report["migration"] = {
+        "command": "migrate templates",
+        "input": f"{source_name}: template '{converted.source.name}'",
+        "keep_unused": False,
+        "note": "The findings below describe the converted flow definition, which "
+        "'Upload flow definition' imports on NiFi 1.x and 2.x.",
+        "changes": {f"{k} converted": v for k, v in converted.counts().items() if v},
+    }
+    report_path = output.with_name(f"{output.stem}.report.md")
+    report_path.write_text(render(report, "markdown"), encoding="utf-8", newline="\n")
+    by_severity = {
+        s.value: sum(1 for f in converted.findings if f.severity is s) for s in SEVERITY_ORDER
+    }
+    remaining = ", ".join(f"{k} {v}" for k, v in by_severity.items() if v)
+    console.print(
+        f"  {converted.source.name!r} -> {output} ({len(converted.findings)} findings"
+        + (f": {remaining})" if remaining else ")")
+    )
+
+
+@migrate_app.command("templates")
+def migrate_templates_command(
+    flow_file: Annotated[Path, typer.Argument(help="flow.json.gz or flow.json holding templates.")],
+    output: Annotated[
+        Path,
+        typer.Option(
+            "--output",
+            "-o",
+            help="Directory for the flow definitions: one <template>.json and "
+            "<template>.report.md per template.",
+        ),
+    ],
+    source_version: Annotated[
+        str, typer.Option("--source-version", help="NiFi release the flow comes from.")
+    ] = DEFAULT_SOURCE_VERSION,
+    target_version: Annotated[
+        str, typer.Option("--target-version", help="NiFi release to migrate to.")
+    ] = DEFAULT_TARGET_VERSION,
+) -> None:
+    """Convert every template stored in a flow to a flow definition.
+
+    NiFi 2.x removed templates and drops them when the flow loads. Each
+    template becomes a flow definition JSON that "Upload flow definition"
+    accepts on 1.x and 2.x. The analyzer runs on every result; its findings go
+    to the report next to the definition.
+    """
+    from flowport.catalog import load_catalog
+    from flowport.loaders import load
+    from flowport.loaders.templates import templates_in_flow
+    from flowport.model import InputKind
+    from flowport.transforms.templates import convert_and_analyze, slugify
+
+    try:
+        catalog = load_catalog(source_version, target_version)
+        flow = load(flow_file)
+    except (LoadError, CatalogError) as exc:
+        stderr.print(f"[red]error:[/red] {exc}")
+        raise typer.Exit(EXIT_ERROR) from None
+    if flow.kind is not InputKind.FLOW:
+        stderr.print(
+            "[red]error:[/red] templates are stored in flow.json; this is a flow definition"
+        )
+        raise typer.Exit(EXIT_ERROR)
+
+    console = Console()
+    sources = templates_in_flow(flow.raw)
+    console.print(
+        f"[bold]flowport[/bold] {__version__}  migrate templates  "
+        f"input: {flow_file.name} ({len(sources)} templates)"
+    )
+    if not sources:
+        console.print("No templates in this flow; nothing written.")
+        raise typer.Exit(EXIT_OK)
+    used: set[str] = set()
+    for source in sources:
+        slug = slugify(source.name)
+        candidate, counter = slug, 1
+        while candidate in used:
+            counter += 1
+            candidate = f"{slug}-{counter}"
+        used.add(candidate)
+        converted = convert_and_analyze(source, catalog)
+        _write_converted_template(
+            converted, output / f"{candidate}.json", flow_file.name, catalog, console
+        )
+    raise typer.Exit(EXIT_OK)
+
+
+@migrate_app.command("template")
+def migrate_template_command(
+    template_file: Annotated[Path, typer.Argument(help="An XML template exported from NiFi 1.x.")],
+    output: Annotated[
+        Path,
+        typer.Option(
+            "--output",
+            "-o",
+            help="The flow definition to write; the report goes to <name>.report.md next to it.",
+        ),
+    ],
+    source_version: Annotated[
+        str, typer.Option("--source-version", help="NiFi release the template comes from.")
+    ] = DEFAULT_SOURCE_VERSION,
+    target_version: Annotated[
+        str, typer.Option("--target-version", help="NiFi release to migrate to.")
+    ] = DEFAULT_TARGET_VERSION,
+) -> None:
+    """Convert one exported XML template to a flow definition."""
+    from flowport.catalog import load_catalog
+    from flowport.loaders.templates import parse_template_xml
+    from flowport.transforms.templates import convert_and_analyze
+
+    try:
+        catalog = load_catalog(source_version, target_version)
+        if not template_file.is_file():
+            raise LoadError(f"{template_file}: no such file")
+        source = parse_template_xml(template_file.read_bytes())
+    except (LoadError, CatalogError) as exc:
+        stderr.print(f"[red]error:[/red] {exc}")
+        raise typer.Exit(EXIT_ERROR) from None
+    if output.resolve() == template_file.resolve():
+        stderr.print("[red]error:[/red] the output must be a different file than the input")
+        raise typer.Exit(EXIT_ERROR)
+
+    console = Console()
+    console.print(
+        f"[bold]flowport[/bold] {__version__}  migrate template  input: {template_file.name}"
+    )
+    converted = convert_and_analyze(source, catalog)
+    _write_converted_template(converted, output, template_file.name, catalog, console)
     raise typer.Exit(EXIT_OK)
