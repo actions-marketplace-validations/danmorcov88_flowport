@@ -1,0 +1,46 @@
+# flowport report
+
+- Tool: flowport {{ report.tool.version }}
+- Catalog: NiFi {{ report.catalog.source_version }} to {{ report.catalog.target_version }}
+- Input: `{{ report.input.name }}` ({{ report.input.kind }}){% if report.input.sha256 %}, sha256 `{{ report.input.sha256 }}`{% endif %}
+
+- {{ report.summary.process_groups }} process groups, {{ report.summary.components }} components, **{{ report.summary.total }} findings**
+
+## Summary
+
+| Severity | Count |
+|---|---|
+{% for severity, count in report.summary.by_severity.items() %}
+| {{ severity }} | {{ count }} |
+{% endfor %}
+
+{% if report.summary.by_category %}
+| Category | Count |
+|---|---|
+{% for category, count in report.summary.by_category.items() %}
+| {{ category }} | {{ count }} |
+{% endfor %}
+
+{% endif %}
+{% for severity, findings in grouped %}
+{% if findings %}
+## {{ severity }} ({{ findings|length }})
+
+{% for f in findings %}
+### {{ f.rule_id }}: {{ f.location.path or "(controller level)" }}{% if f.location.kind != "PROCESS_GROUP" %} > {{ f.location.name }}{% endif %}
+
+
+{% if f.location.type %}
+- Type: `{{ f.location.type }}`
+{% endif %}
+- Id: `{{ f.location.id }}`
+- {{ f.message }}
+{% if f.suggestion %}
+- Suggestion: {{ f.suggestion }}
+{% endif %}
+- Sources: {% for s in f.sources %}<{{ s }}>{% if not loop.last %}, {% endif %}{% endfor %}
+
+
+{% endfor %}
+{% endif %}
+{% endfor %}

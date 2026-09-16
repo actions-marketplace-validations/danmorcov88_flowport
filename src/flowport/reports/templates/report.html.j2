@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>flowport report: {{ report.input.name }}</title>
+<style>
+  :root { --blocker: #b00020; --manual: #b26a00; --auto: #00695c; --info: #546e7a; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; margin: 0 auto; max-width: 1100px; padding: 16px; color: #222; background: #fff; line-height: 1.45; }
+  h1 { font-size: 1.5rem; } h2 { font-size: 1.2rem; margin-top: 2rem; } h3 { font-size: 1rem; margin: 0 0 .25rem; }
+  table { border-collapse: collapse; margin: .5rem 0 1rem; } th, td { border: 1px solid #ddd; padding: .25rem .6rem; text-align: left; } th { background: #f5f5f5; }
+  .meta { color: #555; }
+  .finding { border-left: 4px solid #999; padding: .5rem .75rem; margin: .75rem 0; background: #fafafa; }
+  .finding.BLOCKER { border-color: var(--blocker); } .finding.MANUAL { border-color: var(--manual); }
+  .finding.AUTO_FIXABLE { border-color: var(--auto); } .finding.INFO { border-color: var(--info); }
+  .badge { display: inline-block; font-size: .75rem; font-weight: 600; padding: .1rem .4rem; border-radius: 3px; color: #fff; margin-right: .4rem; }
+  .badge.BLOCKER { background: var(--blocker); } .badge.MANUAL { background: var(--manual); }
+  .badge.AUTO_FIXABLE { background: var(--auto); } .badge.INFO { background: var(--info); }
+  code { background: #eee; padding: 0 .2rem; border-radius: 2px; font-size: .9em; word-break: break-all; }
+  .sources a { margin-right: .6rem; font-size: .85rem; }
+  .filters button { margin-right: .4rem; padding: .25rem .6rem; cursor: pointer; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<h1>flowport report</h1>
+<p class="meta">flowport {{ report.tool.version }} · NiFi {{ report.catalog.source_version }} → {{ report.catalog.target_version }} · input <code>{{ report.input.name }}</code> ({{ report.input.kind }}){% if report.input.sha256 %} · sha256 <code>{{ report.input.sha256 }}</code>{% endif %}</p>
+<p>{{ report.summary.process_groups }} process groups, {{ report.summary.components }} components, <strong>{{ report.summary.total }} findings</strong></p>
+
+<h2>Summary</h2>
+<table>
+  <tr><th>Severity</th><th>Count</th></tr>
+{% for severity, count in report.summary.by_severity.items() %}
+  <tr><td><span class="badge {{ severity }}">{{ severity }}</span></td><td>{{ count }}</td></tr>
+{% endfor %}
+</table>
+{% if report.summary.by_category %}
+<table>
+  <tr><th>Category</th><th>Count</th></tr>
+{% for category, count in report.summary.by_category.items() %}
+  <tr><td>{{ category }}</td><td>{{ count }}</td></tr>
+{% endfor %}
+</table>
+{% endif %}
+
+<h2>Findings</h2>
+<p class="filters">
+  <button data-filter="">All</button>
+{% for severity, count in report.summary.by_severity.items() %}
+  <button data-filter="{{ severity }}">{{ severity }} ({{ count }})</button>
+{% endfor %}
+</p>
+{% for severity, findings in grouped %}
+{% for f in findings %}
+<div class="finding {{ f.severity }}" data-severity="{{ f.severity }}">
+  <h3><span class="badge {{ f.severity }}">{{ f.severity }}</span>{{ f.rule_id }} — {{ f.location.path or "(controller level)" }}{% if f.location.kind != "PROCESS_GROUP" %} › {{ f.location.name }}{% endif %}</h3>
+  <div class="meta">{% if f.location.type %}type <code>{{ f.location.type }}</code> · {% endif %}id <code>{{ f.location.id }}</code></div>
+  <p>{{ f.message }}</p>
+{% if f.suggestion %}
+  <p><strong>Suggestion:</strong> {{ f.suggestion }}</p>
+{% endif %}
+  <div class="sources">{% for s in f.sources %}<a href="{{ s }}">{{ s }}</a>{% endfor %}</div>
+</div>
+{% endfor %}
+{% endfor %}
+<script>
+  document.querySelectorAll('.filters button').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var severity = button.getAttribute('data-filter');
+      document.querySelectorAll('.finding').forEach(function (el) {
+        el.classList.toggle('hidden', severity !== '' && el.getAttribute('data-severity') !== severity);
+      });
+    });
+  });
+</script>
+</body>
+</html>
