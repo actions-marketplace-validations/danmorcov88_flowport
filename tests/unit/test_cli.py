@@ -244,3 +244,28 @@ def test_migrate_template_converts_an_xml_export(fixtures_dir: Path, tmp_path: P
         ).exit_code
         == 2
     )
+
+
+def test_migrate_components_writes_flow_changes_and_report(
+    definitions_dir: Path, tmp_path: Path
+) -> None:
+    source = definitions_dir / "replacements.json"
+    before = hashlib.sha256(source.read_bytes()).hexdigest()
+    out = tmp_path / "migrated" / "replacements.json"
+    result = runner.invoke(app, ["migrate", "components", str(source), "--output", str(out)])
+    assert result.exit_code == 0, result.output
+    assert hashlib.sha256(source.read_bytes()).hexdigest() == before
+    changes = json.loads((out.parent / "changes.json").read_text(encoding="utf-8"))
+    assert {c["kind"] for c in changes} >= {
+        "replace-component",
+        "rename-property",
+        "map-relationship",
+    }
+    report = (out.parent / "report.md").read_text(encoding="utf-8")
+    assert "NIFI2-COMPONENT-REPLACED" in report and "NIFI2-REPLACEMENT-SKIPPED" in report
+    assert "replace-component | 9" in report
+    dry = runner.invoke(
+        app, ["migrate", "components", str(source), "-o", str(tmp_path / "x.json"), "--dry-run"]
+    )
+    assert dry.exit_code == 0 and "nothing written" in dry.output
+    assert not (tmp_path / "x.json").exists()
