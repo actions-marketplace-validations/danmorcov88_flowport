@@ -4,7 +4,13 @@ from pathlib import Path
 
 import pytest
 
-from flowport.loaders import LoadError, UnsupportedInputError, detect_kind, load
+from flowport.loaders import (
+    LoadError,
+    UnsupportedInputError,
+    detect_kind,
+    load,
+    load_flow_document,
+)
 from flowport.model import ComponentKind, InputKind
 
 
@@ -111,3 +117,14 @@ def test_template_xml_is_rejected_for_now(fixtures_dir: Path) -> None:
 def test_missing_file(tmp_path: Path) -> None:
     with pytest.raises(LoadError):
         load(tmp_path / "nope.json")
+
+
+def test_model_raw_is_the_document_itself(flow_json: Path) -> None:
+    """Transforms edit the document through the model, so raw must not be a copy."""
+    document = json.loads(flow_json.read_text(encoding="utf-8"))
+    flow = load_flow_document(document)
+    assert flow.raw is document
+    assert flow.root.raw is document["rootGroup"]
+    group = flow.root.groups[0]
+    assert group.raw is document["rootGroup"]["processGroups"][0]
+    assert group.processors[0].raw is group.raw["processors"][0]

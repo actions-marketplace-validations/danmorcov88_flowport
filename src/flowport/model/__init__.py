@@ -12,7 +12,7 @@ from collections.abc import Iterator
 from enum import StrEnum
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, SkipValidation
 
 
 class InputKind(StrEnum):
@@ -41,7 +41,10 @@ class ComponentKind(StrEnum):
 class _Node(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    raw: dict[str, Any] = Field(repr=False, exclude=True)
+    # Validation is skipped so that ``raw`` is the very dict from the parsed
+    # document (pydantic would copy it), which lets transforms edit the
+    # document through the model.
+    raw: SkipValidation[dict[str, Any]] = Field(repr=False, exclude=True)
 
 
 class Bundle(BaseModel):
