@@ -6,6 +6,18 @@
 
 - {{ report.summary.process_groups }} process groups, {{ report.summary.components }} components, **{{ report.summary.total }} findings**
 
+{% if report.migration %}
+## Migration
+
+`flowport {{ report.migration.command }}` was applied to `{{ report.migration.input }}`{% if report.migration.keep_unused %} with `--keep-unused`{% endif %}. The findings below describe the migrated flow; see `changes.json` for every edit.
+
+| Change | Count |
+|---|---|
+{% for kind, count in report.migration.changes.items() %}
+| {{ kind }} | {{ count }} |
+{% endfor %}
+
+{% endif %}
 {% for w in report.warnings %}
 > Warning: {{ w }}
 
