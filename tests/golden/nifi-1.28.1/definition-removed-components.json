@@ -1,0 +1,469 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: EncodeContent (org.apache.nifi.processors.standard.EncodeContent)."
+      },
+      "location": {
+        "id": "a961e2cc-01a0-1000-6361-9bbd54d5efff",
+        "kind": "PROCESSOR",
+        "name": "Base64 encode",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.Base64EncodeContent"
+      },
+      "message": "Base64EncodeContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: EncodeContent (org.apache.nifi.processors.standard.EncodeContent).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e383-01a0-1000-c8cf-cc16033f421c",
+        "kind": "PROCESSOR",
+        "name": "Consume Kafka 2.6",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.kafka.pubsub.ConsumeKafka_2_6"
+      },
+      "message": "ConsumeKafka_2_6 does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13489"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e34c-01a0-1000-aa50-2ef51198f596",
+        "kind": "PROCESSOR",
+        "name": "Convert JSON to SQL",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.ConvertJSONToSQL"
+      },
+      "message": "ConvertJSONToSQL does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: DecryptContent (org.apache.nifi.processors.cipher.DecryptContent), DecryptContentAge (org.apache.nifi.processors.cipher.DecryptContentAge), DecryptContentCompatibility (org.apache.nifi.processors.cipher.DecryptContentCompatibility), EncryptContentAge (org.apache.nifi.processors.cipher.EncryptContentAge), DecryptContentPGP (org.apache.nifi.processors.pgp.DecryptContentPGP), EncryptContentPGP (org.apache.nifi.processors.pgp.EncryptContentPGP)."
+      },
+      "location": {
+        "id": "a961e360-01a0-1000-9408-d74f95e3e2e8",
+        "kind": "PROCESSOR",
+        "name": "Encrypt content",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.EncryptContent"
+      },
+      "message": "EncryptContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-12094"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: DecryptContent (org.apache.nifi.processors.cipher.DecryptContent), DecryptContentAge (org.apache.nifi.processors.cipher.DecryptContentAge), DecryptContentCompatibility (org.apache.nifi.processors.cipher.DecryptContentCompatibility), EncryptContentAge (org.apache.nifi.processors.cipher.EncryptContentAge), DecryptContentPGP (org.apache.nifi.processors.pgp.DecryptContentPGP), EncryptContentPGP (org.apache.nifi.processors.pgp.EncryptContentPGP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "a961e261-01a0-1000-1193-5f210abe48e9",
+        "kind": "PROCESSOR",
+        "name": "Fetch checksum",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.GetHTTP"
+      },
+      "message": "GetHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: ConsumeJMS (org.apache.nifi.jms.processors.ConsumeJMS)."
+      },
+      "location": {
+        "id": "a961e329-01a0-1000-a5ad-b0c39c395684",
+        "kind": "PROCESSOR",
+        "name": "Get JMS queue",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.GetJMSQueue"
+      },
+      "message": "GetJMSQueue does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: ConsumeJMS (org.apache.nifi.jms.processors.ConsumeJMS).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: UpdateAttribute (org.apache.nifi.processors.attributes.UpdateAttribute)."
+      },
+      "location": {
+        "id": "a961e2b0-01a0-1000-0420-e0a4d3c96080",
+        "kind": "PROCESSOR",
+        "name": "Hash attribute",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.HashAttribute"
+      },
+      "message": "HashAttribute does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: UpdateAttribute (org.apache.nifi.processors.attributes.UpdateAttribute).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: CryptographicHashContent (org.apache.nifi.processors.standard.CryptographicHashContent)."
+      },
+      "location": {
+        "id": "a961e29b-01a0-1000-c3ad-0c24774e1514",
+        "kind": "PROCESSOR",
+        "name": "Hash content",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.HashContent"
+      },
+      "message": "HashContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: CryptographicHashContent (org.apache.nifi.processors.standard.CryptographicHashContent).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "to_bundle": "org.apache.nifi:nifi-jolt-nar",
+        "to_type": "org.apache.nifi.processors.jolt.JoltTransformJSON"
+      },
+      "location": {
+        "id": "a961e3c4-01a0-1000-b874-af9078f4b400",
+        "kind": "PROCESSOR",
+        "name": "Jolt transform",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.JoltTransformJSON"
+      },
+      "message": "JoltTransformJSON does not exist under this class name in NiFi 2.12.0; a component of the same name exists as org.apache.nifi.processors.jolt.JoltTransformJSON in bundle org.apache.nifi:nifi-jolt-nar. NiFi does not map the old name and loads a ghost component.",
+      "rule_id": "NIFI2-RENAMED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features"
+      ],
+      "suggestion": "Change the component type to org.apache.nifi.processors.jolt.JoltTransformJSON and its bundle to org.apache.nifi:nifi-jolt-nar. Check that its properties still match.",
+      "title": "Component type renamed or moved in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e301-01a0-1000-030a-ccb9a1a73a5d",
+        "kind": "PROCESSOR",
+        "name": "Listen RELP",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.ListenRELP"
+      },
+      "message": "ListenRELP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13509"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e2de-01a0-1000-6c02-75c3f2c095dc",
+        "kind": "PROCESSOR",
+        "name": "Listen TCP records",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.ListenTCPRecord"
+      },
+      "message": "ListenTCPRecord does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13509"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e437-01a0-1000-c59a-6e20a6ae21d7",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Map cache client",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService"
+      },
+      "message": "DistributedMapCacheClientService does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13596"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e40f-01a0-1000-e615-7b4bd464e077",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Map cache server",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer"
+      },
+      "message": "DistributedMapCacheServer does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13596"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e2ef-01a0-1000-ecdd-ac7f0325261e",
+        "kind": "PROCESSOR",
+        "name": "Parse CEF",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.ParseCEF"
+      },
+      "message": "ParseCEF does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13509"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: PublishSlack (org.apache.nifi.processors.slack.PublishSlack)."
+      },
+      "location": {
+        "id": "a961e374-01a0-1000-7834-bfbf4f05af71",
+        "kind": "PROCESSOR",
+        "name": "Post to Slack",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.slack.PutSlack"
+      },
+      "message": "PutSlack does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-12331"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: PublishSlack (org.apache.nifi.processors.slack.PublishSlack).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "a961e281-01a0-1000-39fe-6a197e86d05c",
+        "kind": "PROCESSOR",
+        "name": "Post to listener",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.PostHTTP"
+      },
+      "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: PutAzureBlobStorage_v12 (org.apache.nifi.processors.azure.storage.PutAzureBlobStorage_v12)."
+      },
+      "location": {
+        "id": "a961e3a4-01a0-1000-0059-d1fe82c1ded1",
+        "kind": "PROCESSOR",
+        "name": "Put Azure blob (v8)",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.azure.storage.PutAzureBlobStorage"
+      },
+      "message": "PutAzureBlobStorage does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11228"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: PutAzureBlobStorage_v12 (org.apache.nifi.processors.azure.storage.PutAzureBlobStorage_v12).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: PutElasticsearchJson (org.apache.nifi.processors.elasticsearch.PutElasticsearchJson)."
+      },
+      "location": {
+        "id": "a961e394-01a0-1000-610a-30b2b7e66b8d",
+        "kind": "PROCESSOR",
+        "name": "Put Elasticsearch HTTP",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.elasticsearch.PutElasticsearchHttp"
+      },
+      "message": "PutElasticsearchHttp does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11168"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: PutElasticsearchJson (org.apache.nifi.processors.elasticsearch.PutElasticsearchJson).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: PublishJMS (org.apache.nifi.jms.processors.PublishJMS)."
+      },
+      "location": {
+        "id": "a961e317-01a0-1000-e330-bb8b0f447763",
+        "kind": "PROCESSOR",
+        "name": "Put JMS",
+        "path": "/Removed Components",
+        "type": "org.apache.nifi.processors.standard.PutJMS"
+      },
+      "message": "PutJMS does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: PublishJMS (org.apache.nifi.jms.processors.PublishJMS).",
+      "title": "Component type removed in NiFi 2.x"
+    }
+  ],
+  "input": {
+    "kind": "definition",
+    "name": "removed-components.json",
+    "sha256": "f6616611d56143bea263337e4287e97abc2b97f4b9e4970782f23861fe5e7d6f"
+  },
+  "summary": {
+    "bundle_versions": {
+      "1.28.1": 20
+    },
+    "by_category": {
+      "removed-component": 19
+    },
+    "by_rule": {
+      "NIFI2-REMOVED-COMPONENT": 18,
+      "NIFI2-RENAMED-COMPONENT": 1
+    },
+    "by_severity": {
+      "AUTO_FIXABLE": 0,
+      "BLOCKER": 19,
+      "INFO": 0,
+      "MANUAL": 0
+    },
+    "components": 20,
+    "process_groups": 1,
+    "total": 19
+  }
+}

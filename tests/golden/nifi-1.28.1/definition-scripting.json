@@ -1,0 +1,183 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Clojure, Groovy",
+        "engine": "ECMAScript"
+      },
+      "location": {
+        "id": "a961e5af-01a0-1000-839f-a6c1ee46ecc7",
+        "kind": "PROCESSOR",
+        "name": "ECMAScript script",
+        "path": "/Scripting",
+        "type": "org.apache.nifi.processors.script.ExecuteScript"
+      },
+      "message": "ExecuteScript uses the ECMAScript script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Clojure, Groovy",
+        "engine": "python"
+      },
+      "location": {
+        "id": "a961e47f-01a0-1000-251f-ee3017827ef3",
+        "kind": "PROCESSOR",
+        "name": "Jython script",
+        "path": "/Scripting",
+        "type": "org.apache.nifi.processors.script.ExecuteScript"
+      },
+      "message": "ExecuteScript uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Groovy",
+        "engine": "python"
+      },
+      "location": {
+        "id": "a961eb81-01a0-1000-5e21-0596c6dc2a25",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Lookup in Jython",
+        "path": "/Scripting",
+        "type": "org.apache.nifi.lookup.script.ScriptedLookupService"
+      },
+      "message": "ScriptedLookupService uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Clojure, Groovy",
+        "engine": "lua"
+      },
+      "location": {
+        "id": "a961e5ef-01a0-1000-042c-9f823f88c8b3",
+        "kind": "PROCESSOR",
+        "name": "Lua script",
+        "path": "/Scripting",
+        "type": "org.apache.nifi.processors.script.ExecuteScript"
+      },
+      "message": "ExecuteScript uses the lua script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Clojure, Groovy",
+        "engine": "ruby"
+      },
+      "location": {
+        "id": "a961e5db-01a0-1000-b313-6207604323f2",
+        "kind": "PROCESSOR",
+        "name": "Ruby script",
+        "path": "/Scripting",
+        "type": "org.apache.nifi.processors.script.ExecuteScript"
+      },
+      "message": "ExecuteScript uses the ruby script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Groovy",
+        "engine": "python"
+      },
+      "location": {
+        "id": "a961e61f-01a0-1000-5c6a-b424566ad270",
+        "kind": "PROCESSOR",
+        "name": "Scripted processor in Jython",
+        "path": "/Scripting",
+        "type": "org.apache.nifi.processors.script.InvokeScriptedProcessor"
+      },
+      "message": "InvokeScriptedProcessor uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    }
+  ],
+  "input": {
+    "kind": "definition",
+    "name": "scripting.json",
+    "sha256": "c78aaf6437d4a54311b09c32cc4aa41875550e529e1d1c3248b59a47c6d9b09d"
+  },
+  "summary": {
+    "bundle_versions": {
+      "1.28.1": 9
+    },
+    "by_category": {
+      "script-engine": 6
+    },
+    "by_rule": {
+      "NIFI2-SCRIPT-ENGINE": 6
+    },
+    "by_severity": {
+      "AUTO_FIXABLE": 0,
+      "BLOCKER": 6,
+      "INFO": 0,
+      "MANUAL": 0
+    },
+    "components": 9,
+    "process_groups": 1,
+    "total": 6
+  }
+}

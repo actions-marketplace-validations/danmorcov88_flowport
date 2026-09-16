@@ -1,0 +1,28 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [],
+  "input": {
+    "kind": "definition",
+    "name": "clean.json",
+    "sha256": "3d44e0042326640ebf654528eb91142172fc1ac31ae391a6805b1a1678b05925"
+  },
+  "summary": {
+    "bundle_versions": {
+      "1.28.1": 4
+    },
+    "by_category": {},
+    "by_rule": {},
+    "by_severity": {
+      "AUTO_FIXABLE": 0,
+      "BLOCKER": 0,
+      "INFO": 0,
+      "MANUAL": 0
+    },
+    "components": 4,
+    "process_groups": 1,
+    "total": 0
+  }
+}

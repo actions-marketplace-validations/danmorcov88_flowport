@@ -1,0 +1,107 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [
+    {
+      "category": "variables",
+      "details": {
+        "count": "2",
+        "names": "host, retries"
+      },
+      "location": {
+        "id": "a961e1de-01a0-1000-1fd9-8c8a3ed2834c",
+        "kind": "PROCESS_GROUP",
+        "name": "Existing Context",
+        "path": "/Existing Context",
+        "type": ""
+      },
+      "message": "This process group defines 2 variable(s): host, retries. NiFi 2.x removed the Variable Registry and silently drops them when the flow loads.",
+      "rule_id": "NIFI2-VARIABLES-DEFINED",
+      "severity": "AUTO_FIXABLE",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Convert the variables to a parameter context (flowport migrate variables) and rewrite the references to #{name}.",
+      "title": "Process group defines variables"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/Existing Context",
+        "property": "Base Path",
+        "value": "${host}",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e246-01a0-1000-5cae-e4639c3b3600",
+        "kind": "PROCESSOR",
+        "name": "Listen with variable",
+        "path": "/Existing Context",
+        "type": "org.apache.nifi.processors.standard.ListenHTTP"
+      },
+      "message": "Property 'Base Path' references variable ${host} (defined in /Existing Context). On NiFi 2.x the variable no longer exists, so the expression evaluates to empty unless a FlowFile attribute or environment variable of the same name exists. No validation error will point at this.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE",
+      "severity": "AUTO_FIXABLE",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Replace the reference with a parameter: #{host}.",
+      "title": "Property references a variable"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/Existing Context",
+        "property": "Listening Port",
+        "value": "${retries}081",
+        "variable": "retries"
+      },
+      "location": {
+        "id": "a961e246-01a0-1000-5cae-e4639c3b3600",
+        "kind": "PROCESSOR",
+        "name": "Listen with variable",
+        "path": "/Existing Context",
+        "type": "org.apache.nifi.processors.standard.ListenHTTP"
+      },
+      "message": "Property 'Listening Port' references variable ${retries} (defined in /Existing Context). On NiFi 2.x the variable no longer exists, so the expression evaluates to empty unless a FlowFile attribute or environment variable of the same name exists. No validation error will point at this.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE",
+      "severity": "AUTO_FIXABLE",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Replace the reference with a parameter: #{retries}.",
+      "title": "Property references a variable"
+    }
+  ],
+  "input": {
+    "kind": "definition",
+    "name": "existing-context.json",
+    "sha256": "0c8afcee3f6b8d4f021bf25d838e24020eaf98d1fbed99e93104d50dcd5a57b5"
+  },
+  "summary": {
+    "bundle_versions": {
+      "1.28.1": 2
+    },
+    "by_category": {
+      "variables": 3
+    },
+    "by_rule": {
+      "NIFI2-VARIABLE-REFERENCE": 2,
+      "NIFI2-VARIABLES-DEFINED": 1
+    },
+    "by_severity": {
+      "AUTO_FIXABLE": 3,
+      "BLOCKER": 0,
+      "INFO": 0,
+      "MANUAL": 0
+    },
+    "components": 2,
+    "process_groups": 1,
+    "total": 3
+  }
+}

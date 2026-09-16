@@ -1,0 +1,53 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [
+    {
+      "category": "custom-nar",
+      "details": {
+        "bundle": "com.example:example-custom-nar:1.0.0"
+      },
+      "location": {
+        "id": "a961f8a1-01a0-1000-5fb7-849e0c9c4ba2",
+        "kind": "PROCESSOR",
+        "name": "Custom Processor",
+        "path": "/Custom NAR",
+        "type": "com.example.nifi.processors.CustomProcessor"
+      },
+      "message": "CustomProcessor comes from bundle com.example:example-custom-nar:1.0.0, which is not an Apache NiFi bundle. NARs built against the 1.x API do not load on 2.x; the component becomes a ghost.",
+      "rule_id": "NIFI2-THIRD-PARTY-BUNDLE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-12079"
+      ],
+      "suggestion": "Obtain or build a version of this NAR for the NiFi 2.x API and deploy it before loading the flow.",
+      "title": "Component from a third-party or custom NAR"
+    }
+  ],
+  "input": {
+    "kind": "definition",
+    "name": "custom-nar.json",
+    "sha256": "9043fc75031a7f4eab705d7eda54aac38c673806e5f126fde39fcdfc27e8a465"
+  },
+  "summary": {
+    "bundle_versions": {},
+    "by_category": {
+      "custom-nar": 1
+    },
+    "by_rule": {
+      "NIFI2-THIRD-PARTY-BUNDLE": 1
+    },
+    "by_severity": {
+      "AUTO_FIXABLE": 0,
+      "BLOCKER": 0,
+      "INFO": 0,
+      "MANUAL": 1
+    },
+    "components": 1,
+    "process_groups": 1,
+    "total": 1
+  }
+}

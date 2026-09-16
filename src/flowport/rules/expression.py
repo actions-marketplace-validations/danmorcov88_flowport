@@ -14,7 +14,7 @@ from dataclasses import dataclass
 
 # Characters that end an unquoted subject.
 _SUBJECT_END = frozenset("}:( \t\r\n")
-_PARAMETER_REFERENCE = re.compile(r"(?<!#)#\{([A-Za-z0-9 ._-]+)\}")
+_PARAMETER_REFERENCE = re.compile(r"(#+)\{([A-Za-z0-9 ._-]+)\}")
 
 
 @dataclass(frozen=True)
@@ -98,5 +98,9 @@ def _parse_subject(text: str, pos: int, *, start: int) -> Reference | None:
 
 
 def find_parameter_references(text: str) -> list[str]:
-    """Names referenced as ``#{name}`` (``##{name}`` is an escaped literal)."""
-    return _PARAMETER_REFERENCE.findall(text)
+    """Names referenced as ``#{name}``.
+
+    ``##`` is an escaped ``#``, so a reference needs an odd number of ``#``
+    before the brace: ``##{a}`` is literal, ``###{a}`` is ``#`` plus a reference.
+    """
+    return [name for hashes, name in _PARAMETER_REFERENCE.findall(text) if len(hashes) % 2 == 1]
