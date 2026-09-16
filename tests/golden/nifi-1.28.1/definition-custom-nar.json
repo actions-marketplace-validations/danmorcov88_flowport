@@ -30,7 +30,7 @@
   "input": {
     "kind": "definition",
     "name": "custom-nar.json",
-    "sha256": "9043fc75031a7f4eab705d7eda54aac38c673806e5f126fde39fcdfc27e8a465"
+    "sha256": "0ba0b43e745b78f3079d414827e837de6c0b62d22405a3cd292e5db378c1943f"
   },
   "summary": {
     "bundle_versions": {},

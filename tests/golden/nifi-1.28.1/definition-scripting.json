@@ -158,7 +158,7 @@
   "input": {
     "kind": "definition",
     "name": "scripting.json",
-    "sha256": "c78aaf6437d4a54311b09c32cc4aa41875550e529e1d1c3248b59a47c6d9b09d"
+    "sha256": "99a67f8e8decae2456c2a5f4859225114b12fa8d5ea15b4ec950900481feab7d"
   },
   "summary": {
     "bundle_versions": {

@@ -30,7 +30,7 @@
   "input": {
     "kind": "definition",
     "name": "deprecated-properties.json",
-    "sha256": "eedf66d5f19bcf25a1b14e6b7b4d7a8605fc65ab61e7b89a1fb76c2b0269ea75"
+    "sha256": "29cfcf65a4c90ceff9ee1e25476844e53fc0e627cf5f2c355071b6ba16f84646"
   },
   "summary": {
     "bundle_versions": {

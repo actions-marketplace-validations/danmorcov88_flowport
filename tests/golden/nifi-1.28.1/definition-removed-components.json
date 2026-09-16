@@ -443,7 +443,7 @@
   "input": {
     "kind": "definition",
     "name": "removed-components.json",
-    "sha256": "f6616611d56143bea263337e4287e97abc2b97f4b9e4970782f23861fe5e7d6f"
+    "sha256": "6ed28f184c5e09f790f6a5aad4671c4d393161674797929dbcc153c06931db47"
   },
   "summary": {
     "bundle_versions": {

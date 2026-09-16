@@ -444,7 +444,7 @@
   "input": {
     "kind": "definition",
     "name": "variables.json",
-    "sha256": "deb5962cc651af53b1cb91a63e346652b1f3bd066a4242a60b27779a23a26855"
+    "sha256": "a0552409ef9b17301f3743e2e8541d73d206bfd3b4a03841c0f35b090025a283"
   },
   "summary": {
     "bundle_versions": {
