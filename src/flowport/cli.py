@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from enum import StrEnum
 from pathlib import Path
 from typing import Annotated, Any
@@ -11,9 +12,11 @@ from rich.console import Console
 from rich.table import Table
 
 from flowport import __version__
-from flowport.catalog import DEFAULT_SOURCE_VERSION, DEFAULT_TARGET_VERSION, CatalogError
+from flowport.catalog import DEFAULT_SOURCE_VERSION, DEFAULT_TARGET_VERSION, Catalog, CatalogError
 from flowport.loaders import LoadError
+from flowport.model import Flow
 from flowport.reports import SEVERITY_ORDER
+from flowport.transforms import MigrationResult
 
 EXIT_OK = 0
 EXIT_FINDINGS = 1
@@ -143,49 +146,34 @@ def analyze(
     raise typer.Exit(EXIT_OK)
 
 
-@migrate_app.command("variables")
-def migrate_variables_command(
-    flow_file: Annotated[
-        Path, typer.Argument(help="flow.json.gz, flow.json or an exported flow definition JSON.")
-    ],
-    output: Annotated[
-        Path,
-        typer.Option(
-            "--output",
-            "-o",
-            help="Where to write the migrated flow (gzip when the name ends in .gz). "
-            "changes.json and report.md are written next to it.",
-        ),
-    ],
-    keep_unused: Annotated[
-        bool,
-        typer.Option("--keep-unused", help="Also convert variables that nothing references."),
-    ] = False,
-    dry_run: Annotated[
-        bool, typer.Option("--dry-run", help="Show the changes without writing any file.")
-    ] = False,
-    source_version: Annotated[
-        str, typer.Option("--source-version", help="NiFi release the flow comes from.")
-    ] = DEFAULT_SOURCE_VERSION,
-    target_version: Annotated[
-        str, typer.Option("--target-version", help="NiFi release to migrate to.")
-    ] = DEFAULT_TARGET_VERSION,
-) -> None:
-    """Convert process group variables to parameter contexts.
+_FLOW_FILE_HELP = "flow.json.gz, flow.json or an exported flow definition JSON."
+_OUTPUT_HELP = (
+    "Where to write the migrated flow (gzip when the name ends in .gz). "
+    "changes.json and report.md are written next to it."
+)
+_DRY_RUN_HELP = "Show the changes without writing any file."
+_SOURCE_HELP = "NiFi release the flow comes from."
+_TARGET_HELP = "NiFi release to migrate to."
 
-    Creates one parameter context per process group that defines variables
-    (inheriting from the nearest ancestor context), rewrites ${name} to #{name}
-    where that is safe, and removes each variable once all its references are
-    rewritten. Everything that needs a decision stays in the report. The output
-    is still a NiFi 1.x flow, so it can be checked on 1.x before upgrading.
-    """
+
+def _run_flow_migration(
+    command: str,
+    flow_file: Path,
+    output: Path,
+    *,
+    dry_run: bool,
+    source_version: str,
+    target_version: str,
+    migrate: Callable[[Flow, Catalog], MigrationResult],
+    report_extra: dict[str, Any] | None = None,
+) -> None:
+    """Load, migrate, print a summary and write flow + changes.json + report.md."""
     from flowport.catalog import load_catalog
     from flowport.loaders import load
     from flowport.reports import build_report, render
     from flowport.rules import Finding
     from flowport.rules import analyze as run_rules
     from flowport.transforms import CHANGE_KINDS, render_changes
-    from flowport.transforms.variables import migrate_variables
     from flowport.writers import write
 
     try:
@@ -198,33 +186,33 @@ def migrate_variables_command(
         stderr.print("[red]error:[/red] the output must be a different file than the input")
         raise typer.Exit(EXIT_ERROR)
 
-    result = migrate_variables(flow, catalog, keep_unused=keep_unused)
+    result = migrate(flow, catalog)
     result.flow.source_name = output.name
     findings = sorted([*run_rules(result.flow, catalog), *result.findings], key=Finding.sort_key)
     counts = result.counts()
 
     console = Console()
     console.print(
-        f"[bold]flowport[/bold] {__version__}  migrate variables  "
+        f"[bold]flowport[/bold] {__version__}  {command}  "
         f"input: {flow_file.name} ({flow.kind.value})"
     )
     table = Table(title="Changes", show_header=True, header_style="bold")
     table.add_column("Kind")
     table.add_column("Count", justify="right")
     for kind in CHANGE_KINDS:
-        table.add_row(kind, str(counts[kind]))
+        if counts[kind]:
+            table.add_row(kind, str(counts[kind]))
+    if not result.changes:
+        table.add_row("(none)", "0")
     console.print(table)
     if dry_run:
         details = Table(show_header=True, header_style="bold")
         for column in ("Kind", "Where", "Name", "Old", "New", "Context"):
             details.add_column(column, overflow="fold")
         for change in result.changes:
-            where = change.path
-            if change.kind == "rewrite-property":
-                where = f"{change.path} > {change.component_name}"
             details.add_row(
                 change.kind,
-                where,
+                f"{change.path} > {change.component_name}",
                 change.property or "",
                 change.old or "",
                 change.new or "",
@@ -243,11 +231,12 @@ def migrate_variables_command(
     write(result.flow, output)
     report = build_report(result.flow, findings, catalog, output)
     report["migration"] = {
-        "command": "migrate variables",
+        "command": command,
         "input": flow_file.name,
-        "keep_unused": keep_unused,
+        "keep_unused": False,
         "note": "The findings below describe the migrated flow; see `changes.json` for every edit.",
-        "changes": counts,
+        "changes": {k: v for k, v in counts.items() if v},
+        **(report_extra or {}),
     }
     changes_path = output.parent / "changes.json"
     report_path = output.parent / "report.md"
@@ -255,6 +244,78 @@ def migrate_variables_command(
     report_path.write_text(render(report, "markdown"), encoding="utf-8", newline="\n")
     console.print(f"Wrote {output}, {changes_path} and {report_path}")
     raise typer.Exit(EXIT_OK)
+
+
+@migrate_app.command("variables")
+def migrate_variables_command(
+    flow_file: Annotated[Path, typer.Argument(help=_FLOW_FILE_HELP)],
+    output: Annotated[Path, typer.Option("--output", "-o", help=_OUTPUT_HELP)],
+    keep_unused: Annotated[
+        bool,
+        typer.Option("--keep-unused", help="Also convert variables that nothing references."),
+    ] = False,
+    dry_run: Annotated[bool, typer.Option("--dry-run", help=_DRY_RUN_HELP)] = False,
+    source_version: Annotated[
+        str, typer.Option("--source-version", help=_SOURCE_HELP)
+    ] = DEFAULT_SOURCE_VERSION,
+    target_version: Annotated[
+        str, typer.Option("--target-version", help=_TARGET_HELP)
+    ] = DEFAULT_TARGET_VERSION,
+) -> None:
+    """Convert process group variables to parameter contexts.
+
+    Creates one parameter context per process group that defines variables
+    (inheriting from the nearest ancestor context), rewrites ${name} to #{name}
+    where that is safe, and removes each variable once all its references are
+    rewritten. Everything that needs a decision stays in the report. The output
+    is still a NiFi 1.x flow, so it can be checked on 1.x before upgrading.
+    """
+    from flowport.transforms.variables import migrate_variables
+
+    _run_flow_migration(
+        "migrate variables",
+        flow_file,
+        output,
+        dry_run=dry_run,
+        source_version=source_version,
+        target_version=target_version,
+        migrate=lambda flow, catalog: migrate_variables(flow, catalog, keep_unused=keep_unused),
+        report_extra={"keep_unused": keep_unused},
+    )
+
+
+@migrate_app.command("components")
+def migrate_components_command(
+    flow_file: Annotated[Path, typer.Argument(help=_FLOW_FILE_HELP)],
+    output: Annotated[Path, typer.Option("--output", "-o", help=_OUTPUT_HELP)],
+    dry_run: Annotated[bool, typer.Option("--dry-run", help=_DRY_RUN_HELP)] = False,
+    source_version: Annotated[
+        str, typer.Option("--source-version", help=_SOURCE_HELP)
+    ] = DEFAULT_SOURCE_VERSION,
+    target_version: Annotated[
+        str, typer.Option("--target-version", help=_TARGET_HELP)
+    ] = DEFAULT_TARGET_VERSION,
+) -> None:
+    """Replace components with their documented successors.
+
+    Applies only the 1:1 replacements listed in the catalog (replacements.yaml):
+    the new type and bundle, property names, values and relationships, exactly
+    as the Apache migration guide documents them. Components keep their id,
+    name, position and connections. Processors scheduled EVENT_DRIVEN, which
+    stops NiFi 2.x from starting, are switched to TIMER_DRIVEN. Everything
+    without a documented replacement stays a finding.
+    """
+    from flowport.transforms.components import migrate_components
+
+    _run_flow_migration(
+        "migrate components",
+        flow_file,
+        output,
+        dry_run=dry_run,
+        source_version=source_version,
+        target_version=target_version,
+        migrate=migrate_components,
+    )
 
 
 def _write_converted_template(

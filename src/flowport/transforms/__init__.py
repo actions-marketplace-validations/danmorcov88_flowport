@@ -17,11 +17,20 @@ from flowport.model import Flow
 from flowport.rules import Finding
 
 CHANGE_KINDS = (
+    # migrate variables
     "create-context",
     "add-parameter",
     "assign-context",
     "rewrite-property",
     "remove-variable",
+    # migrate components
+    "replace-component",
+    "rename-property",
+    "set-property",
+    "drop-property",
+    "map-relationship",
+    "terminate-relationship",
+    "set-scheduling",
 )
 
 

@@ -98,7 +98,7 @@ class Replacement:
     properties: dict[str, str]  # old name -> new name
     values: dict[str, dict[str, str]]  # new name -> {old value: new value}
     set: dict[str, str]  # new name -> value
-    drop: tuple[str, ...]
+    drop: dict[str, str | None]  # old name -> source default (reported only when different)
     relationships: dict[str, tuple[str, ...]]  # old -> new relationships
     terminate: tuple[str, ...]
     unless: tuple[Condition, ...]
@@ -273,7 +273,10 @@ def _replacement(entry: dict[str, Any], catalog: Catalog) -> Replacement:
                 for k, v in (entry.get("values") or {}).items()
             },
             set={str(k): str(v) for k, v in (entry.get("set") or {}).items()},
-            drop=tuple(str(d) for d in entry.get("drop") or []),
+            drop={
+                str(k): (None if v is None else str(v))
+                for k, v in (entry.get("drop") or {}).items()
+            },
             relationships={
                 str(k): tuple(str(r) for r in (v or []))
                 for k, v in (entry.get("relationships") or {}).items()

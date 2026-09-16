@@ -220,6 +220,51 @@ rules:
       - NIFI-12079
       - parameter_names
 
+  # ---- reported by migrate components ---------------------------------------
+
+  NIFI2-COMPONENT-REPLACED:
+    severity: INFO
+    category: replaced-component
+    title: Component replaced by its documented successor
+    # fields: from_type, from_short, to_type, note
+    message: "{from_short} was replaced by {short_type} ({type}). {note}"
+    suggestion: "Review the component's configuration on NiFi 1.x, then on 2.x."
+    sources:
+      - migrating_deprecated
+      - deprecated_components
+
+  NIFI2-REPLACEMENT-SKIPPED:
+    severity: MANUAL
+    category: replaced-component
+    title: Documented replacement not applied
+    # fields: to_type, property, value, reason
+    message: "{short_type} could be replaced by {to_type}, but property '{property}' is set to '{value}': {reason}."
+    suggestion: "Change the flow by hand, then replace the component with {to_type}."
+    sources:
+      - migrating_deprecated
+      - deprecated_components
+
+  NIFI2-REPLACED-PROPERTY-DROPPED:
+    severity: INFO
+    category: replaced-component
+    title: Property without an equivalent on the replacement
+    # fields: from_short, property, value
+    message: "Property '{property}' of the former {from_short} was set to '{value}' and has no equivalent on {short_type}; it was dropped."
+    suggestion: "Check whether the behavior it controlled matters and configure {short_type} accordingly."
+    sources:
+      - migrating_deprecated
+
+  NIFI2-SCHEDULING-CHANGED:
+    severity: INFO
+    category: scheduling
+    title: Event-driven scheduling replaced by timer-driven
+    # fields: short_type
+    message: "{short_type} used the EVENT_DRIVEN scheduling strategy, which NiFi 2.x removed; it now runs TIMER_DRIVEN with a run schedule of 0 sec."
+    suggestion: "Check the run schedule and the number of concurrent tasks after the upgrade."
+    sources:
+      - NIFI-11813
+      - deprecated_components
+
   NIFI2-TEMPLATE:
     severity: MANUAL
     category: templates

@@ -17,7 +17,9 @@
 #                   target declares it, dropped with a finding otherwise)
 #   values          new property name -> {old value: new value}
 #   set             new property name -> fixed value
-#   drop            old properties that have no equivalent (dropped; INFO when set)
+#   drop            old properties that have no equivalent -> their default value in
+#                   the source release (null when none). Dropped silently when the
+#                   value is the default, with an INFO finding otherwise.
 #   relationships   old relationship -> list of new relationships (connections
 #                   and auto-terminations are remapped)
 #   terminate       new relationships that did not exist before: auto-terminated
@@ -57,11 +59,11 @@ replacements:
       HTTP Method: GET
       Response FlowFile Naming Strategy: URL_PATH
     drop:
-      - Filename                  # InvokeHTTP derives it from the URL path (naming strategy)
-      - Accept Content-Type       # send it as an Accept header (dynamic property) if needed
-      - redirect-cookie-policy
-      - Proxy Host                # replaced by the Proxy Configuration Service
-      - Proxy Port
+      Filename: null              # InvokeHTTP derives it from the URL path (naming strategy)
+      Accept Content-Type: null   # send it as an Accept header (dynamic property) if needed
+      redirect-cookie-policy: default
+      Proxy Host: null            # replaced by the Proxy Configuration Service
+      Proxy Port: null
     relationships:
       success: [Response]
     terminate: [Original, Retry, No Retry, Failure]
@@ -88,11 +90,11 @@ replacements:
     set:
       HTTP Method: POST
     drop:
-      - Max Batch Size            # InvokeHTTP sends one FlowFile per request
-      - Max Data to Post per Second
-      - Send as FlowFile          # checked by "unless" below
-      - Proxy Host
-      - Proxy Port
+      Max Batch Size: 100 MB      # InvokeHTTP sends one FlowFile per request
+      Max Data to Post per Second: null
+      Send as FlowFile: "false"   # "true" is caught by "unless" below
+      Proxy Host: null
+      Proxy Port: null
     relationships:
       success: [Original]
       failure: [Failure, Retry, No Retry]
