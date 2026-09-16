@@ -51,6 +51,27 @@ pytest -m integration
 The component inventory (`src/flowport/catalog/generated/`) is not edited by
 hand; run `python tools/build_catalog.py <from> <to>` to regenerate it.
 
+## Adding a component replacement
+
+`migrate components` applies only what `src/flowport/catalog/replacements.yaml`
+lists. To add one:
+
+1. Find the official Apache source that documents the replacement (the
+   "Migrating Deprecated Components and Features for 2.0.0" page or a NiFi
+   JIRA). No source, no mapping.
+2. Add an entry with `from`, `to`, `kind`, `bundle`, `sources`, the property
+   mapping (`properties`, `values`, `set`, `drop`), the relationship mapping
+   (`relationships`, `terminate`) and `unless` guards for configurations that
+   have no equivalent. The field reference is at the top of the file.
+3. Run `pytest tests/unit/test_replacements.py`: it checks every name against
+   the extension manifests of both releases (`catalog/generated/properties/`),
+   so a typo or a forgotten property fails here.
+4. Add the component to the `Replacements` group in `tools/make_fixtures.py`,
+   wired to something, regenerate the fixtures and refresh the golden files.
+5. Extend `tests/integration/test_nifi2_import.py` so that the migrated
+   component is asserted valid on NiFi 2.x, and run `pytest -m integration`.
+6. Add the row to the README table.
+
 ## Changing a migration
 
 Transforms live in `src/flowport/transforms/`. They edit the raw document

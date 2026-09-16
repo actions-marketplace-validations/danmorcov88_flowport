@@ -49,4 +49,11 @@ Ideas that came up during development and are outside the current phase.
   fixtures; the import would leave the property pointing at an unknown id.
 - **Unit test for `migrate all`** once it exists (Phase 5): the three
   migrations in sequence on one flow.
+- **More replacements with two-component outputs.** HashContent needs a
+  CryptographicHashContent plus an UpdateAttribute (the guide's own migrated
+  example); HashAttribute an UpdateAttribute with an Expression Language
+  hash. The YAML schema handles one component per replacement; inserting a
+  second one and a connection is a different transform.
+- **Cron year field.** Removing the seventh field is what the guide says,
+  but it changes when the processor runs; kept MANUAL on purpose.
 

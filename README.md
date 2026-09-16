@@ -7,10 +7,10 @@ flowport works offline on files. It never modifies its input. Every finding
 points to the exact component (process group path, name, id) and links to the
 official Apache source (wiki page or JIRA issue) that documents the change.
 
-> Status: v0.3. `analyze` reports incompatibilities; `migrate variables`
+> Status: v0.4. `analyze` reports incompatibilities; `migrate variables`
 > converts process group variables to parameter contexts; `migrate templates`
-> converts templates to flow definitions. Component replacements are planned.
-> See "Roadmap".
+> converts templates to flow definitions; `migrate components` applies the
+> documented component replacements. See "Roadmap" for v1.0.
 
 ## Install
 
@@ -123,6 +123,40 @@ on 1.x first to check it. The conversion was verified by importing the
 fixture templates into a real NiFi 2.12.0 through the REST API; see
 [docs/dev/templates-conversion.md](docs/dev/templates-conversion.md).
 
+### Replacing components
+
+```bash
+flowport migrate components flow.json.gz --output migrated/flow.json.gz
+flowport migrate components flow.json.gz --output migrated/flow.json.gz --dry-run
+```
+
+Applies only the 1:1 replacements that the Apache migration guide or a NiFi
+JIRA documents, listed in `src/flowport/catalog/replacements.yaml` with their
+property, value and relationship mappings. A component keeps its id, name,
+comments, position and connections; connections and auto-terminated
+relationships are remapped. Also switches processors scheduled `EVENT_DRIVEN`
+to `TIMER_DRIVEN` (run schedule 0 sec), because NiFi 2.x refuses to start
+with that strategy in the flow.
+
+| Replaced | By | Notes |
+|---|---|---|
+| Base64EncodeContent | EncodeContent | `Encoding` set to `base64` |
+| GetHTTP | InvokeHTTP | `HTTP Method: GET`, `Response FlowFile Naming Strategy: URL_PATH`; `success` becomes `Response`, the request-side relationships are auto-terminated |
+| PostHTTP | InvokeHTTP | `HTTP Method: POST`; `success` becomes `Original`, `failure` becomes `Failure, Retry, No Retry`; compression level maps to `Request Content-Encoding`. Not replaced when `Send as FlowFile` is true (MANUAL) |
+| JoltTransformJSON, JoltTransformRecord | same names in `nifi-jolt-nar` | property names changed with the move |
+| DistributedMapCacheServer, DistributedMapCacheClientService | MapCacheServer, MapCacheClientService | processors keep referencing the same instance |
+| DistributedSetCacheServer, DistributedSetCacheClientService | SetCacheServer, SetCacheClientService | |
+
+Every replacement is reported (`NIFI2-COMPONENT-REPLACED`, with what to
+check), a property without an equivalent is reported when it was set
+(`NIFI2-REPLACED-PROPERTY-DROPPED`), and a replacement that cannot be applied
+safely is reported instead of applied (`NIFI2-REPLACEMENT-SKIPPED`).
+Components without a documented 1:1 successor (HashContent, HashAttribute,
+the JMS and Slack processors, ...) stay findings. Each mapping is checked
+against the extension manifests of both releases and verified by importing
+the migrated fixture into a real NiFi 2.12.0; see
+[docs/dev/component-replacements.md](docs/dev/component-replacements.md).
+
 ### Exit codes
 
 | Code | Meaning |
@@ -146,7 +180,9 @@ NiFi 2.12.0 instance; see
 variables migration was verified on a real NiFi 1.28.1
 ([docs/dev/variables-migration.md](docs/dev/variables-migration.md)) and the
 template conversion on a real NiFi 2.12.0
-([docs/dev/templates-conversion.md](docs/dev/templates-conversion.md)).
+([docs/dev/templates-conversion.md](docs/dev/templates-conversion.md)), as
+were the component replacements
+([docs/dev/component-replacements.md](docs/dev/component-replacements.md)).
 
 ## What it checks (NiFi 1.28.1 to 2.12.0)
 
@@ -175,6 +211,10 @@ template conversion on a real NiFi 2.12.0
 | NIFI2-VARIABLE-NAME | MANUAL | Variable name that is not a valid parameter name |
 | NIFI2-TEMPLATE | MANUAL | Template stored in the flow (dropped silently by 2.x) |
 | NIFI2-INVOKEHTTP-PROXY-PROPERTIES | INFO | Deprecated proxy properties that NiFi 2.x migrates on load |
+| NIFI2-COMPONENT-REPLACED | INFO | Component replaced by `migrate components`, with what to check |
+| NIFI2-REPLACED-PROPERTY-DROPPED | INFO | Property that was set but has no equivalent on the replacement |
+| NIFI2-REPLACEMENT-SKIPPED | MANUAL | Documented replacement not applied because a property makes it unsafe |
+| NIFI2-SCHEDULING-CHANGED | INFO | EVENT_DRIVEN switched to TIMER_DRIVEN by `migrate components` |
 
 Rules are data: the component inventory in
 `src/flowport/catalog/generated/` is produced by `tools/build_catalog.py` from
@@ -197,7 +237,6 @@ rules in `src/flowport/catalog/manual.yaml` each cite an Apache source.
 
 ## Roadmap
 
-- v0.4: `flowport migrate components` applies documented 1:1 replacements.
 - v1.0: validation against a running NiFi 2.x, PyPI and Docker packaging,
   GitHub Action.
 
@@ -209,7 +248,7 @@ ruff check .
 mypy
 pytest                 # unit and golden tests
 pytest -m slow         # large generated input (about 40 s)
-pytest -m integration  # migrated flow into NiFi 1.28.1, converted templates into 2.12.0 (Docker)
+pytest -m integration  # migrated flow into NiFi 1.28.1, templates and replacements into 2.12.0 (Docker)
 pytest --update-golden # refresh expected reports on purpose
 ```
 
