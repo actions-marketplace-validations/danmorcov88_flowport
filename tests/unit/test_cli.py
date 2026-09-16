@@ -107,3 +107,69 @@ def test_markdown_and_html_outputs(definitions_dir: Path, tmp_path: Path) -> Non
     assert page.startswith("<!DOCTYPE html>")
     assert "NIFI2-SCRIPT-ENGINE" in page
     assert "<link" not in page and 'src="http' not in page  # single file, no external assets
+
+
+def test_migrate_variables_writes_three_files_and_leaves_input_alone(
+    flow_gz: Path, tmp_path: Path
+) -> None:
+    before = hashlib.sha256(flow_gz.read_bytes()).hexdigest()
+    out = tmp_path / "migrated" / "flow.json.gz"
+    result = runner.invoke(app, ["migrate", "variables", str(flow_gz), "--output", str(out)])
+    assert result.exit_code == 0, result.output
+    assert hashlib.sha256(flow_gz.read_bytes()).hexdigest() == before
+    assert out.read_bytes()[:2] == b"\x1f\x8b"
+    changes = json.loads((out.parent / "changes.json").read_text(encoding="utf-8"))
+    assert {c["kind"] for c in changes} == {
+        "create-context",
+        "add-parameter",
+        "assign-context",
+        "rewrite-property",
+        "remove-variable",
+    }
+    report = (out.parent / "report.md").read_text(encoding="utf-8")
+    assert "## Migration" in report
+    assert "NIFI2-VARIABLE-PARAMETER-COLLISION" in report
+    assert "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE" in report
+    # running again gives the same bytes
+    again = tmp_path / "again" / "flow.json.gz"
+    assert (
+        runner.invoke(app, ["migrate", "variables", str(flow_gz), "-o", str(again)]).exit_code == 0
+    )
+    assert again.read_bytes() == out.read_bytes()
+    assert (again.parent / "changes.json").read_bytes() == (
+        out.parent / "changes.json"
+    ).read_bytes()
+
+
+def test_migrate_variables_dry_run_writes_nothing(definitions_dir: Path, tmp_path: Path) -> None:
+    out = tmp_path / "out" / "variables.json"
+    result = runner.invoke(
+        app,
+        [
+            "migrate",
+            "variables",
+            str(definitions_dir / "variables.json"),
+            "-o",
+            str(out),
+            "--dry-run",
+        ],
+    )
+    assert result.exit_code == 0, result.output
+    assert "nothing written" in result.output
+    assert "rewrite-property" in result.output
+    assert not out.parent.exists()
+
+
+def test_migrate_variables_refuses_to_overwrite_the_input(flow_gz: Path) -> None:
+    result = runner.invoke(app, ["migrate", "variables", str(flow_gz), "-o", str(flow_gz)])
+    assert result.exit_code == 2
+
+
+def test_migrate_variables_keep_unused(definitions_dir: Path, tmp_path: Path) -> None:
+    out = tmp_path / "variables.json"
+    args = ["migrate", "variables", str(definitions_dir / "variables.json"), "-o", str(out)]
+    assert runner.invoke(app, [*args, "--keep-unused"]).exit_code == 0
+    changes = json.loads((tmp_path / "changes.json").read_text(encoding="utf-8"))
+    added = {c["property"] for c in changes if c["kind"] == "add-parameter"}
+    assert "unused.var" in added
+    assert out.read_bytes()[:1] == b"{"  # same kind as the input, no gzip without .gz
