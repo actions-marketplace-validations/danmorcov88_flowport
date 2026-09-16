@@ -1,0 +1,32 @@
+name: flowport
+description: Analyze a NiFi 1.x flow for NiFi 2.x incompatibilities, or run a flowport migration.
+author: Dan Morcov
+branding:
+  icon: git-branch
+  color: blue
+inputs:
+  command:
+    description: >-
+      flowport command and options, without the input file, for example
+      "analyze --fail-on blocker" or "migrate all --output migrated/".
+    required: false
+    default: analyze --fail-on blocker
+  file:
+    description: The flow file (flow.json.gz, flow.json or a flow definition) to work on.
+    required: true
+  python-version:
+    description: Python version to run flowport with.
+    required: false
+    default: "3.12"
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v6
+      with:
+        python-version: ${{ inputs.python-version }}
+    - name: Install flowport
+      shell: bash
+      run: python -m pip install --quiet "${{ github.action_path }}"
+    - name: Run flowport
+      shell: bash
+      run: flowport ${{ inputs.command }} "${{ inputs.file }}"

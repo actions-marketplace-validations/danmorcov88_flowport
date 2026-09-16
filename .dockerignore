@@ -1,0 +1,12 @@
+.git
+.github
+.venv
+dist
+build
+tests
+tools
+docs
+tasks
+.claude
+CLAUDE.md
+**/__pycache__
