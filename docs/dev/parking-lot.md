@@ -56,4 +56,11 @@ Ideas that came up during development and are outside the current phase.
   second one and a connection is a different transform.
 - **Cron year field.** Removing the seventh field is what the guide says,
   but it changes when the processor runs; kept MANUAL on purpose.
+- **Validate the whole `flow.json` including controller-level services and
+  reporting tasks.** `validate` imports a process group; a mode that
+  starts a 2.x container with the file in `conf/` (what the integration
+  test does) would cover everything, at the cost of a restart per run.
+- **Announce.** Section 12 of the plan suggests the NiFi users mailing
+  list once the tool is public; PyPI trusted publishing must be registered
+  by the project owner before the first `v*` tag runs the release workflow.
 

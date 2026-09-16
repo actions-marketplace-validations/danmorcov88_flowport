@@ -1,25 +1,42 @@
 # flowport
 
 A migration tool for Apache NiFi: analyze NiFi 1.x flows for NiFi 2.x
-incompatibilities and apply the changes that can be made safely.
+incompatibilities, apply the changes that can be made safely, and validate
+the result on a real NiFi 2.x.
 
 flowport works offline on files. It never modifies its input. Every finding
-points to the exact component (process group path, name, id) and links to the
-official Apache source (wiki page or JIRA issue) that documents the change.
+points to the exact component (process group path, name, id), links to the
+official Apache source (wiki page or JIRA issue) that documents the change,
+and to the [rule reference](docs/rules.md). Every migration is verified by
+loading its output into real NiFi instances in CI.
 
-> Status: v0.4. `analyze` reports incompatibilities; `migrate variables`
-> converts process group variables to parameter contexts; `migrate templates`
-> converts templates to flow definitions; `migrate components` applies the
-> documented component replacements. See "Roadmap" for v1.0.
+```bash
+flowport analyze flow.json.gz                          # what will break on 2.x
+flowport migrate all flow.json.gz --output migrated/   # variables, components, templates
+flowport validate migrated/flow.json.gz --docker       # let a NiFi 2.12.0 judge the result
+```
+
+Start with the [quickstart](docs/quickstart.md).
 
 ## Install
 
 Python 3.11 or newer.
 
 ```bash
-pipx install git+https://github.com/danmorcov88/flowport
+pipx install flowport
 # or, inside a virtual environment
-python -m pip install git+https://github.com/danmorcov88/flowport
+python -m pip install flowport
+# or the Docker image
+docker run --rm -v "$PWD:/work" ghcr.io/danmorcov88/flowport analyze /work/flow.json.gz
+```
+
+In GitHub Actions:
+
+```yaml
+- uses: danmorcov88/flowport@v1
+  with:
+    file: conf/flow.json.gz
+    command: analyze --fail-on blocker
 ```
 
 ## Usage
@@ -157,13 +174,45 @@ against the extension manifests of both releases and verified by importing
 the migrated fixture into a real NiFi 2.12.0; see
 [docs/dev/component-replacements.md](docs/dev/component-replacements.md).
 
+### Everything at once
+
+```bash
+flowport migrate all flow.json.gz --output migrated/
+```
+
+Runs `migrate variables`, then `migrate components`, then `migrate templates`
+on one flow (in that order: the variable rewrite relies on the Expression
+Language scopes of the original component types). Writes `migrated/<flow
+file>`, one `changes.json` and one `report.md` for the flow, and the
+converted templates under `migrated/templates/`. `--dry-run` and
+`--keep-unused` work as for the individual commands.
+
+### Validating on a NiFi 2.x
+
+```bash
+flowport validate migrated/flow.json.gz --docker                     # throwaway apache/nifi:2.12.0
+flowport validate migrated/flow.json.gz --nifi-url https://host:8443/nifi-api \
+    --username admin --password '...' --insecure                     # your own instance
+flowport validate migrated/flow.json.gz --nifi-url ... --format json --output validation.json
+```
+
+The flow is imported as a new process group (the same path as "Upload flow
+definition"), NiFi validates every component, and flowport reports the
+invalid ones and the missing types with NiFi's own messages, then removes
+the group (`--keep` leaves it, and the Docker container, in place). Exit
+code 1 when anything is invalid. `FLOWPORT_NIFI_USERNAME` and
+`FLOWPORT_NIFI_PASSWORD` can replace the options. Controller-level services
+and reporting tasks of a `flow.json` cannot travel with a process group and
+are listed as warnings; the full flow is validated by starting a 2.x with
+the file in `conf/`, which is what the integration tests do.
+
 ### Exit codes
 
 | Code | Meaning |
 |---|---|
-| 0 | No finding at or above the `--fail-on` threshold (`analyze`); output written (`migrate`) |
-| 1 | At least one finding at or above the threshold (`analyze`) |
-| 2 | Input or internal error |
+| 0 | No finding at or above the `--fail-on` threshold (`analyze`); output written (`migrate`); every component valid (`validate`) |
+| 1 | At least one finding at or above the threshold (`analyze`); an invalid component or a missing type (`validate`) |
+| 2 | Input, connection or internal error |
 
 ### Severities
 
@@ -223,22 +272,11 @@ rules in `src/flowport/catalog/manual.yaml` each cite an Apache source.
 
 ## Known limitations
 
-- The catalog covers NiFi 1.28.1 to 2.12.0. Flows from older 1.x releases are
-  analyzed with a warning; upgrade to 1.28.1 first for accurate results.
-- Properties renamed between releases are not reported: NiFi 2.x migrates
-  most of them itself when the flow loads.
-- `nifi.properties`, `authorizers.xml` and other configuration files are out
-  of scope.
-- Cloudera-specific components are not covered.
-- A converted template has no `controllerServiceApis` and no property
-  `displayName`s (templates do not carry them); NiFi fills both in on import.
-- `migrate templates` leaves the templates in the flow; NiFi 2.x drops them
-  itself. Convert them first, then upgrade.
-
-## Roadmap
-
-- v1.0: validation against a running NiFi 2.x, PyPI and Docker packaging,
-  GitHub Action.
+See [docs/limitations.md](docs/limitations.md). The short version: the
+catalog covers NiFi 1.28.1 to 2.12.0; only documented 1:1 replacements are
+applied; a reference the analyzer cannot prove safe to rewrite stays a
+finding; sensitive values are carried over as they are; configuration files
+(`nifi.properties`, `authorizers.xml`) are out of scope.
 
 ## Development
 
@@ -248,13 +286,16 @@ ruff check .
 mypy
 pytest                 # unit and golden tests
 pytest -m slow         # large generated input (about 40 s)
-pytest -m integration  # migrated flow into NiFi 1.28.1, templates and replacements into 2.12.0 (Docker)
+pytest -m integration  # real NiFi 1.28.1 and 2.12.0 in Docker (about 3 minutes)
 pytest --update-golden # refresh expected reports on purpose
 ```
 
 Fixtures are generated from a real NiFi 1.28.1 instance in Docker by
 `tools/make_fixtures.py`; see [tests/fixtures/README.md](tests/fixtures/README.md).
-See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add a rule.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and
+[docs/adding-a-rule.md](docs/adding-a-rule.md) for how to add a rule, a
+replacement or a migration. Releases are tagged `vX.Y.Z`; the release
+workflow publishes to PyPI and GHCR.
 
 ## License
 
