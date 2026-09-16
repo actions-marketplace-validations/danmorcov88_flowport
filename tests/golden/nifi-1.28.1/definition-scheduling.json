@@ -11,7 +11,7 @@
         "field": "1"
       },
       "location": {
-        "id": "a9d02034-01a0-1000-0e1c-82eb12dff166",
+        "id": "a9d5ea70-01a0-1000-80e3-798745e84bca",
         "kind": "PROCESSOR",
         "name": "Cron with numeric weekday",
         "path": "/Scheduling",
@@ -33,7 +33,7 @@
         "expression": "0 0 12 * * ? 2030"
       },
       "location": {
-        "id": "a9d02011-01a0-1000-ad75-2372e7a2d16d",
+        "id": "a9d5ea5b-01a0-1000-f7d5-22d1ce60563e",
         "kind": "PROCESSOR",
         "name": "Cron with year field",
         "path": "/Scheduling",
@@ -53,7 +53,7 @@
       "category": "scheduling",
       "details": {},
       "location": {
-        "id": "a9d01ff8-01a0-1000-7ffe-aad78f732aca",
+        "id": "a9d5ea3d-01a0-1000-82e8-15a5fb743215",
         "kind": "PROCESSOR",
         "name": "Event driven",
         "path": "/Scheduling",
@@ -73,7 +73,7 @@
   "input": {
     "kind": "definition",
     "name": "scheduling.json",
-    "sha256": "c20da51a30ae5d0e8bf126345c202f0a96fe49424dc3f30cda29e63ff95e7c0a"
+    "sha256": "78219c55b29504931bb0f5828cba0ca6678d3887c7cf3ba273fe885be6f2dcce"
   },
   "summary": {
     "bundle_versions": {

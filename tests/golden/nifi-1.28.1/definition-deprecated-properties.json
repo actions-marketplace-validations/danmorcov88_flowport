@@ -10,7 +10,7 @@
         "properties": "Proxy Host, Proxy Port, Proxy Type"
       },
       "location": {
-        "id": "a9d0205c-01a0-1000-0a53-484f95f9881a",
+        "id": "a9d5eaaa-01a0-1000-0edb-e8c02571fb8e",
         "kind": "PROCESSOR",
         "name": "Invoke through proxy",
         "path": "/Deprecated Properties",
@@ -30,7 +30,7 @@
   "input": {
     "kind": "definition",
     "name": "deprecated-properties.json",
-    "sha256": "2c64a51bed98cf7bbb9b5d9810eb326a17e1ede39bdc78b82ad1eefaf92b1aa0"
+    "sha256": "73a00966814eacdc64607fae1edc31ad11e53a269457784719b585bffa9c6434"
   },
   "summary": {
     "bundle_versions": {

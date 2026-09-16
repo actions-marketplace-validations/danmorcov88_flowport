@@ -2,7 +2,7 @@
   {
     "kind": "rewrite-property",
     "path": "/NiFi Flow/Variables",
-    "component_id": "a9d0134b-01a0-1000-13c1-dd9ff6981fe7",
+    "component_id": "a9d5dcdf-01a0-1000-45bb-ca683e110296",
     "component_name": "Generate with host text",
     "property": "generate-ff-custom-text",
     "old": "host=${host} port=${port}",
@@ -12,7 +12,7 @@
   {
     "kind": "rewrite-property",
     "path": "/NiFi Flow/Variables",
-    "component_id": "a9d012a1-01a0-1000-d124-0ca957de2df0",
+    "component_id": "a9d5dc67-01a0-1000-8571-6cfe1cebba2d",
     "component_name": "Listen on variable port",
     "property": "Listening Port",
     "old": "${port}",
@@ -22,7 +22,7 @@
   {
     "kind": "create-context",
     "path": "/NiFi Flow/Variables",
-    "component_id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+    "component_id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
     "component_name": "Variables",
     "property": null,
     "old": null,
@@ -32,7 +32,7 @@
   {
     "kind": "add-parameter",
     "path": "/NiFi Flow/Variables",
-    "component_id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+    "component_id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
     "component_name": "Variables",
     "property": "host",
     "old": null,
@@ -42,7 +42,7 @@
   {
     "kind": "add-parameter",
     "path": "/NiFi Flow/Variables",
-    "component_id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+    "component_id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
     "component_name": "Variables",
     "property": "port",
     "old": null,
@@ -52,7 +52,7 @@
   {
     "kind": "add-parameter",
     "path": "/NiFi Flow/Variables",
-    "component_id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+    "component_id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
     "component_name": "Variables",
     "property": "shared",
     "old": null,
@@ -62,7 +62,7 @@
   {
     "kind": "assign-context",
     "path": "/NiFi Flow/Variables",
-    "component_id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+    "component_id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
     "component_name": "Variables",
     "property": null,
     "old": null,
@@ -72,7 +72,7 @@
   {
     "kind": "create-context",
     "path": "/NiFi Flow/Variables/Child",
-    "component_id": "a9d01402-01a0-1000-49b7-0376d43cec76",
+    "component_id": "a9d5ddaf-01a0-1000-08e2-2eb48c1c175e",
     "component_name": "Child",
     "property": null,
     "old": null,
@@ -82,7 +82,7 @@
   {
     "kind": "add-parameter",
     "path": "/NiFi Flow/Variables/Child",
-    "component_id": "a9d01402-01a0-1000-49b7-0376d43cec76",
+    "component_id": "a9d5ddaf-01a0-1000-08e2-2eb48c1c175e",
     "component_name": "Child",
     "property": "path",
     "old": null,
@@ -92,7 +92,7 @@
   {
     "kind": "add-parameter",
     "path": "/NiFi Flow/Variables/Child",
-    "component_id": "a9d01402-01a0-1000-49b7-0376d43cec76",
+    "component_id": "a9d5ddaf-01a0-1000-08e2-2eb48c1c175e",
     "component_name": "Child",
     "property": "shared",
     "old": null,
@@ -102,7 +102,7 @@
   {
     "kind": "assign-context",
     "path": "/NiFi Flow/Variables/Child",
-    "component_id": "a9d01402-01a0-1000-49b7-0376d43cec76",
+    "component_id": "a9d5ddaf-01a0-1000-08e2-2eb48c1c175e",
     "component_name": "Child",
     "property": null,
     "old": null,
@@ -112,7 +112,7 @@
   {
     "kind": "remove-variable",
     "path": "/NiFi Flow/Variables/Child",
-    "component_id": "a9d01402-01a0-1000-49b7-0376d43cec76",
+    "component_id": "a9d5ddaf-01a0-1000-08e2-2eb48c1c175e",
     "component_name": "Child",
     "property": "path",
     "old": "/data/in",
@@ -122,7 +122,7 @@
   {
     "kind": "remove-variable",
     "path": "/NiFi Flow/Variables/Child",
-    "component_id": "a9d01402-01a0-1000-49b7-0376d43cec76",
+    "component_id": "a9d5ddaf-01a0-1000-08e2-2eb48c1c175e",
     "component_name": "Child",
     "property": "shared",
     "old": "from-child",
@@ -132,7 +132,7 @@
   {
     "kind": "rewrite-property",
     "path": "/NiFi Flow/Variables/Child",
-    "component_id": "a9d0142f-01a0-1000-7ded-6163e6856d67",
+    "component_id": "a9d5ddde-01a0-1000-560c-0470f8d93b3d",
     "component_name": "Generate with parent host",
     "property": "generate-ff-custom-text",
     "old": "${host}",
@@ -142,7 +142,7 @@
   {
     "kind": "rewrite-property",
     "path": "/NiFi Flow/Variables/Child",
-    "component_id": "a9d0141c-01a0-1000-eb7b-0b2b23e87eec",
+    "component_id": "a9d5ddca-01a0-1000-12e2-a177dfe76fa8",
     "component_name": "Get from variable path",
     "property": "Input Directory",
     "old": "${path}",
@@ -152,7 +152,7 @@
   {
     "kind": "rewrite-property",
     "path": "/NiFi Flow/Variables/Child/Grandchild",
-    "component_id": "a9d01463-01a0-1000-2c61-ab61ce33a86f",
+    "component_id": "a9d5de0f-01a0-1000-e58d-c2d8c2c2d2c7",
     "component_name": "Generate with inherited host",
     "property": "generate-ff-custom-text",
     "old": "${host}",
@@ -162,7 +162,7 @@
   {
     "kind": "rewrite-property",
     "path": "/NiFi Flow/Variables/Child/Grandchild",
-    "component_id": "a9d01450-01a0-1000-bd5f-e04f54e6cac3",
+    "component_id": "a9d5ddfc-01a0-1000-419f-7fffe6888ac8",
     "component_name": "Get from inherited path",
     "property": "Input Directory",
     "old": "${path}/${shared}",
@@ -172,7 +172,7 @@
   {
     "kind": "assign-context",
     "path": "/NiFi Flow/Variables/Child/Grandchild",
-    "component_id": "a9d01447-01a0-1000-dcb1-32a9bf423712",
+    "component_id": "a9d5ddf4-01a0-1000-4f7e-77050e918ac5",
     "component_name": "Grandchild",
     "property": null,
     "old": null,

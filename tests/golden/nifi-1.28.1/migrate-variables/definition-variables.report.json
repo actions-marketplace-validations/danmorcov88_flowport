@@ -13,7 +13,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d013b0-01a0-1000-4ba2-e3f110694132",
+        "id": "a9d5dd58-01a0-1000-50f0-8dc4399c102a",
         "kind": "PROCESSOR",
         "name": "Build URL attribute",
         "path": "/Variables",
@@ -39,7 +39,7 @@
         "variable": "port"
       },
       "location": {
-        "id": "a9d013b0-01a0-1000-4ba2-e3f110694132",
+        "id": "a9d5dd58-01a0-1000-50f0-8dc4399c102a",
         "kind": "PROCESSOR",
         "name": "Build URL attribute",
         "path": "/Variables",
@@ -65,7 +65,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d013c9-01a0-1000-570e-f358cf8c545e",
+        "id": "a9d5dd76-01a0-1000-d9f9-fbd922a7f62c",
         "kind": "PROCESSOR",
         "name": "Log literal dollar text",
         "path": "/Variables",
@@ -89,7 +89,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d01367-01a0-1000-4551-7eda6b70ec84",
+        "id": "a9d5dcfa-01a0-1000-e1b4-5bf83fb153bd",
         "kind": "PROCESSOR",
         "name": "Put to shadowed directory",
         "path": "/Variables",
@@ -115,7 +115,7 @@
         "variable": "shared"
       },
       "location": {
-        "id": "a9d013e6-01a0-1000-7012-95b0c2e8dc2b",
+        "id": "a9d5dd8d-01a0-1000-8562-e52e3a1a8974",
         "kind": "PROCESSOR",
         "name": "Tail with function",
         "path": "/Variables",
@@ -137,7 +137,7 @@
         "variable": "bad name!"
       },
       "location": {
-        "id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/Variables",
@@ -160,7 +160,7 @@
         "variable": "bad name!"
       },
       "location": {
-        "id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/Variables",
@@ -182,7 +182,7 @@
         "variable": "unused.var"
       },
       "location": {
-        "id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/Variables",
@@ -204,7 +204,7 @@
         "names": "bad name!, host, port, shared, unused.var"
       },
       "location": {
-        "id": "a9d011f7-01a0-1000-21e9-0cd82c426bed",
+        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/Variables",

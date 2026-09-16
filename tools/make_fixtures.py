@@ -317,6 +317,31 @@ class NiFi:
             },
         )
 
+    def create_remote_group(self, group_id: str, target_uri: str) -> dict[str, Any]:
+        entity = self.post(
+            f"/process-groups/{group_id}/remote-process-groups",
+            {
+                "revision": {"version": 0, "clientId": CLIENT_ID},
+                "component": {
+                    "targetUris": target_uri,
+                    "position": {"x": 800, "y": 0},
+                    "communicationsTimeout": "20 sec",
+                    "yieldDuration": "5 sec",
+                    "transportProtocol": "HTTP",
+                },
+            },
+        )
+        # NiFi fetches the remote ports in the background; wait for them so the
+        # template carries them.
+        deadline = time.monotonic() + 60
+        while time.monotonic() < deadline:
+            entity = self.get(f"/remote-process-groups/{entity['id']}")
+            contents = entity["component"].get("contents") or {}
+            if contents.get("inputPorts"):
+                return entity
+            time.sleep(3)
+        raise RuntimeError("remote process group did not discover any remote port")
+
     def create_funnel(self, group_id: str) -> dict[str, Any]:
         return self.post(
             f"/process-groups/{group_id}/funnels",
@@ -921,6 +946,10 @@ def build_template_conversion(nifi: NiFi, root: str) -> tuple[str, dict[str, Any
         group, STD + "LogAttribute", "Done", None, x=400, y=600, auto_terminate=["success"]
     )
     label = nifi.create_label(group, "Converted from a template by flowport")
+    # Site-to-site to this very instance: the root group has a remote-accessible
+    # input port so that the remote group discovers one port.
+    nifi.create_port(root, "input", "Remote In")
+    remote = nifi.create_remote_group(group, "http://localhost:8080/nifi")
 
     sink = nifi.create_group(group, "Sink", y=400)
     sink_in = nifi.create_port(sink, "input", "in")
@@ -968,6 +997,7 @@ def build_template_conversion(nifi: NiFi, root: str) -> tuple[str, dict[str, Any
         "connections": connections,
         "funnels": [funnel],
         "labels": [label],
+        "remoteProcessGroups": [remote],
         "processGroups": [nifi.get(f"/process-groups/{sink}")],
     }
     return group, entities

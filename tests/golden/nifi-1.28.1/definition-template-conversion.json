@@ -7,7 +7,7 @@
   "input": {
     "kind": "definition",
     "name": "template-conversion.json",
-    "sha256": "e8a9d2348a9764e431dd7fb4be5794ae3eaafcbc7486f2bd36cc92fceec04dc8"
+    "sha256": "c1e682baab514cca6e7421e2f2ac7262ccb497738232e5badd81ce6578a793b4"
   },
   "summary": {
     "bundle_versions": {
