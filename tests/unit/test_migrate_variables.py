@@ -138,7 +138,8 @@ def test_fixture_flow_covers_every_case(catalog: Catalog) -> None:
         },
         "/NiFi Flow/Existing Context": {"retries": "3", "host": "variable.example.org"},
     }
-    assert result.flow.raw["rootGroup"]["processGroups"][0]["processGroups"][0]["variables"] == {}
+    child = next(g for g in result.flow.groups() if g.path == "/NiFi Flow/Variables/Child")
+    assert child.raw["variables"] == {}
 
 
 def test_generated_identifiers_are_stable_and_nifi_shaped() -> None:

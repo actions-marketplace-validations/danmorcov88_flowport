@@ -1,79 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <template encoding-version="1.3">
     <description>Fixture template Removed Components Template</description>
-    <groupId>a961e258-01a0-1000-3dd6-6ad85b0b6a5a</groupId>
+    <groupId>a9d01520-01a0-1000-9f6e-5a7efc87f1a0</groupId>
     <name>Removed Components Template</name>
     <snippet>
         <processors>
-            <id>1f587bd9-55c9-3e3f-0000-000000000000</id>
-            <parentGroupId>1d8c2d9a-2988-3ec5-0000-000000000000</parentGroupId>
-            <position>
-                <x>0.0</x>
-                <y>400.0</y>
-            </position>
-            <bundle>
-                <artifact>nifi-standard-nar</artifact>
-                <group>org.apache.nifi</group>
-                <version>1.28.1</version>
-            </bundle>
-            <config>
-                <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
-                <bulletinLevel>WARN</bulletinLevel>
-                <comments></comments>
-                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
-                <descriptors>
-                    <entry>
-                        <key>Hash Attribute Name</key>
-                        <value>
-                            <name>Hash Attribute Name</name>
-                        </value>
-                    </entry>
-                    <entry>
-                        <key>Hash Algorithm</key>
-                        <value>
-                            <name>Hash Algorithm</name>
-                        </value>
-                    </entry>
-                </descriptors>
-                <executionNode>ALL</executionNode>
-                <lossTolerant>false</lossTolerant>
-                <maxBackoffPeriod>10 mins</maxBackoffPeriod>
-                <penaltyDuration>30 sec</penaltyDuration>
-                <properties>
-                    <entry>
-                        <key>Hash Attribute Name</key>
-                        <value>hash.value</value>
-                    </entry>
-                    <entry>
-                        <key>Hash Algorithm</key>
-                        <value>SHA-256</value>
-                    </entry>
-                </properties>
-                <retryCount>10</retryCount>
-                <runDurationMillis>0</runDurationMillis>
-                <schedulingPeriod>0 sec</schedulingPeriod>
-                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
-                <yieldDuration>1 sec</yieldDuration>
-            </config>
-            <executionNodeRestricted>false</executionNodeRestricted>
-            <name>Hash content</name>
-            <relationships>
-                <autoTerminate>true</autoTerminate>
-                <name>failure</name>
-                <retry>false</retry>
-            </relationships>
-            <relationships>
-                <autoTerminate>true</autoTerminate>
-                <name>success</name>
-                <retry>false</retry>
-            </relationships>
-            <state>STOPPED</state>
-            <style/>
-            <type>org.apache.nifi.processors.standard.HashContent</type>
-        </processors>
-        <processors>
-            <id>2e6e6b13-dacd-33bc-0000-000000000000</id>
-            <parentGroupId>1d8c2d9a-2988-3ec5-0000-000000000000</parentGroupId>
+            <id>0c9049d4-2bfc-3292-0000-000000000000</id>
+            <parentGroupId>eed2f1ef-700c-3713-0000-000000000000</parentGroupId>
             <position>
                 <x>0.0</x>
                 <y>200.0</y>
@@ -282,8 +215,75 @@
             <type>org.apache.nifi.processors.standard.PostHTTP</type>
         </processors>
         <processors>
-            <id>a2ead034-e691-3c90-0000-000000000000</id>
-            <parentGroupId>1d8c2d9a-2988-3ec5-0000-000000000000</parentGroupId>
+            <id>4df39c54-d3f1-3b78-0000-000000000000</id>
+            <parentGroupId>eed2f1ef-700c-3713-0000-000000000000</parentGroupId>
+            <position>
+                <x>0.0</x>
+                <y>400.0</y>
+            </position>
+            <bundle>
+                <artifact>nifi-standard-nar</artifact>
+                <group>org.apache.nifi</group>
+                <version>1.28.1</version>
+            </bundle>
+            <config>
+                <backoffMechanism>PENALIZE_FLOWFILE</backoffMechanism>
+                <bulletinLevel>WARN</bulletinLevel>
+                <comments></comments>
+                <concurrentlySchedulableTaskCount>1</concurrentlySchedulableTaskCount>
+                <descriptors>
+                    <entry>
+                        <key>Hash Attribute Name</key>
+                        <value>
+                            <name>Hash Attribute Name</name>
+                        </value>
+                    </entry>
+                    <entry>
+                        <key>Hash Algorithm</key>
+                        <value>
+                            <name>Hash Algorithm</name>
+                        </value>
+                    </entry>
+                </descriptors>
+                <executionNode>ALL</executionNode>
+                <lossTolerant>false</lossTolerant>
+                <maxBackoffPeriod>10 mins</maxBackoffPeriod>
+                <penaltyDuration>30 sec</penaltyDuration>
+                <properties>
+                    <entry>
+                        <key>Hash Attribute Name</key>
+                        <value>hash.value</value>
+                    </entry>
+                    <entry>
+                        <key>Hash Algorithm</key>
+                        <value>SHA-256</value>
+                    </entry>
+                </properties>
+                <retryCount>10</retryCount>
+                <runDurationMillis>0</runDurationMillis>
+                <schedulingPeriod>0 sec</schedulingPeriod>
+                <schedulingStrategy>TIMER_DRIVEN</schedulingStrategy>
+                <yieldDuration>1 sec</yieldDuration>
+            </config>
+            <executionNodeRestricted>false</executionNodeRestricted>
+            <name>Hash content</name>
+            <relationships>
+                <autoTerminate>true</autoTerminate>
+                <name>failure</name>
+                <retry>false</retry>
+            </relationships>
+            <relationships>
+                <autoTerminate>true</autoTerminate>
+                <name>success</name>
+                <retry>false</retry>
+            </relationships>
+            <state>STOPPED</state>
+            <style/>
+            <type>org.apache.nifi.processors.standard.HashContent</type>
+        </processors>
+        <processors>
+            <id>877a1051-2d13-34aa-0000-000000000000</id>
+            <parentGroupId>eed2f1ef-700c-3713-0000-000000000000</parentGroupId>
             <position>
                 <x>0.0</x>
                 <y>0.0</y>
@@ -458,8 +458,8 @@
             <type>org.apache.nifi.processors.standard.GetHTTP</type>
         </processors>
         <processors>
-            <id>e65ec793-db3f-370f-0000-000000000000</id>
-            <parentGroupId>1d8c2d9a-2988-3ec5-0000-000000000000</parentGroupId>
+            <id>fcb799ce-115f-3bd6-0000-000000000000</id>
+            <parentGroupId>eed2f1ef-700c-3713-0000-000000000000</parentGroupId>
             <position>
                 <x>0.0</x>
                 <y>600.0</y>
@@ -525,5 +525,5 @@
             <type>org.apache.nifi.processors.standard.HashAttribute</type>
         </processors>
     </snippet>
-    <timestamp>09/16/2026 08:42:45 UTC</timestamp>
+    <timestamp>09/16/2026 10:43:04 UTC</timestamp>
 </template>

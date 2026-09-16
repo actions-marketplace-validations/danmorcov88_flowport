@@ -37,5 +37,6 @@ def test_expected_groups_present() -> None:
         "Deprecated Properties",
         "Custom NAR",
         "Clean",
+        "Template Conversion",
     }
-    assert len(flow["templates"]) == 1
+    assert len(flow["templates"]) == 2

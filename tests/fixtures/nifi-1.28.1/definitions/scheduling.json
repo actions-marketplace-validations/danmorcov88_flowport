@@ -1,7 +1,7 @@
 {
   "flowContents": {
-    "identifier": "e34d5863-7b36-3788-804f-1e2176df76fa",
-    "instanceIdentifier": "a961f828-01a0-1000-b7c6-ad1e71c6de64",
+    "identifier": "14c9b712-965a-3bd4-a70e-9ded9a08b99d",
+    "instanceIdentifier": "a9d01fe2-01a0-1000-8655-926437fddc35",
     "name": "Scheduling",
     "comments": "",
     "position": {
@@ -12,8 +12,8 @@
     "remoteProcessGroups": [],
     "processors": [
       {
-        "identifier": "826920f8-cb5a-3258-a9ae-cc583dfbe953",
-        "instanceIdentifier": "a961f874-01a0-1000-a813-0a3319a1123a",
+        "identifier": "874326bd-c179-3274-ba38-76100e891dbe",
+        "instanceIdentifier": "a9d02044-01a0-1000-fd15-10f85456d5bf",
         "name": "Cron unaffected",
         "comments": "",
         "position": {
@@ -97,90 +97,16 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "e34d5863-7b36-3788-804f-1e2176df76fa"
+        "groupIdentifier": "14c9b712-965a-3bd4-a70e-9ded9a08b99d"
       },
       {
-        "identifier": "9676736c-8970-3fc3-b8e8-7b52bcb885ca",
-        "instanceIdentifier": "a961f83b-01a0-1000-1da9-b178dbbc8e2b",
-        "name": "Event driven",
+        "identifier": "e2ffdfed-7a16-3ebf-83e0-8b5d52ec1e29",
+        "instanceIdentifier": "a9d01fe9-01a0-1000-e44d-e578e85596cd",
+        "name": "Timer source",
         "comments": "",
         "position": {
           "x": 0.0,
-          "y": 200.0
-        },
-        "type": "org.apache.nifi.processors.attributes.UpdateAttribute",
-        "bundle": {
-          "group": "org.apache.nifi",
-          "artifact": "nifi-update-attribute-nar",
-          "version": "1.28.1"
-        },
-        "properties": {
-          "touched": "true",
-          "Delete Attributes Expression": null,
-          "Store State": "Do not store state",
-          "canonical-value-lookup-cache-size": "100",
-          "Stateful Variables Initial Value": null
-        },
-        "propertyDescriptors": {
-          "touched": {
-            "name": "touched",
-            "displayName": "touched",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Delete Attributes Expression": {
-            "name": "Delete Attributes Expression",
-            "displayName": "Delete Attributes Expression",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Store State": {
-            "name": "Store State",
-            "displayName": "Store State",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "canonical-value-lookup-cache-size": {
-            "name": "canonical-value-lookup-cache-size",
-            "displayName": "Cache Value Lookup Cache Size",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Stateful Variables Initial Value": {
-            "name": "Stateful Variables Initial Value",
-            "displayName": "Stateful Variables Initial Value",
-            "identifiesControllerService": false,
-            "sensitive": false
-          }
-        },
-        "style": {},
-        "schedulingPeriod": "0 sec",
-        "schedulingStrategy": "EVENT_DRIVEN",
-        "executionNode": "ALL",
-        "penaltyDuration": "30 sec",
-        "yieldDuration": "1 sec",
-        "bulletinLevel": "WARN",
-        "runDurationMillis": 25,
-        "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [
-          "success"
-        ],
-        "scheduledState": "ENABLED",
-        "retryCount": 10,
-        "retriedRelationships": [],
-        "backoffMechanism": "PENALIZE_FLOWFILE",
-        "maxBackoffPeriod": "10 mins",
-        "componentType": "PROCESSOR",
-        "groupIdentifier": "e34d5863-7b36-3788-804f-1e2176df76fa"
-      },
-      {
-        "identifier": "d79787db-1233-383f-8ea9-32348a7c6585",
-        "instanceIdentifier": "a961f863-01a0-1000-73fb-64cc727cef21",
-        "name": "Cron with numeric weekday",
-        "comments": "",
-        "position": {
-          "x": 400.0,
-          "y": 200.0
+          "y": 0.0
         },
         "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
         "bundle": {
@@ -242,28 +168,26 @@
           }
         },
         "style": {},
-        "schedulingPeriod": "0 0 6 ? * 1",
-        "schedulingStrategy": "CRON_DRIVEN",
+        "schedulingPeriod": "1 min",
+        "schedulingStrategy": "TIMER_DRIVEN",
         "executionNode": "ALL",
         "penaltyDuration": "30 sec",
         "yieldDuration": "1 sec",
         "bulletinLevel": "WARN",
         "runDurationMillis": 0,
         "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [
-          "success"
-        ],
+        "autoTerminatedRelationships": [],
         "scheduledState": "ENABLED",
         "retryCount": 10,
         "retriedRelationships": [],
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "e34d5863-7b36-3788-804f-1e2176df76fa"
+        "groupIdentifier": "14c9b712-965a-3bd4-a70e-9ded9a08b99d"
       },
       {
-        "identifier": "f2f97fa8-db19-3c4f-8bde-a1502b22fee8",
-        "instanceIdentifier": "a961f851-01a0-1000-a399-e607cc9deb8f",
+        "identifier": "516280a5-4798-3d2c-9381-220e609ce7cb",
+        "instanceIdentifier": "a9d02011-01a0-1000-ad75-2372e7a2d16d",
         "name": "Cron with year field",
         "comments": "",
         "position": {
@@ -347,16 +271,16 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "e34d5863-7b36-3788-804f-1e2176df76fa"
+        "groupIdentifier": "14c9b712-965a-3bd4-a70e-9ded9a08b99d"
       },
       {
-        "identifier": "9f78ba96-662e-3022-9eb1-2dc35a92b9f8",
-        "instanceIdentifier": "a961f82f-01a0-1000-e1b5-97f3b8efa4f4",
-        "name": "Timer source",
+        "identifier": "df2e958c-a2ad-35d9-9a3a-19d49bbfcbbf",
+        "instanceIdentifier": "a9d02034-01a0-1000-0e1c-82eb12dff166",
+        "name": "Cron with numeric weekday",
         "comments": "",
         "position": {
-          "x": 0.0,
-          "y": 0.0
+          "x": 400.0,
+          "y": 200.0
         },
         "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
         "bundle": {
@@ -418,45 +342,121 @@
           }
         },
         "style": {},
-        "schedulingPeriod": "1 min",
-        "schedulingStrategy": "TIMER_DRIVEN",
+        "schedulingPeriod": "0 0 6 ? * 1",
+        "schedulingStrategy": "CRON_DRIVEN",
         "executionNode": "ALL",
         "penaltyDuration": "30 sec",
         "yieldDuration": "1 sec",
         "bulletinLevel": "WARN",
         "runDurationMillis": 0,
         "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [],
+        "autoTerminatedRelationships": [
+          "success"
+        ],
         "scheduledState": "ENABLED",
         "retryCount": 10,
         "retriedRelationships": [],
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "e34d5863-7b36-3788-804f-1e2176df76fa"
+        "groupIdentifier": "14c9b712-965a-3bd4-a70e-9ded9a08b99d"
+      },
+      {
+        "identifier": "7436f8f7-b297-3638-8024-af611e491ee2",
+        "instanceIdentifier": "a9d01ff8-01a0-1000-7ffe-aad78f732aca",
+        "name": "Event driven",
+        "comments": "",
+        "position": {
+          "x": 0.0,
+          "y": 200.0
+        },
+        "type": "org.apache.nifi.processors.attributes.UpdateAttribute",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-update-attribute-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "touched": "true",
+          "Delete Attributes Expression": null,
+          "Store State": "Do not store state",
+          "canonical-value-lookup-cache-size": "100",
+          "Stateful Variables Initial Value": null
+        },
+        "propertyDescriptors": {
+          "touched": {
+            "name": "touched",
+            "displayName": "touched",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Delete Attributes Expression": {
+            "name": "Delete Attributes Expression",
+            "displayName": "Delete Attributes Expression",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Store State": {
+            "name": "Store State",
+            "displayName": "Store State",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "canonical-value-lookup-cache-size": {
+            "name": "canonical-value-lookup-cache-size",
+            "displayName": "Cache Value Lookup Cache Size",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Stateful Variables Initial Value": {
+            "name": "Stateful Variables Initial Value",
+            "displayName": "Stateful Variables Initial Value",
+            "identifiesControllerService": false,
+            "sensitive": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "EVENT_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 25,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "14c9b712-965a-3bd4-a70e-9ded9a08b99d"
       }
     ],
     "inputPorts": [],
     "outputPorts": [],
     "connections": [
       {
-        "identifier": "f498c7c0-4666-355e-9764-e90db327af66",
-        "instanceIdentifier": "a961f84a-01a0-1000-5080-e821d8fdaf35",
+        "identifier": "e0c46f03-2070-35e4-b19e-18bbaf6efc8a",
+        "instanceIdentifier": "a9d02009-01a0-1000-3f46-559485bbd308",
         "source": {
-          "id": "9f78ba96-662e-3022-9eb1-2dc35a92b9f8",
+          "id": "e2ffdfed-7a16-3ebf-83e0-8b5d52ec1e29",
           "type": "PROCESSOR",
-          "groupId": "e34d5863-7b36-3788-804f-1e2176df76fa",
+          "groupId": "14c9b712-965a-3bd4-a70e-9ded9a08b99d",
           "name": "Timer source",
           "comments": "",
-          "instanceIdentifier": "a961f82f-01a0-1000-e1b5-97f3b8efa4f4"
+          "instanceIdentifier": "a9d01fe9-01a0-1000-e44d-e578e85596cd"
         },
         "destination": {
-          "id": "9676736c-8970-3fc3-b8e8-7b52bcb885ca",
+          "id": "7436f8f7-b297-3638-8024-af611e491ee2",
           "type": "PROCESSOR",
-          "groupId": "e34d5863-7b36-3788-804f-1e2176df76fa",
+          "groupId": "14c9b712-965a-3bd4-a70e-9ded9a08b99d",
           "name": "Event driven",
           "comments": "",
-          "instanceIdentifier": "a961f83b-01a0-1000-1da9-b178dbbc8e2b"
+          "instanceIdentifier": "a9d01ff8-01a0-1000-7ffe-aad78f732aca"
         },
         "labelIndex": 1,
         "zIndex": 0,
@@ -471,7 +471,7 @@
         "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
         "loadBalanceCompression": "DO_NOT_COMPRESS",
         "componentType": "CONNECTION",
-        "groupIdentifier": "e34d5863-7b36-3788-804f-1e2176df76fa"
+        "groupIdentifier": "14c9b712-965a-3bd4-a70e-9ded9a08b99d"
       }
     ],
     "labels": [],

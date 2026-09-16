@@ -6,12 +6,12 @@
   "findings": [],
   "input": {
     "kind": "definition",
-    "name": "clean.json",
-    "sha256": "495706be9f20b8c4f045d824e6c537f916c13f5de1852463adcb4677e4a8c1a2"
+    "name": "template-conversion.json",
+    "sha256": "e8a9d2348a9764e431dd7fb4be5794ae3eaafcbc7486f2bd36cc92fceec04dc8"
   },
   "summary": {
     "bundle_versions": {
-      "1.28.1": 4
+      "1.28.1": 6
     },
     "by_category": {},
     "by_rule": {},
@@ -21,8 +21,8 @@
       "INFO": 0,
       "MANUAL": 0
     },
-    "components": 4,
-    "process_groups": 1,
+    "components": 6,
+    "process_groups": 2,
     "total": 0
   },
   "warnings": []

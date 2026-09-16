@@ -10,7 +10,7 @@
         "bundle": "com.example:example-custom-nar:1.0.0"
       },
       "location": {
-        "id": "a961f8a1-01a0-1000-5fb7-849e0c9c4ba2",
+        "id": "a9d02073-01a0-1000-25ec-945ce75d357b",
         "kind": "PROCESSOR",
         "name": "Custom Processor",
         "path": "/Custom NAR",
@@ -30,7 +30,7 @@
   "input": {
     "kind": "definition",
     "name": "custom-nar.json",
-    "sha256": "0ba0b43e745b78f3079d414827e837de6c0b62d22405a3cd292e5db378c1943f"
+    "sha256": "f30b072ae02fc1b2147d8b264394b630469e22c2a638dbe76aa90309468db174"
   },
   "summary": {
     "bundle_versions": {},

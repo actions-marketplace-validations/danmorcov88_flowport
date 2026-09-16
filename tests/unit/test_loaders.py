@@ -47,7 +47,7 @@ def test_flow_model_structure(flow_gz: Path) -> None:
     assert "/NiFi Flow/Variables/Child/Grandchild" in paths
     variables = next(g for g in flow.groups() if g.path == "/NiFi Flow/Variables")
     assert variables.variables["host"] == "example.org"
-    assert len(flow.templates) == 1
+    assert len(flow.templates) == 2
     assert [t.name for t in flow.reporting_tasks] == ["Prometheus metrics"]
     assert {c.name for c in flow.parameter_contexts} == {
         "Base Context",

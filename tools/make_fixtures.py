@@ -284,7 +284,9 @@ class NiFi:
         *,
         source_type: str = "PROCESSOR",
         destination_type: str = "PROCESSOR",
+        **extra: Any,
     ) -> dict[str, Any]:
+        """Connect two components. ``extra`` are ConnectionDTO fields (name, bends, ...)."""
         return self.post(
             f"/process-groups/{group_id}/connections",
             {
@@ -301,6 +303,7 @@ class NiFi:
                         "type": destination_type,
                     },
                     "selectedRelationships": relationships,
+                    **extra,
                 },
             },
         )
@@ -332,16 +335,30 @@ class NiFi:
             },
         )
 
-    def create_template(self, group_id: str, name: str, processors: list[dict[str, Any]]) -> str:
+    def create_template(
+        self,
+        group_id: str,
+        name: str,
+        processors: list[dict[str, Any]],
+        **others: list[dict[str, Any]],
+    ) -> str:
+        """Template of the given processors plus, by snippet key, other entities of
+        the same group (connections, funnels, labels, inputPorts, outputPorts,
+        processGroups)."""
+
+        def revisions(entities: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+            return {
+                e["id"]: {"version": e["revision"]["version"], "clientId": CLIENT_ID}
+                for e in entities
+            }
+
         snippet = self.post(
             "/snippets",
             {
                 "snippet": {
                     "parentGroupId": group_id,
-                    "processors": {
-                        p["id"]: {"version": p["revision"]["version"], "clientId": CLIENT_ID}
-                        for p in processors
-                    },
+                    "processors": revisions(processors),
+                    **{key: revisions(entities) for key, entities in others.items()},
                 }
             },
         )
@@ -866,6 +883,96 @@ def build_clean(nifi: NiFi, root: str) -> str:
     return group
 
 
+def build_template_conversion(nifi: NiFi, root: str) -> tuple[str, dict[str, Any]]:
+    """Everything a template can hold, using only components that exist on 2.x.
+
+    Returns the group id and the entities to put in the template, keyed like a
+    snippet. The template is created from the group's whole content.
+    """
+    group = nifi.create_group(root, "Template Conversion", x=4200, y=600)
+    reader = nifi.create_controller_service(
+        group,
+        "org.apache.nifi.csv.CSVReader",
+        "Reader",
+        {"schema-access-strategy": "csv-header-derived"},
+    )
+    writer = nifi.create_controller_service(
+        group, "org.apache.nifi.json.JsonRecordSetWriter", "Writer", {"Pretty Print JSON": "true"}
+    )
+    gen = nifi.create_processor(
+        group,
+        STD + "GenerateFlowFile",
+        "Generate",
+        {"generate-ff-custom-text": "a,b\n1,2", "File Size": "0B"},
+        config={"schedulingPeriod": "1 min", "yieldDuration": "2 sec", "penaltyDuration": "45 sec"},
+        comments="Seeds the flow",
+    )
+    convert = nifi.create_processor(
+        group,
+        STD + "ConvertRecord",
+        "Convert",
+        {"record-reader": reader["id"], "record-writer": writer["id"]},
+        y=200,
+        auto_terminate=["failure"],
+        config={"concurrentlySchedulableTaskCount": 2, "bulletinLevel": "ERROR"},
+    )
+    funnel = nifi.create_funnel(group)
+    done = nifi.create_processor(
+        group, STD + "LogAttribute", "Done", None, x=400, y=600, auto_terminate=["success"]
+    )
+    label = nifi.create_label(group, "Converted from a template by flowport")
+
+    sink = nifi.create_group(group, "Sink", y=400)
+    sink_in = nifi.create_port(sink, "input", "in")
+    log = nifi.create_processor(sink, STD + "LogAttribute", "Log", {"Log Level": "warn"}, y=200)
+    sink_out = nifi.create_port(sink, "output", "out")
+    nifi.connect(sink, sink_in, log, [""], source_type="INPUT_PORT")
+    nifi.connect(sink, log, sink_out, ["success"], destination_type="OUTPUT_PORT")
+
+    connections = [
+        nifi.connect(
+            group,
+            gen,
+            convert,
+            ["success"],
+            name="generated",
+            backPressureObjectThreshold=500,
+            backPressureDataSizeThreshold="2 GB",
+            flowFileExpiration="1 hour",
+            prioritizers=["org.apache.nifi.prioritizer.FirstInFirstOutPrioritizer"],
+            bends=[{"x": 300.0, "y": 100.0}],
+            labelIndex=1,
+            zIndex=2,
+        ),
+        nifi.connect(group, convert, funnel, ["success"], destination_type="FUNNEL"),
+        nifi.connect(
+            group,
+            funnel,
+            {"id": sink_in["id"], "component": {"parentGroupId": sink}},
+            [""],
+            source_type="FUNNEL",
+            destination_type="INPUT_PORT",
+        ),
+        nifi.connect(
+            group,
+            {"id": sink_out["id"], "component": {"parentGroupId": sink}},
+            done,
+            [""],
+            source_type="OUTPUT_PORT",
+            loadBalanceStrategy="ROUND_ROBIN",
+            loadBalanceCompression="COMPRESS_ATTRIBUTES_ONLY",
+        ),
+    ]
+    entities = {
+        "processors": [gen, convert, done],
+        "connections": connections,
+        "funnels": [funnel],
+        "labels": [label],
+        "processGroups": [nifi.get(f"/process-groups/{sink}")],
+    }
+    return group, entities
+
+
 # ---------------------------------------------------------------------------
 # Docker and export
 # ---------------------------------------------------------------------------
@@ -989,9 +1096,14 @@ def main() -> int:
     groups["deprecated-properties"] = build_deprecated_properties(nifi, root)
     groups["custom-nar"] = build_custom_nar(nifi, root)
     groups["clean"] = build_clean(nifi, root)
+    conversion_group, conversion_entities = build_template_conversion(nifi, root)
+    groups["template-conversion"] = conversion_group
     templates = {
         "removed-components": nifi.create_template(
             removed_group, "Removed Components Template", removed_processors[:4]
+        ),
+        "template-conversion": nifi.create_template(
+            conversion_group, "Template Conversion Template", **conversion_entities
         ),
     }
     print(f"exporting to {out_dir}")

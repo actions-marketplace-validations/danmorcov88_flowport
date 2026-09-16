@@ -11,7 +11,7 @@
         "engine": "ECMAScript"
       },
       "location": {
-        "id": "a961e5af-01a0-1000-839f-a6c1ee46ecc7",
+        "id": "a9d0190e-01a0-1000-9890-9e4618fa919c",
         "kind": "PROCESSOR",
         "name": "ECMAScript script",
         "path": "/Scripting",
@@ -36,7 +36,7 @@
         "engine": "python"
       },
       "location": {
-        "id": "a961e47f-01a0-1000-251f-ee3017827ef3",
+        "id": "a9d017a2-01a0-1000-8427-7e54e319f2f5",
         "kind": "PROCESSOR",
         "name": "Jython script",
         "path": "/Scripting",
@@ -61,7 +61,7 @@
         "engine": "python"
       },
       "location": {
-        "id": "a961eb81-01a0-1000-5e21-0596c6dc2a25",
+        "id": "a9d01e7e-01a0-1000-c332-0a6d29108755",
         "kind": "CONTROLLER_SERVICE",
         "name": "Lookup in Jython",
         "path": "/Scripting",
@@ -86,7 +86,7 @@
         "engine": "lua"
       },
       "location": {
-        "id": "a961e5ef-01a0-1000-042c-9f823f88c8b3",
+        "id": "a9d01949-01a0-1000-ef9c-5ffe74fec23a",
         "kind": "PROCESSOR",
         "name": "Lua script",
         "path": "/Scripting",
@@ -111,7 +111,7 @@
         "engine": "ruby"
       },
       "location": {
-        "id": "a961e5db-01a0-1000-b313-6207604323f2",
+        "id": "a9d01921-01a0-1000-741f-a5fad9e06ea0",
         "kind": "PROCESSOR",
         "name": "Ruby script",
         "path": "/Scripting",
@@ -136,7 +136,7 @@
         "engine": "python"
       },
       "location": {
-        "id": "a961e61f-01a0-1000-5c6a-b424566ad270",
+        "id": "a9d0196e-01a0-1000-3794-cc2cc91f60db",
         "kind": "PROCESSOR",
         "name": "Scripted processor in Jython",
         "path": "/Scripting",
@@ -158,7 +158,7 @@
   "input": {
     "kind": "definition",
     "name": "scripting.json",
-    "sha256": "99a67f8e8decae2456c2a5f4859225114b12fa8d5ea15b4ec950900481feab7d"
+    "sha256": "6745255ce0a33d87ed855db3d40f87d50ab41235e10ae75826626f3809edf5ee"
   },
   "summary": {
     "bundle_versions": {

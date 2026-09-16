@@ -1,7 +1,7 @@
 {
   "flowContents": {
-    "identifier": "629f59bb-4792-366c-898a-e57be93d8b16",
-    "instanceIdentifier": "a961f89a-01a0-1000-ede8-6b6ed2130795",
+    "identifier": "324fa8b9-3fb2-36e7-974c-a4f2ba9e034c",
+    "instanceIdentifier": "a9d0206c-01a0-1000-920b-ee24a61495be",
     "name": "Custom NAR",
     "comments": "",
     "position": {
@@ -12,8 +12,8 @@
     "remoteProcessGroups": [],
     "processors": [
       {
-        "identifier": "328742c1-96e6-364e-999d-fdfa92f41134",
-        "instanceIdentifier": "a961f8a1-01a0-1000-5fb7-849e0c9c4ba2",
+        "identifier": "24057c7f-60e6-3d70-8118-d40520c64e39",
+        "instanceIdentifier": "a9d02073-01a0-1000-25ec-945ce75d357b",
         "name": "Custom Processor",
         "comments": "Type and bundle rewritten by make_fixtures.py",
         "position": {
@@ -83,7 +83,7 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "629f59bb-4792-366c-898a-e57be93d8b16"
+        "groupIdentifier": "324fa8b9-3fb2-36e7-974c-a4f2ba9e034c"
       }
     ],
     "inputPorts": [],
