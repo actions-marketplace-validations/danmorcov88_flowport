@@ -551,3 +551,134 @@ def migrate_template_command(
     converted = convert_and_analyze(source, catalog)
     _write_converted_template(converted, output, template_file.name, catalog, console)
     raise typer.Exit(EXIT_OK)
+
+
+class ValidateFormat(StrEnum):
+    terminal = "terminal"
+    json = "json"
+
+
+@app.command()
+def validate(
+    flow_file: Annotated[Path, typer.Argument(help=_FLOW_FILE_HELP)],
+    nifi_url: Annotated[
+        str | None,
+        typer.Option(
+            "--nifi-url",
+            help="Base URL of a running NiFi, for example https://localhost:8443/nifi-api.",
+        ),
+    ] = None,
+    username: Annotated[
+        str | None,
+        typer.Option("--username", envvar="FLOWPORT_NIFI_USERNAME", help="Single-user login."),
+    ] = None,
+    password: Annotated[
+        str | None,
+        typer.Option("--password", envvar="FLOWPORT_NIFI_PASSWORD", help="Single-user password."),
+    ] = None,
+    insecure: Annotated[
+        bool, typer.Option("--insecure", help="Do not verify the TLS certificate.")
+    ] = False,
+    use_docker: Annotated[
+        bool,
+        typer.Option("--docker", help="Start a throwaway NiFi in Docker instead of --nifi-url."),
+    ] = False,
+    image: Annotated[
+        str, typer.Option("--image", help="Docker image for --docker.")
+    ] = "apache/nifi:2.12.0",
+    port: Annotated[
+        int, typer.Option("--port", help="Host and container port for --docker.")
+    ] = 18443,
+    keep: Annotated[
+        bool,
+        typer.Option(
+            "--keep",
+            help="Leave the imported process group (and the Docker container) in place.",
+        ),
+    ] = False,
+    fmt: Annotated[
+        ValidateFormat, typer.Option("--format", "-f", help="Output format.", show_default=True)
+    ] = ValidateFormat.terminal,
+    output: Annotated[
+        Path | None,
+        typer.Option("--output", "-o", help="Write the result to this file instead of stdout."),
+    ] = None,
+) -> None:
+    """Import a flow into a running NiFi and report what NiFi says about it.
+
+    The flow is uploaded as a new process group (the same path as "Upload flow
+    definition"), its components are validated by NiFi itself, and the group
+    is removed afterwards unless --keep is given. Exit code 1 when a component
+    is invalid or its type is missing on the target; 2 on errors.
+    """
+    import json
+
+    from flowport.loaders import load
+    from flowport.nifi import NiFiClient, NiFiError
+    from flowport.validation import validate_flow
+
+    if bool(nifi_url) == use_docker:
+        stderr.print("[red]error:[/red] give either --nifi-url or --docker")
+        raise typer.Exit(EXIT_ERROR)
+    try:
+        flow = load(flow_file)
+    except LoadError as exc:
+        stderr.print(f"[red]error:[/red] {exc}")
+        raise typer.Exit(EXIT_ERROR) from None
+
+    container = None
+    try:
+        if use_docker:
+            from flowport.nifi.docker import start_container
+
+            stderr.print(f"starting {image} on port {port} (this takes a minute or two)")
+            container = start_container("flowport-validate", image, port, https=True)
+            client = container.wait_ready()
+        else:
+            assert nifi_url is not None
+            client = NiFiClient(
+                nifi_url, username=username, password=password, verify_tls=not insecure
+            )
+        result = validate_flow(flow, client, keep=keep)
+    except NiFiError as exc:
+        stderr.print(f"[red]error:[/red] {exc}")
+        raise typer.Exit(EXIT_ERROR) from None
+    finally:
+        if container is not None and not keep:
+            container.remove()
+    if container is not None and keep:
+        stderr.print(f"container {container.name} left running at {container.url}")
+
+    if fmt is ValidateFormat.json:
+        text = json.dumps(result.to_dict(), indent=2, ensure_ascii=False) + "\n"
+    else:
+        from io import StringIO
+
+        buffer = StringIO()
+        console = Console(file=buffer, width=100) if output else Console()
+        summary = result.summary()
+        console.print(
+            f"[bold]flowport[/bold] {__version__}  validate  input: {flow_file.name}  "
+            f"NiFi {result.nifi_version} at {result.nifi_url}"
+        )
+        for warning in result.warnings:
+            console.print(f"[yellow]warning:[/yellow] {warning}")
+        console.print(
+            f"{summary['components']} components: [green]{summary['valid']} valid[/green], "
+            f"[red]{summary['invalid']} invalid[/red], [red]{summary['ghosts']} missing types[/red]"
+        )
+        for component in result.invalid:
+            label = "missing type" if component.ghost else component.status
+            console.print(f"[bold]{component.path} > {component.name}[/bold] ({label})")
+            console.print(f"  {component.type}")
+            for error in component.errors:
+                console.print(f"  - {error}")
+        if result.kept:
+            console.print(f"process group {result.group_name!r} ({result.group_id}) kept")
+        text = buffer.getvalue()
+    if output:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(text, encoding="utf-8", newline="\n")
+    elif text:
+        typer.echo(text, nl=False)
+    raise typer.Exit(EXIT_FINDINGS if result.invalid else EXIT_OK)

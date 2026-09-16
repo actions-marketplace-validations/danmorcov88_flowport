@@ -28,9 +28,9 @@ import pytest
 from flowport.catalog import load_catalog
 from flowport.loaders import load
 from flowport.loaders.templates import templates_in_flow
+from flowport.nifi import NiFiClient
+from flowport.nifi.docker import start_container
 from flowport.transforms.templates import ConvertedTemplate, convert_and_analyze
-from flowport.writers import dumps
-from tests.integration.nifi import Instance, docker, start
 
 pytestmark = pytest.mark.integration
 
@@ -40,15 +40,14 @@ PORT = 18443
 
 
 @pytest.fixture(scope="module")
-def nifi2() -> Iterator[Instance]:
+def nifi2() -> Iterator[NiFiClient]:
     if shutil.which("docker") is None:
         pytest.skip("docker is not installed")
-    instance = start("flowport-it-nifi2", IMAGE, PORT, https=True)
+    container = start_container("flowport-it-nifi2", IMAGE, PORT, https=True)
     try:
-        instance.api.wait_ready(instance.container)
-        yield instance
+        yield container.wait_ready()
     finally:
-        docker("rm", "-f", instance.container, check=False)
+        container.remove()
 
 
 @pytest.fixture(scope="module")
@@ -59,14 +58,14 @@ def converted() -> dict[str, ConvertedTemplate]:
 
 
 def test_clean_template_imports_with_every_component(
-    nifi2: Instance, converted: dict[str, ConvertedTemplate]
+    nifi2: NiFiClient, converted: dict[str, ConvertedTemplate]
 ) -> None:
     template = converted["Template Conversion Template"]
     assert template.findings == []
-    group_id = nifi2.api.upload_definition("root", "Converted", dumps(template.document).encode())
-    assert nifi2.api.count_components(group_id) == template.counts()
+    group_id = nifi2.upload_definition("root", "Converted", template.document)
+    assert nifi2.count_components(group_id) == template.counts()
 
-    components = nifi2.api.wait_validated(group_id)
+    components = nifi2.wait_validated(group_id)
     by_name = {c.name: c for c in components.values()}
     assert set(by_name) == {"Generate", "Convert", "Done", "Log", "Reader", "Writer"}
     for name in ("Generate", "Done", "Log", "Reader", "Writer"):
@@ -79,7 +78,7 @@ def test_clean_template_imports_with_every_component(
         sorted(convert.errors)
     )
 
-    flow = nifi2.api.group_flow(group_id)
+    flow = nifi2.group_flow(group_id)
     connections = {
         (c["component"]["source"]["name"], c["component"]["destination"]["name"])
         for c in flow["connections"]
@@ -102,14 +101,14 @@ def test_clean_template_imports_with_every_component(
 
 
 def test_template_with_removed_components_imports_as_ghosts(
-    nifi2: Instance, converted: dict[str, ConvertedTemplate]
+    nifi2: NiFiClient, converted: dict[str, ConvertedTemplate]
 ) -> None:
     template = converted["Removed Components Template"]
     flagged = {f.location.name for f in template.findings if f.rule_id == "NIFI2-REMOVED-COMPONENT"}
     assert flagged == {"Fetch checksum", "Post to listener", "Hash content", "Hash attribute"}
-    group_id = nifi2.api.upload_definition("root", "Ghosts", dumps(template.document).encode())
-    assert nifi2.api.count_components(group_id) == template.counts()
-    flow = nifi2.api.group_flow(group_id)
+    group_id = nifi2.upload_definition("root", "Ghosts", template.document)
+    assert nifi2.count_components(group_id) == template.counts()
+    flow = nifi2.group_flow(group_id)
     ghosts = {
         p["component"]["name"] for p in flow["processors"] if p["component"].get("extensionMissing")
     }
@@ -119,7 +118,7 @@ def test_template_with_removed_components_imports_as_ghosts(
 # -- migrate components -------------------------------------------------------
 
 
-def test_replaced_components_import_and_validate(nifi2: Instance) -> None:
+def test_replaced_components_import_and_validate(nifi2: NiFiClient) -> None:
     from flowport.transforms.components import migrate_components
 
     catalog = load_catalog()
@@ -128,10 +127,10 @@ def test_replaced_components_import_and_validate(nifi2: Instance) -> None:
     skipped = [f for f in result.findings if f.rule_id == "NIFI2-REPLACEMENT-SKIPPED"]
     assert [f.location.name for f in skipped] == ["Post packaged"]
 
-    group_id = nifi2.api.upload_definition("root", "Replacements", dumps(result.flow.raw).encode())
-    components = nifi2.api.wait_validated(group_id)
+    group_id = nifi2.upload_definition("root", "Replacements", result.flow.raw)
+    components = nifi2.wait_validated(group_id)
     by_name = {c.name: c for c in components.values()}
-    flow = nifi2.api.group_flow(group_id)
+    flow = nifi2.group_flow(group_id)
     ghosts = {
         p["component"]["name"] for p in flow["processors"] if p["component"].get("extensionMissing")
     }
@@ -193,18 +192,18 @@ def test_replaced_components_import_and_validate(nifi2: Instance) -> None:
     assert connections[("Encode", "Dedupe")] == {"success"}
 
 
-def test_event_driven_processor_imports_as_timer_driven(nifi2: Instance) -> None:
+def test_event_driven_processor_imports_as_timer_driven(nifi2: NiFiClient) -> None:
     from flowport.transforms.components import migrate_components
 
     result = migrate_components(
         load(FLOW.parent / "definitions" / "scheduling.json"), load_catalog()
     )
-    group_id = nifi2.api.upload_definition("root", "Scheduling", dumps(result.flow.raw).encode())
-    flow = nifi2.api.group_flow(group_id)
+    group_id = nifi2.upload_definition("root", "Scheduling", result.flow.raw)
+    flow = nifi2.group_flow(group_id)
     event = next(
         p["component"] for p in flow["processors"] if p["component"]["name"] == "Event driven"
     )
     assert event["config"]["schedulingStrategy"] == "TIMER_DRIVEN"
     assert event["config"]["schedulingPeriod"] == "0 sec"
-    components = nifi2.api.wait_validated(group_id)
+    components = nifi2.wait_validated(group_id)
     assert next(c for c in components.values() if c.name == "Event driven").status == "VALID"

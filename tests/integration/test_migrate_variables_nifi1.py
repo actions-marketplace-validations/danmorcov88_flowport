@@ -24,15 +24,17 @@ import pytest
 
 from flowport.catalog import load_catalog
 from flowport.loaders import load
+from flowport.nifi import NiFiClient
+from flowport.nifi.docker import Container, start_container
 from flowport.transforms.variables import migrate_variables
 from flowport.writers import write
-from tests.integration.nifi import Instance, docker, start
 
 pytestmark = pytest.mark.integration
 
 IMAGE = "apache/nifi:1.28.1"
 FLOW = Path(__file__).resolve().parent.parent / "fixtures" / "nifi-1.28.1" / "flow.json.gz"
 PORTS = {"original": 18080, "migrated": 18081}
+SENSITIVE_PROPS_KEY = "flowport-fixtures-key"
 # Directories the fixture's GetFile processors point at. NiFi skips the
 # "directory exists" check while the value holds ${...}, but validates the
 # literal once #{...} is substituted; with the directories present both
@@ -43,7 +45,7 @@ DATA_DIRECTORIES = ("data", "data/in", "data/in/from-child")
 @pytest.fixture(scope="module")
 def instances(
     tmp_path_factory: pytest.TempPathFactory,
-) -> Iterator[tuple[Instance, Instance, Path]]:
+) -> Iterator[tuple[NiFiClient, NiFiClient, Path]]:
     if shutil.which("docker") is None:
         pytest.skip("docker is not installed")
     out_dir = tmp_path_factory.mktemp("migrated")
@@ -53,39 +55,38 @@ def instances(
     (out_dir / "changes.json").write_text(
         json.dumps([c.model_dump() for c in result.changes]), encoding="utf-8"
     )
-    original = start(
-        "flowport-it-original",
-        IMAGE,
-        PORTS["original"],
-        flow_gz=FLOW.read_bytes(),
-        directories=DATA_DIRECTORIES,
-    )
-    migrated_instance = start(
-        "flowport-it-migrated",
-        IMAGE,
-        PORTS["migrated"],
-        flow_gz=migrated.read_bytes(),
-        directories=DATA_DIRECTORIES,
-    )
+    containers: list[Container] = []
     try:
-        original.api.wait_ready(original.container)
-        migrated_instance.api.wait_ready(migrated_instance.container)
+        for name, flow_gz in (("original", FLOW.read_bytes()), ("migrated", migrated.read_bytes())):
+            containers.append(
+                start_container(
+                    f"flowport-it-{name}",
+                    IMAGE,
+                    PORTS[name],
+                    https=False,
+                    flow_gz=flow_gz,
+                    directories=DATA_DIRECTORIES,
+                    sensitive_props_key=SENSITIVE_PROPS_KEY,
+                )
+            )
+        original, migrated_instance = (c.wait_ready() for c in containers)
         yield original, migrated_instance, out_dir
     finally:
-        docker("rm", "-f", original.container, migrated_instance.container, check=False)
+        for container in containers:
+            container.remove()
 
 
 def test_migrated_flow_has_no_new_validation_errors(
-    instances: tuple[Instance, Instance, Path],
+    instances: tuple[NiFiClient, NiFiClient, Path],
 ) -> None:
     original, migrated, _ = instances
-    before = original.api.wait_validated()
-    after = migrated.api.wait_validated()
+    before = original.wait_validated()
+    after = migrated.wait_validated()
     assert set(after) == set(before), "the migrated flow must keep every component"
     new_errors = {
-        c.name: sorted(c.errors - before[cid].errors)
+        c.name: sorted(set(c.errors) - set(before[cid].errors))
         for cid, c in after.items()
-        if c.errors - before[cid].errors
+        if set(c.errors) - set(before[cid].errors)
     }
     assert new_errors == {}
     # The rewritten properties resolve: no error mentions a parameter.
@@ -95,12 +96,11 @@ def test_migrated_flow_has_no_new_validation_errors(
 
 
 def test_contexts_parameters_and_assignments_match_changes(
-    instances: tuple[Instance, Instance, Path],
+    instances: tuple[NiFiClient, NiFiClient, Path],
 ) -> None:
     _, migrated, out_dir = instances
     changes = json.loads((out_dir / "changes.json").read_text(encoding="utf-8"))
-    entities = migrated.api.get("/flow/parameter-contexts")["parameterContexts"]
-    contexts = {e["component"]["name"]: e for e in entities}
+    contexts = migrated.parameter_contexts()
 
     created = {c["context"] for c in changes if c["kind"] == "create-context"}
     assert created <= set(contexts)
@@ -121,7 +121,7 @@ def test_contexts_parameters_and_assignments_match_changes(
             i for i in inherits if i
         ]
 
-    groups = migrated.api.groups()
+    groups = migrated.groups()
     for change in changes:
         if change["kind"] == "assign-context":
             assert groups[change["component_name"]]["context"] == change["context"], change
@@ -131,11 +131,10 @@ def test_contexts_parameters_and_assignments_match_changes(
     ] == ["host", "timeout"]
 
 
-def test_own_parameter_wins_over_inherited(instances: tuple[Instance, Instance, Path]) -> None:
+def test_own_parameter_wins_over_inherited(instances: tuple[NiFiClient, NiFiClient, Path]) -> None:
     _, migrated, _ = instances
-    entities = migrated.api.get("/flow/parameter-contexts")["parameterContexts"]
-    context_id = next(e["id"] for e in entities if e["component"]["name"] == "Child Variables")
-    entity = migrated.api.get(f"/parameter-contexts/{context_id}?includeInheritedParameters=true")
+    context_id = migrated.parameter_contexts()["Child Variables"]["id"]
+    entity = migrated.get(f"/parameter-contexts/{context_id}?includeInheritedParameters=true")
     effective = {p["parameter"]["name"]: p["parameter"] for p in entity["component"]["parameters"]}
     origin = {name: p["parameterContext"]["component"]["name"] for name, p in effective.items()}
     assert origin == {
