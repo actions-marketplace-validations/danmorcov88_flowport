@@ -39,6 +39,8 @@ CONTAINER = "flowport-fixtures"
 IMAGE = "apache/nifi"
 FLOW_PATH_IN_CONTAINER = "/opt/nifi/nifi-current/conf/flow.json.gz"
 CLIENT_ID = "flowport-make-fixtures"
+# Fixed key so that any test container (1.x or 2.x) can load the exported flow.
+SENSITIVE_PROPS_KEY = "flowport-fixtures-key"
 
 # A processor created as UpdateAttribute and rewritten after export to look
 # like a component from a third-party NAR (what NiFi calls a "ghost" component
