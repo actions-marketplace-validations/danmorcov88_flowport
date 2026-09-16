@@ -1,0 +1,732 @@
+[
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea1c7-01a0-1000-2b26-f7ef331dc7e5",
+    "component_name": "Base64 encode",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.Base64EncodeContent",
+    "new": "org.apache.nifi.processors.standard.EncodeContent",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea1c7-01a0-1000-2b26-f7ef331dc7e5",
+    "component_name": "Base64 encode",
+    "property": "Encoding",
+    "old": null,
+    "new": "base64",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.GetHTTP",
+    "new": "org.apache.nifi.processors.standard.InvokeHTTP",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": "Data Timeout -> Socket Read Timeout",
+    "old": "30 sec",
+    "new": "30 sec",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": "Follow Redirects -> Response Redirects Enabled",
+    "old": "false",
+    "new": "False",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": "URL -> HTTP URL",
+    "old": "https://example.org/nifi.sha256",
+    "new": "https://example.org/nifi.sha256",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": "HTTP Method",
+    "old": null,
+    "new": "GET",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": "Response FlowFile Naming Strategy",
+    "old": null,
+    "new": "URL_PATH",
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": "Filename",
+    "old": "nifi.sha256",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": "redirect-cookie-policy",
+    "old": "default",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "terminate-relationship",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
+    "component_name": "Fetch checksum",
+    "property": null,
+    "old": "success",
+    "new": "Response, Original, Retry, No Retry, Failure",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea2e8-01a0-1000-196a-93ce6ec5b639",
+    "component_name": "Jolt transform",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.JoltTransformJSON",
+    "new": "org.apache.nifi.processors.jolt.JoltTransformJSON",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea2e8-01a0-1000-196a-93ce6ec5b639",
+    "component_name": "Jolt transform",
+    "property": "jolt-spec -> Jolt Specification",
+    "old": "{\"a\": \"b\"}",
+    "new": "{\"a\": \"b\"}",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea2e8-01a0-1000-196a-93ce6ec5b639",
+    "component_name": "Jolt transform",
+    "property": "jolt-transform -> Jolt Transform",
+    "old": "jolt-transform-shift",
+    "new": "jolt-transform-shift",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea2e8-01a0-1000-196a-93ce6ec5b639",
+    "component_name": "Jolt transform",
+    "property": "pretty_print -> Pretty Print",
+    "old": "false",
+    "new": "false",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea352-01a0-1000-6282-5a90f0c525fb",
+    "component_name": "Map cache client",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService",
+    "new": "org.apache.nifi.distributed.cache.client.MapCacheClientService",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea328-01a0-1000-fe7e-cdd697a35208",
+    "component_name": "Map cache server",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer",
+    "new": "org.apache.nifi.distributed.cache.server.map.MapCacheServer",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea328-01a0-1000-fe7e-cdd697a35208",
+    "component_name": "Map cache server",
+    "property": "maximum-read-size -> Maximum Read Size",
+    "old": "1 MB",
+    "new": "1 MB",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.PostHTTP",
+    "new": "org.apache.nifi.processors.standard.InvokeHTTP",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": "Compression Level -> Request Content-Encoding",
+    "old": "0",
+    "new": "DISABLED",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": "Content-Type -> Request Content-Type",
+    "old": "${mime.type}",
+    "new": "${mime.type}",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": "Data Timeout -> Socket Read Timeout",
+    "old": "30 sec",
+    "new": "30 sec",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": "URL -> HTTP URL",
+    "old": "http://localhost:8081/contentListener",
+    "new": "http://localhost:8081/contentListener",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": "User Agent -> Request User-Agent",
+    "old": "Apache-HttpClient/4.5.14 (Java/11.0.25)",
+    "new": "Apache-HttpClient/4.5.14 (Java/11.0.25)",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": "HTTP Method",
+    "old": null,
+    "new": "POST",
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": "Max Batch Size",
+    "old": "100 MB",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": "Send as FlowFile",
+    "old": "false",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "terminate-relationship",
+    "path": "/NiFi Flow/Removed Components",
+    "component_id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
+    "component_name": "Post to listener",
+    "property": null,
+    "old": "success, failure",
+    "new": "Original, Failure, Retry, No Retry, Response",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febabf-01a0-1000-d082-babc043f3f51",
+    "component_name": "Cache client",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService",
+    "new": "org.apache.nifi.distributed.cache.client.MapCacheClientService",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febaab-01a0-1000-b22c-ab6f1d0d4b7a",
+    "component_name": "Cache server",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer",
+    "new": "org.apache.nifi.distributed.cache.server.map.MapCacheServer",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febaab-01a0-1000-b22c-ab6f1d0d4b7a",
+    "component_name": "Cache server",
+    "property": "maximum-read-size -> Maximum Read Size",
+    "old": "1 MB",
+    "new": "1 MB",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb44-01a0-1000-3661-4a095097b2e3",
+    "component_name": "Encode",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.Base64EncodeContent",
+    "new": "org.apache.nifi.processors.standard.EncodeContent",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb44-01a0-1000-3661-4a095097b2e3",
+    "component_name": "Encode",
+    "property": "Encoding",
+    "old": null,
+    "new": "base64",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.GetHTTP",
+    "new": "org.apache.nifi.processors.standard.InvokeHTTP",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Data Timeout -> Socket Read Timeout",
+    "old": "30 sec",
+    "new": "30 sec",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Follow Redirects -> Response Redirects Enabled",
+    "old": "true",
+    "new": "True",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "URL -> HTTP URL",
+    "old": "https://example.org/data.json",
+    "new": "https://example.org/data.json",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "User Agent -> Request User-Agent",
+    "old": "flowport-fixture",
+    "new": "flowport-fixture",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "HTTP Method",
+    "old": null,
+    "new": "GET",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Response FlowFile Naming Strategy",
+    "old": null,
+    "new": "URL_PATH",
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Accept Content-Type",
+    "old": "application/json",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Filename",
+    "old": "data.json",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "redirect-cookie-policy",
+    "old": "default",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "terminate-relationship",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": null,
+    "old": "",
+    "new": "Original, Retry, No Retry, Failure",
+    "context": null
+  },
+  {
+    "kind": "map-relationship",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febc0c-01a0-1000-f929-769a1afd2509",
+    "component_name": "Fetch -> Encode",
+    "property": "selectedRelationships",
+    "old": "success",
+    "new": "Response",
+    "context": "Fetch"
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.JoltTransformJSON",
+    "new": "org.apache.nifi.processors.jolt.JoltTransformJSON",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": "jolt-spec -> Jolt Specification",
+    "old": "{\"a\": \"b\"}",
+    "new": "{\"a\": \"b\"}",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": "jolt-transform -> Jolt Transform",
+    "old": "jolt-transform-shift",
+    "new": "jolt-transform-shift",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": "pretty_print -> Pretty Print",
+    "old": "false",
+    "new": "false",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": null,
+    "old": "org.apache.nifi.processors.jolt.record.JoltTransformRecord",
+    "new": "org.apache.nifi.processors.jolt.JoltTransformRecord",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-record-reader -> Record Reader",
+    "old": "a9febaf7-01a0-1000-1627-0d056e1fbbe9",
+    "new": "a9febaf7-01a0-1000-1627-0d056e1fbbe9",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-record-writer -> Record Writer",
+    "old": "a9febb03-01a0-1000-559f-066fd0ae5e99",
+    "new": "a9febb03-01a0-1000-559f-066fd0ae5e99",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-spec -> Jolt Specification",
+    "old": "{\"a\": \"b\"}",
+    "new": "{\"a\": \"b\"}",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-transform -> Jolt Transform",
+    "old": "jolt-transform-shift",
+    "new": "jolt-transform-shift",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-transform-cache-size -> Transform Cache Size",
+    "old": "1",
+    "new": "1",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.PostHTTP",
+    "new": "org.apache.nifi.processors.standard.InvokeHTTP",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Attributes to Send as HTTP Headers (Regex) -> Request Header Attributes Pattern",
+    "old": "x-.*",
+    "new": "x-.*",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Compression Level -> Request Content-Encoding",
+    "old": "6",
+    "new": "GZIP",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Content-Type -> Request Content-Type",
+    "old": "application/json",
+    "new": "application/json",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Data Timeout -> Socket Read Timeout",
+    "old": "30 sec",
+    "new": "30 sec",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "URL -> HTTP URL",
+    "old": "http://localhost:8081/contentListener",
+    "new": "http://localhost:8081/contentListener",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Use Chunked Encoding -> Request Chunked Transfer-Encoding Enabled",
+    "old": "true",
+    "new": "true",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "User Agent -> Request User-Agent",
+    "old": "Apache-HttpClient/4.5.14 (Java/11.0.25)",
+    "new": "Apache-HttpClient/4.5.14 (Java/11.0.25)",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "HTTP Method",
+    "old": null,
+    "new": "POST",
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Max Batch Size",
+    "old": "100 MB",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Send as FlowFile",
+    "old": "false",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "terminate-relationship",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": null,
+    "old": "",
+    "new": "Response",
+    "context": null
+  },
+  {
+    "kind": "map-relationship",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febc4d-01a0-1000-cb9b-de32ac4fdf04",
+    "component_name": "Post -> Failed",
+    "property": "selectedRelationships",
+    "old": "failure",
+    "new": "Failure, Retry, No Retry",
+    "context": "Post"
+  },
+  {
+    "kind": "map-relationship",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febc46-01a0-1000-ef10-1c135b727298",
+    "component_name": "Post -> Sent",
+    "property": "selectedRelationships",
+    "old": "success",
+    "new": "Original",
+    "context": "Post"
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febae7-01a0-1000-9e61-2acabd659894",
+    "component_name": "Set client",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.client.DistributedSetCacheClientService",
+    "new": "org.apache.nifi.distributed.cache.client.SetCacheClientService",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febad5-01a0-1000-b6d4-49e5633d38ba",
+    "component_name": "Set server",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.server.DistributedSetCacheServer",
+    "new": "org.apache.nifi.distributed.cache.server.SetCacheServer",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/NiFi Flow/Replacements",
+    "component_id": "a9febad5-01a0-1000-b6d4-49e5633d38ba",
+    "component_name": "Set server",
+    "property": "maximum-read-size -> Maximum Read Size",
+    "old": "1 MB",
+    "new": "1 MB",
+    "context": null
+  },
+  {
+    "kind": "set-scheduling",
+    "path": "/NiFi Flow/Scheduling",
+    "component_id": "a9feac28-01a0-1000-1f6c-e3156b9af39d",
+    "component_name": "Event driven",
+    "property": "schedulingStrategy",
+    "old": "EVENT_DRIVEN (0 sec)",
+    "new": "TIMER_DRIVEN (0 sec)",
+    "context": null
+  }
+]

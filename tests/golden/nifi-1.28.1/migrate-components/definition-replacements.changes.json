@@ -1,0 +1,572 @@
+[
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febabf-01a0-1000-d082-babc043f3f51",
+    "component_name": "Cache client",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService",
+    "new": "org.apache.nifi.distributed.cache.client.MapCacheClientService",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febaab-01a0-1000-b22c-ab6f1d0d4b7a",
+    "component_name": "Cache server",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer",
+    "new": "org.apache.nifi.distributed.cache.server.map.MapCacheServer",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febaab-01a0-1000-b22c-ab6f1d0d4b7a",
+    "component_name": "Cache server",
+    "property": "maximum-read-size -> Maximum Read Size",
+    "old": "1 MB",
+    "new": "1 MB",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febb44-01a0-1000-3661-4a095097b2e3",
+    "component_name": "Encode",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.Base64EncodeContent",
+    "new": "org.apache.nifi.processors.standard.EncodeContent",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/Replacements",
+    "component_id": "a9febb44-01a0-1000-3661-4a095097b2e3",
+    "component_name": "Encode",
+    "property": "Encoding",
+    "old": null,
+    "new": "base64",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.GetHTTP",
+    "new": "org.apache.nifi.processors.standard.InvokeHTTP",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Data Timeout -> Socket Read Timeout",
+    "old": "30 sec",
+    "new": "30 sec",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Follow Redirects -> Response Redirects Enabled",
+    "old": "true",
+    "new": "True",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "URL -> HTTP URL",
+    "old": "https://example.org/data.json",
+    "new": "https://example.org/data.json",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "User Agent -> Request User-Agent",
+    "old": "flowport-fixture",
+    "new": "flowport-fixture",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Username -> Request Username",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "proxy-configuration-service -> Proxy Configuration Service",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "HTTP Method",
+    "old": null,
+    "new": "GET",
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Response FlowFile Naming Strategy",
+    "old": null,
+    "new": "URL_PATH",
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Accept Content-Type",
+    "old": "application/json",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Filename",
+    "old": "data.json",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Proxy Host",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "Proxy Port",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": "redirect-cookie-policy",
+    "old": "default",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "terminate-relationship",
+    "path": "/Replacements",
+    "component_id": "a9febb33-01a0-1000-933d-38481bedee29",
+    "component_name": "Fetch",
+    "property": null,
+    "old": "",
+    "new": "Original, Retry, No Retry, Failure",
+    "context": null
+  },
+  {
+    "kind": "map-relationship",
+    "path": "/Replacements",
+    "component_id": "a9febc0c-01a0-1000-f929-769a1afd2509",
+    "component_name": "Fetch -> Encode",
+    "property": "selectedRelationships",
+    "old": "success",
+    "new": "Response",
+    "context": "Fetch"
+  },
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.JoltTransformJSON",
+    "new": "org.apache.nifi.processors.jolt.JoltTransformJSON",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": "jolt-custom-class -> Custom Transformation Class Name",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": "jolt-custom-modules -> Custom Module Directory",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": "jolt-spec -> Jolt Specification",
+    "old": "{\"a\": \"b\"}",
+    "new": "{\"a\": \"b\"}",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": "jolt-transform -> Jolt Transform",
+    "old": "jolt-transform-shift",
+    "new": "jolt-transform-shift",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+    "component_name": "Jolt",
+    "property": "pretty_print -> Pretty Print",
+    "old": "false",
+    "new": "false",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": null,
+    "old": "org.apache.nifi.processors.jolt.record.JoltTransformRecord",
+    "new": "org.apache.nifi.processors.jolt.JoltTransformRecord",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-custom-class -> Custom Transformation Class Name",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-custom-modules -> Custom Module Directory",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-record-reader -> Record Reader",
+    "old": "d3a1da28-b4cf-37cb-a8a9-8d015add1813",
+    "new": "d3a1da28-b4cf-37cb-a8a9-8d015add1813",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-record-writer -> Record Writer",
+    "old": "fc6a6a41-7d18-3c28-9d6f-40c7ac3e08c4",
+    "new": "fc6a6a41-7d18-3c28-9d6f-40c7ac3e08c4",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-spec -> Jolt Specification",
+    "old": "{\"a\": \"b\"}",
+    "new": "{\"a\": \"b\"}",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-transform -> Jolt Transform",
+    "old": "jolt-transform-shift",
+    "new": "jolt-transform-shift",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+    "component_name": "Jolt record",
+    "property": "jolt-record-transform-cache-size -> Transform Cache Size",
+    "old": "1",
+    "new": "1",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": null,
+    "old": "org.apache.nifi.processors.standard.PostHTTP",
+    "new": "org.apache.nifi.processors.standard.InvokeHTTP",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Attributes to Send as HTTP Headers (Regex) -> Request Header Attributes Pattern",
+    "old": "x-.*",
+    "new": "x-.*",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Compression Level -> Request Content-Encoding",
+    "old": "6",
+    "new": "GZIP",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Content-Type -> Request Content-Type",
+    "old": "application/json",
+    "new": "application/json",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Data Timeout -> Socket Read Timeout",
+    "old": "30 sec",
+    "new": "30 sec",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "URL -> HTTP URL",
+    "old": "http://localhost:8081/contentListener",
+    "new": "http://localhost:8081/contentListener",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Use Chunked Encoding -> Request Chunked Transfer-Encoding Enabled",
+    "old": "true",
+    "new": "true",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "User Agent -> Request User-Agent",
+    "old": "Apache-HttpClient/4.5.14 (Java/11.0.25)",
+    "new": "Apache-HttpClient/4.5.14 (Java/11.0.25)",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Username -> Request Username",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "proxy-configuration-service -> Proxy Configuration Service",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "set-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "HTTP Method",
+    "old": null,
+    "new": "POST",
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Max Batch Size",
+    "old": "100 MB",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Max Data to Post per Second",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Proxy Host",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Proxy Port",
+    "old": null,
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "drop-property",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": "Send as FlowFile",
+    "old": "false",
+    "new": null,
+    "context": null
+  },
+  {
+    "kind": "terminate-relationship",
+    "path": "/Replacements",
+    "component_id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+    "component_name": "Post",
+    "property": null,
+    "old": "",
+    "new": "Response",
+    "context": null
+  },
+  {
+    "kind": "map-relationship",
+    "path": "/Replacements",
+    "component_id": "a9febc4d-01a0-1000-cb9b-de32ac4fdf04",
+    "component_name": "Post -> Failed",
+    "property": "selectedRelationships",
+    "old": "failure",
+    "new": "Failure, Retry, No Retry",
+    "context": "Post"
+  },
+  {
+    "kind": "map-relationship",
+    "path": "/Replacements",
+    "component_id": "a9febc46-01a0-1000-ef10-1c135b727298",
+    "component_name": "Post -> Sent",
+    "property": "selectedRelationships",
+    "old": "success",
+    "new": "Original",
+    "context": "Post"
+  },
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febae7-01a0-1000-9e61-2acabd659894",
+    "component_name": "Set client",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.client.DistributedSetCacheClientService",
+    "new": "org.apache.nifi.distributed.cache.client.SetCacheClientService",
+    "context": null
+  },
+  {
+    "kind": "replace-component",
+    "path": "/Replacements",
+    "component_id": "a9febad5-01a0-1000-b6d4-49e5633d38ba",
+    "component_name": "Set server",
+    "property": null,
+    "old": "org.apache.nifi.distributed.cache.server.DistributedSetCacheServer",
+    "new": "org.apache.nifi.distributed.cache.server.SetCacheServer",
+    "context": null
+  },
+  {
+    "kind": "rename-property",
+    "path": "/Replacements",
+    "component_id": "a9febad5-01a0-1000-b6d4-49e5633d38ba",
+    "component_name": "Set server",
+    "property": "maximum-read-size -> Maximum Read Size",
+    "old": "1 MB",
+    "new": "1 MB",
+    "context": null
+  }
+]

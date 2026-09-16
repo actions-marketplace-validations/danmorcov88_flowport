@@ -1,0 +1,12 @@
+[
+  {
+    "kind": "set-scheduling",
+    "path": "/Scheduling",
+    "component_id": "a9feac28-01a0-1000-1f6c-e3156b9af39d",
+    "component_name": "Event driven",
+    "property": "schedulingStrategy",
+    "old": "EVENT_DRIVEN (0 sec)",
+    "new": "TIMER_DRIVEN (0 sec)",
+    "context": null
+  }
+]
