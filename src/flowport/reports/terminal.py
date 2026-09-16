@@ -40,6 +40,9 @@ def print_report(report: dict[str, Any], console: Console, *, verbose: bool = Fa
         f"[bold]{summary['total']} findings[/bold]"
     )
 
+    for warning in report.get("warnings", []):
+        console.print(f"[yellow]warning:[/yellow] {warning}")
+
     table = Table(title="By severity", show_header=True, header_style="bold")
     table.add_column("Severity")
     table.add_column("Count", justify="right")

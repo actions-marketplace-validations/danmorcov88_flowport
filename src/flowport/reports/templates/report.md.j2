@@ -6,6 +6,10 @@
 
 - {{ report.summary.process_groups }} process groups, {{ report.summary.components }} components, **{{ report.summary.total }} findings**
 
+{% for w in report.warnings %}
+> Warning: {{ w }}
+
+{% endfor %}
 ## Summary
 
 | Severity | Count |

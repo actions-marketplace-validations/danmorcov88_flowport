@@ -27,6 +27,9 @@
 <p class="meta">flowport {{ report.tool.version }} · NiFi {{ report.catalog.source_version }} → {{ report.catalog.target_version }} · input <code>{{ report.input.name }}</code> ({{ report.input.kind }}){% if report.input.sha256 %} · sha256 <code>{{ report.input.sha256 }}</code>{% endif %}</p>
 <p>{{ report.summary.process_groups }} process groups, {{ report.summary.components }} components, <strong>{{ report.summary.total }} findings</strong></p>
 
+{% for w in report.warnings %}
+<p class="warning"><strong>Warning:</strong> {{ w }}</p>
+{% endfor %}
 <h2>Summary</h2>
 <table>
   <tr><th>Severity</th><th>Count</th></tr>

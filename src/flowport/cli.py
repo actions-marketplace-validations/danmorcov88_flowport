@@ -113,9 +113,15 @@ def analyze(
     if fmt is Format.terminal:
         from flowport.reports.terminal import print_report
 
-        console = Console(file=output.open("w", encoding="utf-8") if output else None)
-        print_report(report, console, verbose=verbose)
+        if output:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            with output.open("w", encoding="utf-8") as fh:
+                print_report(report, Console(file=fh, width=100), verbose=verbose)
+        else:
+            print_report(report, Console(), verbose=verbose)
     else:
+        for warning in report["warnings"]:
+            stderr.print(f"[yellow]warning:[/yellow] {warning}")
         text = render(report, fmt.value)
         if output:
             output.parent.mkdir(parents=True, exist_ok=True)

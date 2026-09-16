@@ -471,5 +471,6 @@
     "components": 10,
     "process_groups": 3,
     "total": 18
-  }
+  },
+  "warnings": []
 }
