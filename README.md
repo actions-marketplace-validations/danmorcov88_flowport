@@ -7,9 +7,10 @@ flowport works offline on files. It never modifies its input. Every finding
 points to the exact component (process group path, name, id) and links to the
 official Apache source (wiki page or JIRA issue) that documents the change.
 
-> Status: v0.2. `analyze` reports incompatibilities; `migrate variables`
-> converts process group variables to parameter contexts. Template conversion
-> and component replacements are planned. See "Roadmap".
+> Status: v0.3. `analyze` reports incompatibilities; `migrate variables`
+> converts process group variables to parameter contexts; `migrate templates`
+> converts templates to flow definitions. Component replacements are planned.
+> See "Roadmap".
 
 ## Install
 
@@ -94,11 +95,39 @@ Same input, same output: generated identifiers derive from the source group
 id, and every list is ordered, so the command can run in CI and the result can
 be diffed.
 
+### Migrating templates
+
+```bash
+flowport migrate templates flow.json.gz --output migrated/templates/   # every template in the flow
+flowport migrate template my-template.xml --output my-flow.json        # one exported XML template
+```
+
+NiFi 2.x removed templates and drops them when a flow loads; the replacement
+is the flow definition, the JSON behind "Download flow definition" and
+"Upload flow definition". `migrate templates` converts every template stored
+in `flow.json` (they are kept there as JSON, the XML is not needed) and writes
+`<template>.json` plus `<template>.report.md` per template; `migrate template`
+converts one exported `.xml` file. Both accept the same templates: the XML
+export and the copy inside `flow.json` give byte-identical definitions.
+
+Everything a template can hold is converted: processors with their scheduling
+and properties, controller services (references from processors keep
+resolving), input and output ports, funnels, labels, connections with back
+pressure, prioritizers, bends and load balancing, nested process groups and
+remote process groups with their ports. The analyzer runs on each result, so
+the report tells you what in the template still needs work (a removed
+processor imports as a ghost, exactly as the report says).
+
+Import the definition on 2.x with "Upload flow definition" on the canvas, or
+on 1.x first to check it. The conversion was verified by importing the
+fixture templates into a real NiFi 2.12.0 through the REST API; see
+[docs/dev/templates-conversion.md](docs/dev/templates-conversion.md).
+
 ### Exit codes
 
 | Code | Meaning |
 |---|---|
-| 0 | No finding at or above the `--fail-on` threshold (`analyze`); migration written (`migrate`) |
+| 0 | No finding at or above the `--fail-on` threshold (`analyze`); output written (`migrate`) |
 | 1 | At least one finding at or above the threshold (`analyze`) |
 | 2 | Input or internal error |
 
@@ -114,8 +143,10 @@ be diffed.
 The severities were established by loading the test fixtures into a real
 NiFi 2.12.0 instance; see
 [docs/dev/nifi2-load-experiment.md](docs/dev/nifi2-load-experiment.md). The
-variables migration was verified on a real NiFi 1.28.1; see
-[docs/dev/variables-migration.md](docs/dev/variables-migration.md).
+variables migration was verified on a real NiFi 1.28.1
+([docs/dev/variables-migration.md](docs/dev/variables-migration.md)) and the
+template conversion on a real NiFi 2.12.0
+([docs/dev/templates-conversion.md](docs/dev/templates-conversion.md)).
 
 ## What it checks (NiFi 1.28.1 to 2.12.0)
 
@@ -159,10 +190,13 @@ rules in `src/flowport/catalog/manual.yaml` each cite an Apache source.
 - `nifi.properties`, `authorizers.xml` and other configuration files are out
   of scope.
 - Cloudera-specific components are not covered.
+- A converted template has no `controllerServiceApis` and no property
+  `displayName`s (templates do not carry them); NiFi fills both in on import.
+- `migrate templates` leaves the templates in the flow; NiFi 2.x drops them
+  itself. Convert them first, then upgrade.
 
 ## Roadmap
 
-- v0.3: `flowport migrate templates` converts XML templates to flow definitions.
 - v0.4: `flowport migrate components` applies documented 1:1 replacements.
 - v1.0: validation against a running NiFi 2.x, PyPI and Docker packaging,
   GitHub Action.
@@ -175,7 +209,7 @@ ruff check .
 mypy
 pytest                 # unit and golden tests
 pytest -m slow         # large generated input (about 40 s)
-pytest -m integration  # loads the migrated fixture into NiFi 1.28.1 (Docker)
+pytest -m integration  # migrated flow into NiFi 1.28.1, converted templates into 2.12.0 (Docker)
 pytest --update-golden # refresh expected reports on purpose
 ```
 

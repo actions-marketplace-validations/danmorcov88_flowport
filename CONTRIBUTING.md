@@ -63,9 +63,10 @@ you change what a migration produces:
    log and the post-migration report are all golden.
 2. Add a synthetic case to `tests/unit/test_migrate_variables.py` for the new
    behavior.
-3. Run `pytest -m integration` (Docker) to load the result into a real NiFi
-   1.x and confirm no component gains a validation error. If NiFi's behavior
-   is the reason for the change, write it down in `docs/dev/`.
+3. Run `pytest -m integration` (Docker) to load the result into a real NiFi:
+   the migrated flow into 1.x (no component may gain a validation error) and
+   the converted templates into 2.x (every component must be created). If
+   NiFi's behavior is the reason for the change, write it down in `docs/dev/`.
 
 ## Commits
 

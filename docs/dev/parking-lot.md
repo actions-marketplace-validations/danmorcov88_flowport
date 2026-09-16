@@ -36,4 +36,17 @@ Ideas that came up during development and are outside the current phase.
 - **Rewriting `${var:function()}` to `${ #{var}:function() }`.** The user
   guide documents the form; still left MANUAL because the function may rely
   on the FlowFile-attribute fallback of the original expression.
+- **Strip templates from the flow after conversion.** `migrate templates`
+  could also write a `flow.json.gz` without the `templates` list; 2.x drops
+  them anyway, so this only matters for a tidy 1.x flow.
+- **`controllerServiceApis` from the catalog.** The extension manifests list
+  the service APIs each controller service provides; `tools/build_catalog.py`
+  could extract them so converted templates carry them. NiFi does not need
+  them on import.
+- **Templates that reference controller services outside the snippet.** A
+  template made from a snippet whose processors use services of a parent
+  group references ids that are not in the template. Not exercised by the
+  fixtures; the import would leave the property pointing at an unknown id.
+- **Unit test for `migrate all`** once it exists (Phase 5): the three
+  migrations in sequence on one flow.
 
