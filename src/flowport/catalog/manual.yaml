@@ -14,6 +14,10 @@ sources:
   migrating_deprecated: https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0
   migration_guidance: https://cwiki.apache.org/confluence/display/NIFI/Migration+Guidance
   jira: https://issues.apache.org/jira/browse/
+  el_hierarchy: https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy
+  parameter_names: https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#name-parameter-restriction
+  parameter_sensitivity: https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#using-parameters-with-sensitive-properties
+  parameter_context_assignment: https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#assigning_parameter_context_to_PG
 
 rules:
   # ---- component inventory (data from catalog/generated) -------------------
@@ -122,11 +126,12 @@ rules:
     category: variables
     title: Variable reference in a property that also reads FlowFile attributes
     # fields: property, variable, defined_in, value
-    message: "Property '{property}' references variable ${{{variable}}} (defined in {defined_in}) and supports FlowFile attributes. On 1.x a FlowFile attribute named '{variable}' already takes priority over the variable; on 2.x only the attribute remains."
+    message: "Property '{property}' references variable ${{{variable}}} (defined in {defined_in}) and supports FlowFile attributes. On 1.x a FlowFile attribute named '{variable}' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains."
     suggestion: "If the value must come from configuration, replace the reference with a parameter #{{{variable}}}. If a FlowFile attribute is intended, no change is needed."
     sources:
       - NIFI-12079
       - migrating_deprecated
+      - el_hierarchy
 
   NIFI2-VARIABLE-REFERENCE-FUNCTION:
     severity: MANUAL
@@ -159,6 +164,41 @@ rules:
     sources:
       - NIFI-12079
 
+  NIFI2-VARIABLE-REFERENCE-SENSITIVE:
+    severity: MANUAL
+    category: variables
+    title: Variable reference in a sensitive property
+    # fields: property, variable, defined_in, value
+    message: "Sensitive property '{property}' references variable ${{{variable}}} (defined in {defined_in}). Variables are never sensitive, but a sensitive property can only reference a sensitive parameter, so the reference cannot be rewritten to a non-sensitive parameter."
+    suggestion: "Create a sensitive parameter with the variable's value and reference it as #{{{variable}}}."
+    sources:
+      - NIFI-12079
+      - parameter_sensitivity
+
+  NIFI2-VARIABLE-PARAMETER-COLLISION:
+    severity: MANUAL
+    category: variables
+    title: Variable name collides with an existing parameter
+    # fields: variable, context, value
+    message: "This process group defines variable '{variable}' and already uses parameter context '{context}', which resolves a parameter of the same name. Adding the variable as a parameter would change what #{{{variable}}} means for every group using that context, so flowport leaves this group's variables unchanged."
+    suggestion: "Rename the variable or the parameter, or drop the variable if the parameter value is the intended one, then run the migration again."
+    sources:
+      - NIFI-12079
+      - NIFI-8490
+      - parameter_context_assignment
+
+  NIFI2-VARIABLE-REFERENCE-NOT-VISIBLE:
+    severity: MANUAL
+    category: variables
+    title: Parameter for the variable is not visible from this group
+    # fields: property, variable, defined_in, value, parameter_context, context, reason
+    message: "Property '{property}' references variable ${{{variable}}} (defined in {defined_in}). The parameter was created in context '{parameter_context}', but this group uses parameter context '{context}', which {reason}. A process group does not inherit its parent's parameter context, so the reference was left unchanged."
+    suggestion: "Make '{context}' inherit from '{parameter_context}' (or move the parameter) and replace the reference with #{{{variable}}}."
+    sources:
+      - NIFI-12079
+      - NIFI-8490
+      - parameter_context_assignment
+
   NIFI2-VARIABLE-UNUSED:
     severity: INFO
     category: variables
@@ -178,7 +218,7 @@ rules:
     suggestion: "Choose a valid parameter name and update every reference."
     sources:
       - NIFI-12079
-      - https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#parameters
+      - parameter_names
 
   NIFI2-TEMPLATE:
     severity: MANUAL

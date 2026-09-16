@@ -194,6 +194,33 @@ def test_variable_reference_classification(catalog: Catalog) -> None:
     assert [f.details["variable"] for f in unused] == ["unused"]
 
 
+def test_variable_reference_in_sensitive_property(catalog: Catalog) -> None:
+    # Sensitive values are encrypted or omitted in real exports; the shape is synthetic.
+    pool = processor("pool", "org.apache.nifi.dbcp.DBCPConnectionPool", {"Password": "${secret}"})
+    pool["propertyDescriptors"] = {"Password": {"name": "Password", "sensitive": True}}
+    root = group("root", variables={"secret": "x"})
+    root["controllerServices"] = [pool]
+    findings = run(catalog, root)
+    refs = [f for f in findings if f.location.name == "pool"]
+    assert [f.rule_id for f in refs] == ["NIFI2-VARIABLE-REFERENCE-SENSITIVE"]
+    assert refs[0].severity.value == "MANUAL"
+
+
+def test_one_finding_per_property_variable_and_classification(catalog: Catalog) -> None:
+    root = group(
+        "root",
+        [processor("p", STD + "GetFile", {"Input Directory": "${a}/${a}/${a:toUpper()}"})],
+        variables={"a": "1"},
+    )
+    refs = [
+        (f.rule_id, f.details["variable"]) for f in run(catalog, root) if f.location.name == "p"
+    ]
+    assert refs == [
+        ("NIFI2-VARIABLE-REFERENCE", "a"),
+        ("NIFI2-VARIABLE-REFERENCE-FUNCTION", "a"),
+    ]
+
+
 def test_variable_inheritance_and_shadowing(catalog: Catalog) -> None:
     grandchild = group(
         "grandchild", [processor("g", STD + "GetFile", {"Input Directory": "${a}/${b}"})]

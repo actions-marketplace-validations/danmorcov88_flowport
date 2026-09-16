@@ -19,12 +19,13 @@
         "path": "/Variables",
         "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
       },
-      "message": "Property 'url' references variable ${host} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable; on 2.x only the attribute remains.",
+      "message": "Property 'url' references variable ${host} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
       "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
       "severity": "MANUAL",
       "sources": [
         "https://issues.apache.org/jira/browse/NIFI-12079",
-        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
       ],
       "suggestion": "If the value must come from configuration, replace the reference with a parameter #{host}. If a FlowFile attribute is intended, no change is needed.",
       "title": "Variable reference in a property that also reads FlowFile attributes"
@@ -44,12 +45,13 @@
         "path": "/Variables",
         "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
       },
-      "message": "Property 'url' references variable ${port} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'port' already takes priority over the variable; on 2.x only the attribute remains.",
+      "message": "Property 'url' references variable ${port} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'port' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
       "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
       "severity": "MANUAL",
       "sources": [
         "https://issues.apache.org/jira/browse/NIFI-12079",
-        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
       ],
       "suggestion": "If the value must come from configuration, replace the reference with a parameter #{port}. If a FlowFile attribute is intended, no change is needed.",
       "title": "Variable reference in a property that also reads FlowFile attributes"
@@ -168,12 +170,13 @@
         "path": "/Variables",
         "type": "org.apache.nifi.processors.standard.PutFile"
       },
-      "message": "Property 'Directory' references variable ${host} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable; on 2.x only the attribute remains.",
+      "message": "Property 'Directory' references variable ${host} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
       "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
       "severity": "MANUAL",
       "sources": [
         "https://issues.apache.org/jira/browse/NIFI-12079",
-        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
       ],
       "suggestion": "If the value must come from configuration, replace the reference with a parameter #{host}. If a FlowFile attribute is intended, no change is needed.",
       "title": "Variable reference in a property that also reads FlowFile attributes"
@@ -220,7 +223,7 @@
       "severity": "MANUAL",
       "sources": [
         "https://issues.apache.org/jira/browse/NIFI-12079",
-        "https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#parameters"
+        "https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#name-parameter-restriction"
       ],
       "suggestion": "Choose a valid parameter name and update every reference.",
       "title": "Variable name is not a valid parameter name"
