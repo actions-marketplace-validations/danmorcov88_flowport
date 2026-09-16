@@ -1,0 +1,236 @@
+# Hand-written rule definitions.
+#
+# Detection logic lives in src/flowport/rules/. This file holds what a finding
+# says: severity, category, message, suggestion and the official sources.
+# Every rule must cite at least one Apache source (wiki page, JIRA issue or
+# release note). See docs/dev/nifi2-load-experiment.md for how the severities
+# were established against a real NiFi 2.12.0 instance.
+#
+# Message and suggestion are Python format strings. Available fields depend on
+# the rule and are listed next to each one.
+
+sources:
+  deprecated_components: https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features
+  migrating_deprecated: https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0
+  migration_guidance: https://cwiki.apache.org/confluence/display/NIFI/Migration+Guidance
+  jira: https://issues.apache.org/jira/browse/
+
+rules:
+  # ---- component inventory (data from catalog/generated) -------------------
+
+  NIFI2-REMOVED-COMPONENT:
+    severity: BLOCKER
+    category: removed-component
+    title: Component type removed in NiFi 2.x
+    # fields: short_type, type, target_version, alternatives
+    message: "{short_type} does not exist in NiFi {target_version}. NiFi loads it as a ghost component that is invalid and cannot run."
+    suggestion: "Replace it before upgrading.{alternatives}"
+    sources:
+      - deprecated_components
+      - migrating_deprecated
+
+  NIFI2-RENAMED-COMPONENT:
+    severity: BLOCKER
+    category: removed-component
+    title: Component type renamed or moved in NiFi 2.x
+    # fields: short_type, type, target_version, to_type, to_bundle
+    message: "{short_type} does not exist under this class name in NiFi {target_version}; a component of the same name exists as {to_type} in bundle {to_bundle}. NiFi does not map the old name and loads a ghost component."
+    suggestion: "Change the component type to {to_type} and its bundle to {to_bundle}. Check that its properties still match."
+    sources:
+      - deprecated_components
+
+  NIFI2-OPTIONAL-BUNDLE:
+    severity: MANUAL
+    category: optional-bundle
+    title: Component not in the default NiFi 2.x distribution
+    # fields: short_type, target_version, artifact, profile
+    message: "{short_type} exists in NiFi {target_version} but its bundle {artifact} is not part of the default binary distribution (Maven profile {profile})."
+    suggestion: "Download {artifact} for NiFi {target_version} from Maven Central into the lib or extensions directory, or build NiFi with -P{profile}, before loading this flow."
+    sources:
+      - migration_guidance
+
+  NIFI2-DEPRECATED-IN-TARGET:
+    severity: INFO
+    category: deprecated-component
+    title: Component deprecated in NiFi 2.x
+    # fields: short_type, target_version, reason, alternatives
+    message: "{short_type} still works in NiFi {target_version} but is deprecated: {reason}"
+    suggestion: "Plan a replacement.{alternatives}"
+    sources:
+      - deprecated_components
+
+  NIFI2-UNKNOWN-COMPONENT:
+    severity: INFO
+    category: unknown-component
+    title: Component type not in the catalog
+    # fields: short_type, type, bundle, source_version
+    message: "{short_type} from bundle {bundle} is not part of the Apache NiFi {source_version} distribution, so flowport cannot tell whether it exists in 2.x."
+    suggestion: "Check the bundle's own documentation for a NiFi 2.x release."
+    sources:
+      - migration_guidance
+
+  NIFI2-THIRD-PARTY-BUNDLE:
+    severity: MANUAL
+    category: custom-nar
+    title: Component from a third-party or custom NAR
+    # fields: short_type, type, bundle
+    message: "{short_type} comes from bundle {bundle}, which is not an Apache NiFi bundle. NARs built against the 1.x API do not load on 2.x; the component becomes a ghost."
+    suggestion: "Obtain or build a version of this NAR for the NiFi 2.x API and deploy it before loading the flow."
+    sources:
+      - migrating_deprecated
+      - NIFI-12079
+
+  NIFI2-SCRIPT-ENGINE:
+    severity: BLOCKER
+    category: script-engine
+    title: Script engine removed in NiFi 2.x
+    # fields: short_type, engine, allowed, target_version
+    message: "{short_type} uses the {engine} script engine, which NiFi {target_version} no longer ships for this component (allowed: {allowed}). The component is invalid on 2.x."
+    suggestion: "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x."
+    sources:
+      - deprecated_components
+      - NIFI-11713
+      - NIFI-11753
+      - NIFI-12378
+
+  # ---- flow features -------------------------------------------------------
+
+  NIFI2-VARIABLES-DEFINED:
+    severity: AUTO_FIXABLE
+    category: variables
+    title: Process group defines variables
+    # fields: count, names
+    message: "This process group defines {count} variable(s): {names}. NiFi 2.x removed the Variable Registry and silently drops them when the flow loads."
+    suggestion: "Convert the variables to a parameter context (flowport migrate variables) and rewrite the references to #{{name}}."
+    sources:
+      - NIFI-12079
+      - migrating_deprecated
+
+  NIFI2-VARIABLE-REFERENCE:
+    severity: AUTO_FIXABLE
+    category: variables
+    title: Property references a variable
+    # fields: property, variable, defined_in, value
+    message: "Property '{property}' references variable ${{{variable}}} (defined in {defined_in}). On NiFi 2.x the variable no longer exists, so the expression evaluates to empty unless a FlowFile attribute or environment variable of the same name exists. No validation error will point at this."
+    suggestion: "Replace the reference with a parameter: #{{{variable}}}."
+    sources:
+      - NIFI-12079
+      - migrating_deprecated
+
+  NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE:
+    severity: MANUAL
+    category: variables
+    title: Variable reference in a property that also reads FlowFile attributes
+    # fields: property, variable, defined_in, value
+    message: "Property '{property}' references variable ${{{variable}}} (defined in {defined_in}) and supports FlowFile attributes. On 1.x a FlowFile attribute named '{variable}' already takes priority over the variable; on 2.x only the attribute remains."
+    suggestion: "If the value must come from configuration, replace the reference with a parameter #{{{variable}}}. If a FlowFile attribute is intended, no change is needed."
+    sources:
+      - NIFI-12079
+      - migrating_deprecated
+
+  NIFI2-VARIABLE-REFERENCE-FUNCTION:
+    severity: MANUAL
+    category: variables
+    title: Variable used with Expression Language functions
+    # fields: property, variable, defined_in, value
+    message: "Property '{property}' applies Expression Language functions to variable ${{{variable}}} (defined in {defined_in}). The subject of the expression must change from the variable to a parameter reference."
+    suggestion: "Rewrite the subject as a parameter reference inside the expression, for example ${{ #{{{variable}}}:toUpper() }} (the parameter is substituted before the expression is evaluated), then test the property on 1.x."
+    sources:
+      - NIFI-12079
+      - https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#referencing-parameters
+
+  NIFI2-VARIABLE-REFERENCE-NO-EL:
+    severity: INFO
+    category: variables
+    title: Variable-like text in a property without Expression Language support
+    # fields: property, variable, defined_in, value
+    message: "Property '{property}' contains ${{{variable}}} but does not support Expression Language, so the text was never evaluated on 1.x and nothing changes on 2.x."
+    suggestion: "No change needed. Check the value if it was meant to be dynamic."
+    sources:
+      - NIFI-12079
+
+  NIFI2-VARIABLE-REFERENCE-UNKNOWN-SCOPE:
+    severity: MANUAL
+    category: variables
+    title: Variable reference in a property of an unknown component type
+    # fields: property, variable, defined_in, value
+    message: "Property '{property}' references variable ${{{variable}}} (defined in {defined_in}). The component type is not in the catalog, so flowport cannot tell whether the property evaluates Expression Language or which scope it uses."
+    suggestion: "Check the component's documentation. If the property supports Expression Language, replace the reference with a parameter #{{{variable}}}."
+    sources:
+      - NIFI-12079
+
+  NIFI2-VARIABLE-UNUSED:
+    severity: INFO
+    category: variables
+    title: Variable is never referenced
+    # fields: variable, value
+    message: "Variable '{variable}' is defined here but no property in this group or its children references it."
+    suggestion: "Drop it, or keep it as a parameter if other flows depend on it."
+    sources:
+      - NIFI-12079
+
+  NIFI2-VARIABLE-NAME:
+    severity: MANUAL
+    category: variables
+    title: Variable name is not a valid parameter name
+    # fields: variable
+    message: "Variable '{variable}' contains characters that are not allowed in a parameter name (letters, digits, '-', '_', '.' and space)."
+    suggestion: "Choose a valid parameter name and update every reference."
+    sources:
+      - NIFI-12079
+      - https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#parameters
+
+  NIFI2-TEMPLATE:
+    severity: MANUAL
+    category: templates
+    title: Template stored in the flow
+    # fields: name
+    message: "Template '{name}' is stored in this flow. NiFi 2.x removed templates and silently drops them when the flow loads."
+    suggestion: "Export the template from the 1.x instance before upgrading, or convert it to a flow definition (flowport migrate templates)."
+    sources:
+      - NIFI-12006
+      - deprecated_components
+
+  NIFI2-EVENT-DRIVEN:
+    severity: BLOCKER
+    category: scheduling
+    title: Event-driven scheduling removed in NiFi 2.x
+    # fields: short_type
+    message: "{short_type} uses the EVENT_DRIVEN scheduling strategy. NiFi 2.x does not recognize it and fails to start when the flow contains it."
+    suggestion: "Change the scheduling strategy to TIMER_DRIVEN (run schedule 0 sec) before upgrading."
+    sources:
+      - NIFI-11813
+      - deprecated_components
+
+  NIFI2-CRON-YEAR-FIELD:
+    severity: BLOCKER
+    category: scheduling
+    title: Cron expression with a year field
+    # fields: short_type, expression
+    message: "Run schedule '{expression}' has seven fields. NiFi 2.x uses Spring cron expressions, which have no year field, so the component is invalid."
+    suggestion: "Remove the seventh field. Components can no longer be scheduled for a specific year."
+    sources:
+      - NIFI-12290
+      - migrating_deprecated
+
+  NIFI2-CRON-NUMERIC-DAY-OF-WEEK:
+    severity: MANUAL
+    category: scheduling
+    title: Cron expression with a numeric day of week
+    # fields: short_type, expression, field
+    message: "Run schedule '{expression}' uses a number for the day of week ('{field}'). NiFi 1.x (Quartz) counts 1 as Sunday; NiFi 2.x (Spring) counts 1 as Monday, so the schedule shifts by one day without any error."
+    suggestion: "Use day names (SUN, MON, ...) instead of numbers."
+    sources:
+      - NIFI-12290
+      - migrating_deprecated
+
+  NIFI2-INVOKEHTTP-PROXY-PROPERTIES:
+    severity: INFO
+    category: deprecated-property
+    title: InvokeHTTP proxy properties replaced by a controller service
+    # fields: properties
+    message: "InvokeHTTP is configured with the deprecated proxy properties {properties}. NiFi 2.x creates a StandardProxyConfigurationService from them when the flow loads."
+    suggestion: "No change needed before the upgrade. After the upgrade, check the generated proxy configuration service and remove the leftover properties."
+    sources:
+      - migrating_deprecated
+      - NIFI-11174
