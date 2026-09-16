@@ -1,6 +1,6 @@
 {
   "flowContents": {
-    "identifier": "2f1caad3-57cf-32b5-0000-000000000000",
+    "identifier": "ce1a297e-74ed-3dc2-0000-000000000000",
     "name": "Removed Components Template",
     "comments": "Fixture template Removed Components Template",
     "position": {
@@ -11,60 +11,7 @@
     "remoteProcessGroups": [],
     "processors": [
       {
-        "identifier": "13fee864-c477-3c3a-0000-000000000000",
-        "name": "Hash content",
-        "comments": "",
-        "position": {
-          "x": 0.0,
-          "y": 400.0
-        },
-        "type": "org.apache.nifi.processors.standard.HashContent",
-        "bundle": {
-          "group": "org.apache.nifi",
-          "artifact": "nifi-standard-nar",
-          "version": "1.28.1"
-        },
-        "properties": {
-          "Hash Attribute Name": "hash.value",
-          "Hash Algorithm": "SHA-256"
-        },
-        "propertyDescriptors": {
-          "Hash Attribute Name": {
-            "name": "Hash Attribute Name",
-            "displayName": "Hash Attribute Name",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Hash Algorithm": {
-            "name": "Hash Algorithm",
-            "displayName": "Hash Algorithm",
-            "identifiesControllerService": false,
-            "sensitive": false
-          }
-        },
-        "style": {},
-        "schedulingPeriod": "0 sec",
-        "schedulingStrategy": "TIMER_DRIVEN",
-        "executionNode": "ALL",
-        "penaltyDuration": "30 sec",
-        "yieldDuration": "1 sec",
-        "bulletinLevel": "WARN",
-        "runDurationMillis": 0,
-        "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [
-          "failure",
-          "success"
-        ],
-        "scheduledState": "ENABLED",
-        "retryCount": 10,
-        "retriedRelationships": [],
-        "backoffMechanism": "PENALIZE_FLOWFILE",
-        "maxBackoffPeriod": "10 mins",
-        "componentType": "PROCESSOR",
-        "groupIdentifier": "2f1caad3-57cf-32b5-0000-000000000000"
-      },
-      {
-        "identifier": "3e0f5e4a-fb07-3ef1-0000-000000000000",
+        "identifier": "12ef5169-ff69-37a7-0000-000000000000",
         "name": "Fetch checksum",
         "comments": "",
         "position": {
@@ -189,10 +136,10 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "2f1caad3-57cf-32b5-0000-000000000000"
+        "groupIdentifier": "ce1a297e-74ed-3dc2-0000-000000000000"
       },
       {
-        "identifier": "a0b37ad3-03c3-3e0d-0000-000000000000",
+        "identifier": "214db4df-68d5-395d-0000-000000000000",
         "name": "Post to listener",
         "comments": "",
         "position": {
@@ -338,10 +285,63 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "2f1caad3-57cf-32b5-0000-000000000000"
+        "groupIdentifier": "ce1a297e-74ed-3dc2-0000-000000000000"
       },
       {
-        "identifier": "d1e62bcc-57ba-3b37-0000-000000000000",
+        "identifier": "49b298b6-26ff-3f85-0000-000000000000",
+        "name": "Hash content",
+        "comments": "",
+        "position": {
+          "x": 0.0,
+          "y": 400.0
+        },
+        "type": "org.apache.nifi.processors.standard.HashContent",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "Hash Attribute Name": "hash.value",
+          "Hash Algorithm": "SHA-256"
+        },
+        "propertyDescriptors": {
+          "Hash Attribute Name": {
+            "name": "Hash Attribute Name",
+            "displayName": "Hash Attribute Name",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Hash Algorithm": {
+            "name": "Hash Algorithm",
+            "displayName": "Hash Algorithm",
+            "identifiesControllerService": false,
+            "sensitive": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "failure",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "ce1a297e-74ed-3dc2-0000-000000000000"
+      },
+      {
+        "identifier": "c9312524-661b-32b9-0000-000000000000",
         "name": "Hash attribute",
         "comments": "",
         "position": {
@@ -391,7 +391,7 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "2f1caad3-57cf-32b5-0000-000000000000"
+        "groupIdentifier": "ce1a297e-74ed-3dc2-0000-000000000000"
       }
     ],
     "inputPorts": [],

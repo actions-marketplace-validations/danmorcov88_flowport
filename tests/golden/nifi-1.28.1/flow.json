@@ -10,7 +10,7 @@
         "alternatives": ""
       },
       "location": {
-        "id": "a9d5e0af-01a0-1000-d01e-52b0ad0043fe",
+        "id": "a9fea36b-01a0-1000-4979-ef051112ae6c",
         "kind": "REPORTING_TASK",
         "name": "Prometheus metrics",
         "path": "",
@@ -33,7 +33,7 @@
         "bundle": "com.example:example-custom-nar:1.0.0"
       },
       "location": {
-        "id": "a9d5eacb-01a0-1000-9142-0785ce1c22c2",
+        "id": "a9feac9a-01a0-1000-93a4-f924306fc1a1",
         "kind": "PROCESSOR",
         "name": "Custom Processor",
         "path": "/NiFi Flow/Custom NAR",
@@ -55,7 +55,7 @@
         "properties": "Proxy Host, Proxy Port, Proxy Type"
       },
       "location": {
-        "id": "a9d5eaaa-01a0-1000-0edb-e8c02571fb8e",
+        "id": "a9feac82-01a0-1000-86c3-97c64ed17d40",
         "kind": "PROCESSOR",
         "name": "Invoke through proxy",
         "path": "/NiFi Flow/Deprecated Properties",
@@ -78,7 +78,7 @@
         "names": "host, retries"
       },
       "location": {
-        "id": "a9d5de22-01a0-1000-5db3-96601876bacb",
+        "id": "a9fea0e4-01a0-1000-534e-e599939d0c5d",
         "kind": "PROCESS_GROUP",
         "name": "Existing Context",
         "path": "/NiFi Flow/Existing Context",
@@ -103,7 +103,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5de9a-01a0-1000-8a72-88520d72d5df",
+        "id": "a9fea156-01a0-1000-8791-28ab0bbe5599",
         "kind": "PROCESSOR",
         "name": "Listen with variable",
         "path": "/NiFi Flow/Existing Context",
@@ -128,7 +128,7 @@
         "variable": "retries"
       },
       "location": {
-        "id": "a9d5de9a-01a0-1000-8a72-88520d72d5df",
+        "id": "a9fea156-01a0-1000-8791-28ab0bbe5599",
         "kind": "PROCESSOR",
         "name": "Listen with variable",
         "path": "/NiFi Flow/Existing Context",
@@ -150,7 +150,7 @@
         "alternatives": " Documented alternatives: EncodeContent (org.apache.nifi.processors.standard.EncodeContent)."
       },
       "location": {
-        "id": "a9d5df05-01a0-1000-bf9a-6e8b293528a3",
+        "id": "a9fea1c7-01a0-1000-2b26-f7ef331dc7e5",
         "kind": "PROCESSOR",
         "name": "Base64 encode",
         "path": "/NiFi Flow/Removed Components",
@@ -173,7 +173,7 @@
         "alternatives": ""
       },
       "location": {
-        "id": "a9d5dfd4-01a0-1000-29ee-a3f0c0808864",
+        "id": "a9fea2a8-01a0-1000-cdcc-750428537daa",
         "kind": "PROCESSOR",
         "name": "Consume Kafka 2.6",
         "path": "/NiFi Flow/Removed Components",
@@ -196,7 +196,7 @@
         "alternatives": ""
       },
       "location": {
-        "id": "a9d5df89-01a0-1000-3f5b-7fff241410b3",
+        "id": "a9fea260-01a0-1000-b21d-2df1a0102b89",
         "kind": "PROCESSOR",
         "name": "Convert JSON to SQL",
         "path": "/NiFi Flow/Removed Components",
@@ -218,7 +218,7 @@
         "alternatives": " Documented alternatives: DecryptContent (org.apache.nifi.processors.cipher.DecryptContent), DecryptContentAge (org.apache.nifi.processors.cipher.DecryptContentAge), DecryptContentCompatibility (org.apache.nifi.processors.cipher.DecryptContentCompatibility), EncryptContentAge (org.apache.nifi.processors.cipher.EncryptContentAge), DecryptContentPGP (org.apache.nifi.processors.pgp.DecryptContentPGP), EncryptContentPGP (org.apache.nifi.processors.pgp.EncryptContentPGP)."
       },
       "location": {
-        "id": "a9d5dfa0-01a0-1000-e550-4a9b1eaf4fe1",
+        "id": "a9fea282-01a0-1000-1ff7-e4c43d33d1cb",
         "kind": "PROCESSOR",
         "name": "Encrypt content",
         "path": "/NiFi Flow/Removed Components",
@@ -241,7 +241,7 @@
         "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
       },
       "location": {
-        "id": "a9d5deb7-01a0-1000-3806-7bc7453de0e5",
+        "id": "a9fea16f-01a0-1000-f0d9-38d77f8b1cdc",
         "kind": "PROCESSOR",
         "name": "Fetch checksum",
         "path": "/NiFi Flow/Removed Components",
@@ -264,7 +264,7 @@
         "alternatives": " Documented alternatives: ConsumeJMS (org.apache.nifi.jms.processors.ConsumeJMS)."
       },
       "location": {
-        "id": "a9d5df74-01a0-1000-58b4-f9f1a9bf58da",
+        "id": "a9fea24a-01a0-1000-9109-62a82c929f8b",
         "kind": "PROCESSOR",
         "name": "Get JMS queue",
         "path": "/NiFi Flow/Removed Components",
@@ -287,7 +287,7 @@
         "alternatives": " Documented alternatives: UpdateAttribute (org.apache.nifi.processors.attributes.UpdateAttribute)."
       },
       "location": {
-        "id": "a9d5def0-01a0-1000-674b-b6bc7c03f283",
+        "id": "a9fea1b4-01a0-1000-448c-0b722980168b",
         "kind": "PROCESSOR",
         "name": "Hash attribute",
         "path": "/NiFi Flow/Removed Components",
@@ -310,7 +310,7 @@
         "alternatives": " Documented alternatives: CryptographicHashContent (org.apache.nifi.processors.standard.CryptographicHashContent)."
       },
       "location": {
-        "id": "a9d5dede-01a0-1000-ef71-650daf804bd5",
+        "id": "a9fea198-01a0-1000-ced5-989e16c3df9e",
         "kind": "PROCESSOR",
         "name": "Hash content",
         "path": "/NiFi Flow/Removed Components",
@@ -334,7 +334,7 @@
         "to_type": "org.apache.nifi.processors.jolt.JoltTransformJSON"
       },
       "location": {
-        "id": "a9d5e025-01a0-1000-9f0c-6355d7a80f51",
+        "id": "a9fea2e8-01a0-1000-196a-93ce6ec5b639",
         "kind": "PROCESSOR",
         "name": "Jolt transform",
         "path": "/NiFi Flow/Removed Components",
@@ -355,7 +355,7 @@
         "alternatives": ""
       },
       "location": {
-        "id": "a9d5df46-01a0-1000-a14a-95883e3ce832",
+        "id": "a9fea20b-01a0-1000-264f-43045486b89a",
         "kind": "PROCESSOR",
         "name": "Listen RELP",
         "path": "/NiFi Flow/Removed Components",
@@ -378,7 +378,7 @@
         "alternatives": ""
       },
       "location": {
-        "id": "a9d5df16-01a0-1000-4a99-b0dcfa6d8cf8",
+        "id": "a9fea1d8-01a0-1000-0e72-a03df3d12309",
         "kind": "PROCESSOR",
         "name": "Listen TCP records",
         "path": "/NiFi Flow/Removed Components",
@@ -401,7 +401,7 @@
         "alternatives": ""
       },
       "location": {
-        "id": "a9d5e091-01a0-1000-c0be-4b712f99dd44",
+        "id": "a9fea352-01a0-1000-6282-5a90f0c525fb",
         "kind": "CONTROLLER_SERVICE",
         "name": "Map cache client",
         "path": "/NiFi Flow/Removed Components",
@@ -424,7 +424,7 @@
         "alternatives": ""
       },
       "location": {
-        "id": "a9d5e067-01a0-1000-2a03-0cda7e19383b",
+        "id": "a9fea328-01a0-1000-fe7e-cdd697a35208",
         "kind": "CONTROLLER_SERVICE",
         "name": "Map cache server",
         "path": "/NiFi Flow/Removed Components",
@@ -447,7 +447,7 @@
         "alternatives": ""
       },
       "location": {
-        "id": "a9d5df2d-01a0-1000-3f65-e8b61e28ea5a",
+        "id": "a9fea1f7-01a0-1000-560e-963fc04e7c20",
         "kind": "PROCESSOR",
         "name": "Parse CEF",
         "path": "/NiFi Flow/Removed Components",
@@ -470,7 +470,7 @@
         "alternatives": " Documented alternatives: PublishSlack (org.apache.nifi.processors.slack.PublishSlack)."
       },
       "location": {
-        "id": "a9d5dfbd-01a0-1000-c701-ea1bf8520b9d",
+        "id": "a9fea29a-01a0-1000-7da3-16fccbf85102",
         "kind": "PROCESSOR",
         "name": "Post to Slack",
         "path": "/NiFi Flow/Removed Components",
@@ -493,7 +493,7 @@
         "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
       },
       "location": {
-        "id": "a9d5decd-01a0-1000-c7fb-baf541b4dbe5",
+        "id": "a9fea186-01a0-1000-ab3e-33e43447fc00",
         "kind": "PROCESSOR",
         "name": "Post to listener",
         "path": "/NiFi Flow/Removed Components",
@@ -516,7 +516,7 @@
         "alternatives": " Documented alternatives: PutAzureBlobStorage_v12 (org.apache.nifi.processors.azure.storage.PutAzureBlobStorage_v12)."
       },
       "location": {
-        "id": "a9d5dff6-01a0-1000-e450-a0778a37fc56",
+        "id": "a9fea2cb-01a0-1000-d72e-6388245ddeeb",
         "kind": "PROCESSOR",
         "name": "Put Azure blob (v8)",
         "path": "/NiFi Flow/Removed Components",
@@ -539,7 +539,7 @@
         "alternatives": " Documented alternatives: PutElasticsearchJson (org.apache.nifi.processors.elasticsearch.PutElasticsearchJson)."
       },
       "location": {
-        "id": "a9d5dfe6-01a0-1000-4987-6db0e86c7653",
+        "id": "a9fea2b9-01a0-1000-66ce-ad44aaf94573",
         "kind": "PROCESSOR",
         "name": "Put Elasticsearch HTTP",
         "path": "/NiFi Flow/Removed Components",
@@ -562,7 +562,7 @@
         "alternatives": " Documented alternatives: PublishJMS (org.apache.nifi.jms.processors.PublishJMS)."
       },
       "location": {
-        "id": "a9d5df5e-01a0-1000-63f7-262f11dc21aa",
+        "id": "a9fea231-01a0-1000-efcb-d07a6dff3a1a",
         "kind": "PROCESSOR",
         "name": "Put JMS",
         "path": "/NiFi Flow/Removed Components",
@@ -585,7 +585,7 @@
         "name": "Removed Components Template"
       },
       "location": {
-        "id": "4162e1c2-0c80-49ef-a7e5-99aa0841af72",
+        "id": "1ca7502e-b587-41ee-8c22-e47cc093b283",
         "kind": "TEMPLATE",
         "name": "Removed Components Template",
         "path": "/NiFi Flow/Removed Components",
@@ -602,13 +602,239 @@
       "title": "Template stored in the flow"
     },
     {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a9febabf-01a0-1000-d082-babc043f3f51",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Cache client",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService"
+      },
+      "message": "DistributedMapCacheClientService does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13596"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a9febaab-01a0-1000-b22c-ab6f1d0d4b7a",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Cache server",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer"
+      },
+      "message": "DistributedMapCacheServer does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13596"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: EncodeContent (org.apache.nifi.processors.standard.EncodeContent)."
+      },
+      "location": {
+        "id": "a9febb44-01a0-1000-3661-4a095097b2e3",
+        "kind": "PROCESSOR",
+        "name": "Encode",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.processors.standard.Base64EncodeContent"
+      },
+      "message": "Base64EncodeContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: EncodeContent (org.apache.nifi.processors.standard.EncodeContent).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "a9febb33-01a0-1000-933d-38481bedee29",
+        "kind": "PROCESSOR",
+        "name": "Fetch",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.processors.standard.GetHTTP"
+      },
+      "message": "GetHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "to_bundle": "org.apache.nifi:nifi-jolt-nar",
+        "to_type": "org.apache.nifi.processors.jolt.JoltTransformJSON"
+      },
+      "location": {
+        "id": "a9febb6f-01a0-1000-cfe2-e77d714ebb38",
+        "kind": "PROCESSOR",
+        "name": "Jolt",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.processors.standard.JoltTransformJSON"
+      },
+      "message": "JoltTransformJSON does not exist under this class name in NiFi 2.12.0; a component of the same name exists as org.apache.nifi.processors.jolt.JoltTransformJSON in bundle org.apache.nifi:nifi-jolt-nar. NiFi does not map the old name and loads a ghost component.",
+      "rule_id": "NIFI2-RENAMED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features"
+      ],
+      "suggestion": "Change the component type to org.apache.nifi.processors.jolt.JoltTransformJSON and its bundle to org.apache.nifi:nifi-jolt-nar. Check that its properties still match.",
+      "title": "Component type renamed or moved in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "to_bundle": "org.apache.nifi:nifi-jolt-nar",
+        "to_type": "org.apache.nifi.processors.jolt.JoltTransformRecord"
+      },
+      "location": {
+        "id": "a9febbd3-01a0-1000-fe83-fbe74bcdbc3d",
+        "kind": "PROCESSOR",
+        "name": "Jolt record",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.processors.jolt.record.JoltTransformRecord"
+      },
+      "message": "JoltTransformRecord does not exist under this class name in NiFi 2.12.0; a component of the same name exists as org.apache.nifi.processors.jolt.JoltTransformRecord in bundle org.apache.nifi:nifi-jolt-nar. NiFi does not map the old name and loads a ghost component.",
+      "rule_id": "NIFI2-RENAMED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features"
+      ],
+      "suggestion": "Change the component type to org.apache.nifi.processors.jolt.JoltTransformRecord and its bundle to org.apache.nifi:nifi-jolt-nar. Check that its properties still match.",
+      "title": "Component type renamed or moved in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "a9febba1-01a0-1000-aee3-4569f8db5059",
+        "kind": "PROCESSOR",
+        "name": "Post",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.processors.standard.PostHTTP"
+      },
+      "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "a9febbf6-01a0-1000-7220-3cb67b73c228",
+        "kind": "PROCESSOR",
+        "name": "Post packaged",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.processors.standard.PostHTTP"
+      },
+      "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a9febae7-01a0-1000-9e61-2acabd659894",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Set client",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.distributed.cache.client.DistributedSetCacheClientService"
+      },
+      "message": "DistributedSetCacheClientService does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a9febad5-01a0-1000-b6d4-49e5633d38ba",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Set server",
+        "path": "/NiFi Flow/Replacements",
+        "type": "org.apache.nifi.distributed.cache.server.DistributedSetCacheServer"
+      },
+      "message": "DistributedSetCacheServer does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
       "category": "scheduling",
       "details": {
         "expression": "0 0 6 ? * 1",
         "field": "1"
       },
       "location": {
-        "id": "a9d5ea70-01a0-1000-80e3-798745e84bca",
+        "id": "a9feac55-01a0-1000-28e3-c1801ddf0f2d",
         "kind": "PROCESSOR",
         "name": "Cron with numeric weekday",
         "path": "/NiFi Flow/Scheduling",
@@ -630,7 +856,7 @@
         "expression": "0 0 12 * * ? 2030"
       },
       "location": {
-        "id": "a9d5ea5b-01a0-1000-f7d5-22d1ce60563e",
+        "id": "a9feac41-01a0-1000-3363-e3582f0d7738",
         "kind": "PROCESSOR",
         "name": "Cron with year field",
         "path": "/NiFi Flow/Scheduling",
@@ -650,7 +876,7 @@
       "category": "scheduling",
       "details": {},
       "location": {
-        "id": "a9d5ea3d-01a0-1000-82e8-15a5fb743215",
+        "id": "a9feac28-01a0-1000-1f6c-e3156b9af39d",
         "kind": "PROCESSOR",
         "name": "Event driven",
         "path": "/NiFi Flow/Scheduling",
@@ -673,7 +899,7 @@
         "engine": "ECMAScript"
       },
       "location": {
-        "id": "a9d5e21c-01a0-1000-3c3d-0191df76c54e",
+        "id": "a9fea4fe-01a0-1000-f7bc-b96f659621d5",
         "kind": "PROCESSOR",
         "name": "ECMAScript script",
         "path": "/NiFi Flow/Scripting",
@@ -698,7 +924,7 @@
         "engine": "python"
       },
       "location": {
-        "id": "a9d5e0df-01a0-1000-889a-78e372aaf3ce",
+        "id": "a9fea397-01a0-1000-1f6e-126a0bd77d66",
         "kind": "PROCESSOR",
         "name": "Jython script",
         "path": "/NiFi Flow/Scripting",
@@ -723,7 +949,7 @@
         "engine": "python"
       },
       "location": {
-        "id": "a9d5e894-01a0-1000-7032-7ea02eb2f626",
+        "id": "a9feaaa9-01a0-1000-776c-70eb2f7e5c2f",
         "kind": "CONTROLLER_SERVICE",
         "name": "Lookup in Jython",
         "path": "/NiFi Flow/Scripting",
@@ -748,7 +974,7 @@
         "engine": "lua"
       },
       "location": {
-        "id": "a9d5e25f-01a0-1000-ff16-5ce31115e55c",
+        "id": "a9fea526-01a0-1000-211e-16c1f53eb204",
         "kind": "PROCESSOR",
         "name": "Lua script",
         "path": "/NiFi Flow/Scripting",
@@ -773,7 +999,7 @@
         "engine": "ruby"
       },
       "location": {
-        "id": "a9d5e23e-01a0-1000-2332-f57633b76d0a",
+        "id": "a9fea513-01a0-1000-1f12-69df9e1ea645",
         "kind": "PROCESSOR",
         "name": "Ruby script",
         "path": "/NiFi Flow/Scripting",
@@ -798,7 +1024,7 @@
         "engine": "python"
       },
       "location": {
-        "id": "a9d5e2c0-01a0-1000-8fab-e7a370888032",
+        "id": "a9fea561-01a0-1000-0e8b-ee9ed17698d3",
         "kind": "PROCESSOR",
         "name": "Scripted processor in Jython",
         "path": "/NiFi Flow/Scripting",
@@ -822,7 +1048,7 @@
         "name": "Template Conversion Template"
       },
       "location": {
-        "id": "8ecbb071-c822-4f1d-9408-ac9c505342da",
+        "id": "7e733cea-01a2-450a-b1d8-0009a8d1fb97",
         "kind": "TEMPLATE",
         "name": "Template Conversion Template",
         "path": "/NiFi Flow/Template Conversion",
@@ -847,7 +1073,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5dd58-01a0-1000-50f0-8dc4399c102a",
+        "id": "a9fea014-01a0-1000-d72b-4451e9f98928",
         "kind": "PROCESSOR",
         "name": "Build URL attribute",
         "path": "/NiFi Flow/Variables",
@@ -873,7 +1099,7 @@
         "variable": "port"
       },
       "location": {
-        "id": "a9d5dd58-01a0-1000-50f0-8dc4399c102a",
+        "id": "a9fea014-01a0-1000-d72b-4451e9f98928",
         "kind": "PROCESSOR",
         "name": "Build URL attribute",
         "path": "/NiFi Flow/Variables",
@@ -899,7 +1125,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5dcdf-01a0-1000-45bb-ca683e110296",
+        "id": "a9fe9fae-01a0-1000-2652-c5afe6610c91",
         "kind": "PROCESSOR",
         "name": "Generate with host text",
         "path": "/NiFi Flow/Variables",
@@ -924,7 +1150,7 @@
         "variable": "port"
       },
       "location": {
-        "id": "a9d5dcdf-01a0-1000-45bb-ca683e110296",
+        "id": "a9fe9fae-01a0-1000-2652-c5afe6610c91",
         "kind": "PROCESSOR",
         "name": "Generate with host text",
         "path": "/NiFi Flow/Variables",
@@ -949,7 +1175,7 @@
         "variable": "port"
       },
       "location": {
-        "id": "a9d5dc67-01a0-1000-8571-6cfe1cebba2d",
+        "id": "a9fe9f1b-01a0-1000-ce0a-4d3fe1abf99d",
         "kind": "PROCESSOR",
         "name": "Listen on variable port",
         "path": "/NiFi Flow/Variables",
@@ -974,7 +1200,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5dd76-01a0-1000-d9f9-fbd922a7f62c",
+        "id": "a9fea02d-01a0-1000-c1ff-bbc41a093670",
         "kind": "PROCESSOR",
         "name": "Log literal dollar text",
         "path": "/NiFi Flow/Variables",
@@ -998,7 +1224,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5dcfa-01a0-1000-e1b4-5bf83fb153bd",
+        "id": "a9fe9fcc-01a0-1000-6c73-c09d3d710896",
         "kind": "PROCESSOR",
         "name": "Put to shadowed directory",
         "path": "/NiFi Flow/Variables",
@@ -1024,7 +1250,7 @@
         "variable": "shared"
       },
       "location": {
-        "id": "a9d5dd8d-01a0-1000-8562-e52e3a1a8974",
+        "id": "a9fea041-01a0-1000-f4fa-163764330dd2",
         "kind": "PROCESSOR",
         "name": "Tail with function",
         "path": "/NiFi Flow/Variables",
@@ -1046,7 +1272,7 @@
         "variable": "bad name!"
       },
       "location": {
-        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
+        "id": "a9fe9e75-01a0-1000-414d-eabdfff8040f",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/NiFi Flow/Variables",
@@ -1069,7 +1295,7 @@
         "variable": "bad name!"
       },
       "location": {
-        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
+        "id": "a9fe9e75-01a0-1000-414d-eabdfff8040f",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/NiFi Flow/Variables",
@@ -1091,7 +1317,7 @@
         "variable": "unused.var"
       },
       "location": {
-        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
+        "id": "a9fe9e75-01a0-1000-414d-eabdfff8040f",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/NiFi Flow/Variables",
@@ -1113,7 +1339,7 @@
         "names": "bad name!, host, port, shared, unused.var"
       },
       "location": {
-        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
+        "id": "a9fe9e75-01a0-1000-414d-eabdfff8040f",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/NiFi Flow/Variables",
@@ -1136,7 +1362,7 @@
         "names": "path, shared"
       },
       "location": {
-        "id": "a9d5ddaf-01a0-1000-08e2-2eb48c1c175e",
+        "id": "a9fea070-01a0-1000-35ca-d75ccb1ef5b9",
         "kind": "PROCESS_GROUP",
         "name": "Child",
         "path": "/NiFi Flow/Variables/Child",
@@ -1161,7 +1387,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5ddde-01a0-1000-560c-0470f8d93b3d",
+        "id": "a9fea09e-01a0-1000-b8d0-79463c2e2625",
         "kind": "PROCESSOR",
         "name": "Generate with parent host",
         "path": "/NiFi Flow/Variables/Child",
@@ -1186,7 +1412,7 @@
         "variable": "path"
       },
       "location": {
-        "id": "a9d5ddca-01a0-1000-12e2-a177dfe76fa8",
+        "id": "a9fea08a-01a0-1000-df45-e38e1645738a",
         "kind": "PROCESSOR",
         "name": "Get from variable path",
         "path": "/NiFi Flow/Variables/Child",
@@ -1211,7 +1437,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5de0f-01a0-1000-e58d-c2d8c2c2d2c7",
+        "id": "a9fea0d1-01a0-1000-cfc3-699df4292b90",
         "kind": "PROCESSOR",
         "name": "Generate with inherited host",
         "path": "/NiFi Flow/Variables/Child/Grandchild",
@@ -1236,7 +1462,7 @@
         "variable": "path"
       },
       "location": {
-        "id": "a9d5ddfc-01a0-1000-419f-7fffe6888ac8",
+        "id": "a9fea0be-01a0-1000-9beb-842244c26f4a",
         "kind": "PROCESSOR",
         "name": "Get from inherited path",
         "path": "/NiFi Flow/Variables/Child/Grandchild",
@@ -1261,7 +1487,7 @@
         "variable": "shared"
       },
       "location": {
-        "id": "a9d5ddfc-01a0-1000-419f-7fffe6888ac8",
+        "id": "a9fea0be-01a0-1000-9beb-842244c26f4a",
         "kind": "PROCESSOR",
         "name": "Get from inherited path",
         "path": "/NiFi Flow/Variables/Child/Grandchild",
@@ -1281,16 +1507,16 @@
   "input": {
     "kind": "flow",
     "name": "flow.json.gz",
-    "sha256": "7e7ba7ecf0af3f887da0a1baacb03034bc81a384ad91f44b0e5e0e1105b22957"
+    "sha256": "a88b19c5a6bb20ddf2cab7196914e623cce19886f9d0bf5a3a281d4c53fce399"
   },
   "summary": {
     "bundle_versions": {
-      "1.28.1": 58
+      "1.28.1": 73
     },
     "by_category": {
       "custom-nar": 1,
       "deprecated-property": 1,
-      "removed-component": 20,
+      "removed-component": 30,
       "scheduling": 3,
       "script-engine": 6,
       "templates": 2,
@@ -1301,8 +1527,8 @@
       "NIFI2-CRON-YEAR-FIELD": 1,
       "NIFI2-EVENT-DRIVEN": 1,
       "NIFI2-INVOKEHTTP-PROXY-PROPERTIES": 1,
-      "NIFI2-REMOVED-COMPONENT": 19,
-      "NIFI2-RENAMED-COMPONENT": 1,
+      "NIFI2-REMOVED-COMPONENT": 27,
+      "NIFI2-RENAMED-COMPONENT": 3,
       "NIFI2-SCRIPT-ENGINE": 6,
       "NIFI2-TEMPLATE": 2,
       "NIFI2-THIRD-PARTY-BUNDLE": 1,
@@ -1316,13 +1542,13 @@
     },
     "by_severity": {
       "AUTO_FIXABLE": 13,
-      "BLOCKER": 28,
+      "BLOCKER": 38,
       "INFO": 4,
       "MANUAL": 9
     },
-    "components": 59,
-    "process_groups": 13,
-    "total": 54
+    "components": 74,
+    "process_groups": 14,
+    "total": 64
   },
   "warnings": []
 }

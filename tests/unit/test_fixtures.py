@@ -38,5 +38,6 @@ def test_expected_groups_present() -> None:
         "Custom NAR",
         "Clean",
         "Template Conversion",
+        "Replacements",
     }
     assert len(flow["templates"]) == 2

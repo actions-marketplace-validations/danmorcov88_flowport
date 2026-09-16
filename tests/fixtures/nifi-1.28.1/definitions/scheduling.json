@@ -1,7 +1,7 @@
 {
   "flowContents": {
-    "identifier": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6",
-    "instanceIdentifier": "a9d5ea1d-01a0-1000-e34a-02b21a53e411",
+    "identifier": "d8783884-a8be-3565-8730-724d150615ce",
+    "instanceIdentifier": "a9feac10-01a0-1000-07f1-a2f7c3b68eb5",
     "name": "Scheduling",
     "comments": "",
     "position": {
@@ -12,8 +12,8 @@
     "remoteProcessGroups": [],
     "processors": [
       {
-        "identifier": "5c855aa0-61ea-3ed6-87bb-46beb9ea09f4",
-        "instanceIdentifier": "a9d5ea5b-01a0-1000-f7d5-22d1ce60563e",
+        "identifier": "fe1a2335-b04e-3033-9148-498f06cc0f11",
+        "instanceIdentifier": "a9feac41-01a0-1000-3363-e3582f0d7738",
         "name": "Cron with year field",
         "comments": "",
         "position": {
@@ -97,16 +97,16 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6"
+        "groupIdentifier": "d8783884-a8be-3565-8730-724d150615ce"
       },
       {
-        "identifier": "29df0ebc-39ef-3871-a6a2-b9d1e08262ae",
-        "instanceIdentifier": "a9d5ea70-01a0-1000-80e3-798745e84bca",
-        "name": "Cron with numeric weekday",
+        "identifier": "9084c903-5b0b-3a0a-b622-c457170aa996",
+        "instanceIdentifier": "a9feac19-01a0-1000-97c1-22f373ed37ce",
+        "name": "Timer source",
         "comments": "",
         "position": {
-          "x": 400.0,
-          "y": 200.0
+          "x": 0.0,
+          "y": 0.0
         },
         "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
         "bundle": {
@@ -168,28 +168,26 @@
           }
         },
         "style": {},
-        "schedulingPeriod": "0 0 6 ? * 1",
-        "schedulingStrategy": "CRON_DRIVEN",
+        "schedulingPeriod": "1 min",
+        "schedulingStrategy": "TIMER_DRIVEN",
         "executionNode": "ALL",
         "penaltyDuration": "30 sec",
         "yieldDuration": "1 sec",
         "bulletinLevel": "WARN",
         "runDurationMillis": 0,
         "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [
-          "success"
-        ],
+        "autoTerminatedRelationships": [],
         "scheduledState": "ENABLED",
         "retryCount": 10,
         "retriedRelationships": [],
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6"
+        "groupIdentifier": "d8783884-a8be-3565-8730-724d150615ce"
       },
       {
-        "identifier": "2459923f-a412-3bab-9fd4-4128d9b80555",
-        "instanceIdentifier": "a9d5ea81-01a0-1000-8ea8-015b2e6c87cf",
+        "identifier": "e8797b7c-6756-37a4-b795-3801b7d38d26",
+        "instanceIdentifier": "a9feac63-01a0-1000-7476-7a9468dce997",
         "name": "Cron unaffected",
         "comments": "",
         "position": {
@@ -273,11 +271,11 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6"
+        "groupIdentifier": "d8783884-a8be-3565-8730-724d150615ce"
       },
       {
-        "identifier": "2ac397ae-53ec-3b7b-b7da-dd19c18869c8",
-        "instanceIdentifier": "a9d5ea3d-01a0-1000-82e8-15a5fb743215",
+        "identifier": "599260e9-3b39-3a99-9713-3c5c8d1e3d78",
+        "instanceIdentifier": "a9feac28-01a0-1000-1f6c-e3156b9af39d",
         "name": "Event driven",
         "comments": "",
         "position": {
@@ -347,16 +345,16 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6"
+        "groupIdentifier": "d8783884-a8be-3565-8730-724d150615ce"
       },
       {
-        "identifier": "9779d5f4-538d-35f5-b2cc-fe83ae27cda9",
-        "instanceIdentifier": "a9d5ea2c-01a0-1000-2c46-8de7b4f6b00a",
-        "name": "Timer source",
+        "identifier": "b34a1a5c-6578-3905-a09d-f3d3f77f98e0",
+        "instanceIdentifier": "a9feac55-01a0-1000-28e3-c1801ddf0f2d",
+        "name": "Cron with numeric weekday",
         "comments": "",
         "position": {
-          "x": 0.0,
-          "y": 0.0
+          "x": 400.0,
+          "y": 200.0
         },
         "type": "org.apache.nifi.processors.standard.GenerateFlowFile",
         "bundle": {
@@ -418,45 +416,47 @@
           }
         },
         "style": {},
-        "schedulingPeriod": "1 min",
-        "schedulingStrategy": "TIMER_DRIVEN",
+        "schedulingPeriod": "0 0 6 ? * 1",
+        "schedulingStrategy": "CRON_DRIVEN",
         "executionNode": "ALL",
         "penaltyDuration": "30 sec",
         "yieldDuration": "1 sec",
         "bulletinLevel": "WARN",
         "runDurationMillis": 0,
         "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [],
+        "autoTerminatedRelationships": [
+          "success"
+        ],
         "scheduledState": "ENABLED",
         "retryCount": 10,
         "retriedRelationships": [],
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6"
+        "groupIdentifier": "d8783884-a8be-3565-8730-724d150615ce"
       }
     ],
     "inputPorts": [],
     "outputPorts": [],
     "connections": [
       {
-        "identifier": "ad26d1bd-1ec8-3e2d-bfc8-9d6b6691ed76",
-        "instanceIdentifier": "a9d5ea51-01a0-1000-d511-ca82504611b2",
+        "identifier": "52980e9a-7ca2-3d32-947b-0c4ea1988c68",
+        "instanceIdentifier": "a9feac39-01a0-1000-cbd6-09704930ae44",
         "source": {
-          "id": "9779d5f4-538d-35f5-b2cc-fe83ae27cda9",
+          "id": "9084c903-5b0b-3a0a-b622-c457170aa996",
           "type": "PROCESSOR",
-          "groupId": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6",
+          "groupId": "d8783884-a8be-3565-8730-724d150615ce",
           "name": "Timer source",
           "comments": "",
-          "instanceIdentifier": "a9d5ea2c-01a0-1000-2c46-8de7b4f6b00a"
+          "instanceIdentifier": "a9feac19-01a0-1000-97c1-22f373ed37ce"
         },
         "destination": {
-          "id": "2ac397ae-53ec-3b7b-b7da-dd19c18869c8",
+          "id": "599260e9-3b39-3a99-9713-3c5c8d1e3d78",
           "type": "PROCESSOR",
-          "groupId": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6",
+          "groupId": "d8783884-a8be-3565-8730-724d150615ce",
           "name": "Event driven",
           "comments": "",
-          "instanceIdentifier": "a9d5ea3d-01a0-1000-82e8-15a5fb743215"
+          "instanceIdentifier": "a9feac28-01a0-1000-1f6c-e3156b9af39d"
         },
         "labelIndex": 1,
         "zIndex": 0,
@@ -471,7 +471,7 @@
         "loadBalanceStrategy": "DO_NOT_LOAD_BALANCE",
         "loadBalanceCompression": "DO_NOT_COMPRESS",
         "componentType": "CONNECTION",
-        "groupIdentifier": "8ddcbdc9-6766-3a5f-9b09-7b5356f3e9f6"
+        "groupIdentifier": "d8783884-a8be-3565-8730-724d150615ce"
       }
     ],
     "labels": [],

@@ -10,7 +10,7 @@
         "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
       },
       "location": {
-        "id": "3e0f5e4a-fb07-3ef1-0000-000000000000",
+        "id": "12ef5169-ff69-37a7-0000-000000000000",
         "kind": "PROCESSOR",
         "name": "Fetch checksum",
         "path": "/Removed Components Template",
@@ -33,7 +33,7 @@
         "alternatives": " Documented alternatives: UpdateAttribute (org.apache.nifi.processors.attributes.UpdateAttribute)."
       },
       "location": {
-        "id": "d1e62bcc-57ba-3b37-0000-000000000000",
+        "id": "c9312524-661b-32b9-0000-000000000000",
         "kind": "PROCESSOR",
         "name": "Hash attribute",
         "path": "/Removed Components Template",
@@ -56,7 +56,7 @@
         "alternatives": " Documented alternatives: CryptographicHashContent (org.apache.nifi.processors.standard.CryptographicHashContent)."
       },
       "location": {
-        "id": "13fee864-c477-3c3a-0000-000000000000",
+        "id": "49b298b6-26ff-3f85-0000-000000000000",
         "kind": "PROCESSOR",
         "name": "Hash content",
         "path": "/Removed Components Template",
@@ -79,7 +79,7 @@
         "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
       },
       "location": {
-        "id": "a0b37ad3-03c3-3e0d-0000-000000000000",
+        "id": "214db4df-68d5-395d-0000-000000000000",
         "kind": "PROCESSOR",
         "name": "Post to listener",
         "path": "/Removed Components Template",

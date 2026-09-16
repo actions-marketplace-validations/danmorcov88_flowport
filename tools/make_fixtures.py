@@ -1003,6 +1003,119 @@ def build_template_conversion(nifi: NiFi, root: str) -> tuple[str, dict[str, Any
     return group, entities
 
 
+def build_replacements(nifi: NiFi, root: str) -> str:
+    """Components with a documented 1:1 replacement, wired together so that the
+    relationship mapping and the controller service references are exercised."""
+    group = nifi.create_group(root, "Replacements", x=4800, y=0)
+    cache = "org.apache.nifi.distributed.cache."
+    nifi.create_controller_service(
+        group, cache + "server.map.DistributedMapCacheServer", "Cache server", {"Port": "4558"}
+    )
+    client = nifi.create_controller_service(
+        group,
+        cache + "client.DistributedMapCacheClientService",
+        "Cache client",
+        {"Server Hostname": "localhost", "Server Port": "4558"},
+    )
+    nifi.create_controller_service(
+        group, cache + "server.DistributedSetCacheServer", "Set server", {"Port": "4559"}
+    )
+    nifi.create_controller_service(
+        group,
+        cache + "client.DistributedSetCacheClientService",
+        "Set client",
+        {"Server Hostname": "localhost", "Server Port": "4559"},
+    )
+    reader = nifi.create_controller_service(group, "org.apache.nifi.csv.CSVReader", "Reader")
+    writer = nifi.create_controller_service(
+        group, "org.apache.nifi.json.JsonRecordSetWriter", "Writer"
+    )
+
+    fetch = nifi.create_processor(
+        group,
+        STD + "GetHTTP",
+        "Fetch",
+        {
+            "URL": "https://example.org/data.json",
+            "Filename": "data.json",
+            "Follow Redirects": "true",
+            "User Agent": "flowport-fixture",
+            "Accept Content-Type": "application/json",
+        },
+        config={"schedulingPeriod": "1 min"},
+    )
+    encode = nifi.create_processor(
+        group, STD + "Base64EncodeContent", "Encode", {"Mode": "Decode"}, y=200
+    )
+    dedupe = nifi.create_processor(
+        group,
+        STD + "DetectDuplicate",
+        "Dedupe",
+        {"Cache Entry Identifier": "${uuid}", "Distributed Cache Service": client["id"]},
+        y=400,
+    )
+    jolt = nifi.create_processor(
+        group,
+        STD + "JoltTransformJSON",
+        "Jolt",
+        {"jolt-transform": "jolt-transform-shift", "jolt-spec": '{"a": "b"}'},
+        y=600,
+    )
+    post = nifi.create_processor(
+        group,
+        STD + "PostHTTP",
+        "Post",
+        {
+            "URL": "http://localhost:8081/contentListener",
+            "Compression Level": "6",
+            "Use Chunked Encoding": "true",
+            "Attributes to Send as HTTP Headers (Regex)": "x-.*",
+            "Content-Type": "application/json",
+        },
+        y=800,
+    )
+    sent = nifi.create_processor(
+        group, STD + "LogAttribute", "Sent", None, y=1000, auto_terminate=["success"]
+    )
+    failed = nifi.create_processor(
+        group, STD + "LogAttribute", "Failed", None, x=400, y=600, auto_terminate=["success"]
+    )
+    nifi.create_processor(
+        group,
+        "org.apache.nifi.processors.jolt.record.JoltTransformRecord",
+        "Jolt record",
+        {
+            "jolt-record-record-reader": reader["id"],
+            "jolt-record-record-writer": writer["id"],
+            "jolt-record-transform": "jolt-transform-shift",
+            "jolt-record-spec": '{"a": "b"}',
+        },
+        x=800,
+        y=0,
+        auto_terminate=["success", "failure", "original"],
+    )
+    nifi.create_processor(
+        group,
+        STD + "PostHTTP",
+        "Post packaged",
+        {"URL": "http://localhost:8081/contentListener", "Send as FlowFile": "true"},
+        x=800,
+        y=200,
+        auto_terminate=["success", "failure"],
+    )
+
+    nifi.connect(group, fetch, encode, ["success"])
+    nifi.connect(group, encode, dedupe, ["success"])
+    nifi.connect(group, encode, failed, ["failure"])
+    nifi.connect(group, dedupe, jolt, ["non-duplicate"])
+    nifi.connect(group, dedupe, failed, ["duplicate"])
+    nifi.connect(group, jolt, post, ["success"])
+    nifi.connect(group, jolt, failed, ["failure"])
+    nifi.connect(group, post, sent, ["success"])
+    nifi.connect(group, post, failed, ["failure"])
+    return group
+
+
 # ---------------------------------------------------------------------------
 # Docker and export
 # ---------------------------------------------------------------------------
@@ -1128,6 +1241,7 @@ def main() -> int:
     groups["clean"] = build_clean(nifi, root)
     conversion_group, conversion_entities = build_template_conversion(nifi, root)
     groups["template-conversion"] = conversion_group
+    groups["replacements"] = build_replacements(nifi, root)
     templates = {
         "removed-components": nifi.create_template(
             removed_group, "Removed Components Template", removed_processors[:4]

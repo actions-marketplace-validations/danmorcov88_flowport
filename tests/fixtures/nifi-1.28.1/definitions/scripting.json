@@ -1,7 +1,7 @@
 {
   "flowContents": {
-    "identifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32",
-    "instanceIdentifier": "a9d5e0d8-01a0-1000-032f-2fe54a4fcc2d",
+    "identifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10",
+    "instanceIdentifier": "a9fea38b-01a0-1000-3810-c2d46881cf0c",
     "name": "Scripting",
     "comments": "",
     "position": {
@@ -12,13 +12,91 @@
     "remoteProcessGroups": [],
     "processors": [
       {
-        "identifier": "48674746-2af9-3f52-9019-de9e677edf77",
-        "instanceIdentifier": "a9d5e28b-01a0-1000-78f1-bee7d14e29bd",
-        "name": "Groovy script",
+        "identifier": "a967bb79-7537-3e10-a0d2-1441049f2c3f",
+        "instanceIdentifier": "a9fea561-01a0-1000-0e8b-ee9ed17698d3",
+        "name": "Scripted processor in Jython",
         "comments": "",
         "position": {
-          "x": 400.0,
+          "x": 800.0,
           "y": 200.0
+        },
+        "type": "org.apache.nifi.processors.script.InvokeScriptedProcessor",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-scripting-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "Script File": null,
+          "Script Engine": "python",
+          "Script Body": "class P: pass\n",
+          "Module Directory": null
+        },
+        "propertyDescriptors": {
+          "Script File": {
+            "name": "Script File",
+            "displayName": "Script File",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "resourceDefinition": {
+              "cardinality": "SINGLE",
+              "resourceTypes": [
+                "FILE"
+              ]
+            }
+          },
+          "Script Engine": {
+            "name": "Script Engine",
+            "displayName": "Script Engine",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Script Body": {
+            "name": "Script Body",
+            "displayName": "Script Body",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Module Directory": {
+            "name": "Module Directory",
+            "displayName": "Module Directory",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "resourceDefinition": {
+              "cardinality": "MULTIPLE",
+              "resourceTypes": [
+                "DIRECTORY",
+                "FILE"
+              ]
+            }
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
+      },
+      {
+        "identifier": "70df9043-af12-30fe-820e-15329a95f353",
+        "instanceIdentifier": "a9fea513-01a0-1000-1f12-69df9e1ea645",
+        "name": "Ruby script",
+        "comments": "",
+        "position": {
+          "x": 800.0,
+          "y": 0.0
         },
         "type": "org.apache.nifi.processors.script.ExecuteScript",
         "bundle": {
@@ -28,8 +106,8 @@
         },
         "properties": {
           "Script File": null,
-          "Script Engine": "Groovy",
-          "Script Body": "def ff = session.get()\n",
+          "Script Engine": "ruby",
+          "Script Body": "ff = session.get\n",
           "Module Directory": null
         },
         "propertyDescriptors": {
@@ -90,11 +168,173 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
       },
       {
-        "identifier": "16f9d3bb-a75b-3f72-808e-f5a03b31c1bd",
-        "instanceIdentifier": "a9d5e87e-01a0-1000-2804-e7349acb4222",
+        "identifier": "315ac44d-c8c7-38e1-8242-3434b256ba90",
+        "instanceIdentifier": "a9fea397-01a0-1000-1f6e-126a0bd77d66",
+        "name": "Jython script",
+        "comments": "",
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "type": "org.apache.nifi.processors.script.ExecuteScript",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-scripting-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "Script File": null,
+          "Script Engine": "python",
+          "Script Body": "flowFile = session.get()\n",
+          "Module Directory": null
+        },
+        "propertyDescriptors": {
+          "Script File": {
+            "name": "Script File",
+            "displayName": "Script File",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "resourceDefinition": {
+              "cardinality": "SINGLE",
+              "resourceTypes": [
+                "FILE"
+              ]
+            }
+          },
+          "Script Engine": {
+            "name": "Script Engine",
+            "displayName": "Script Engine",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Script Body": {
+            "name": "Script Body",
+            "displayName": "Script Body",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Module Directory": {
+            "name": "Module Directory",
+            "displayName": "Module Directory",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "resourceDefinition": {
+              "cardinality": "MULTIPLE",
+              "resourceTypes": [
+                "DIRECTORY",
+                "FILE"
+              ]
+            }
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "success",
+          "failure"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
+      },
+      {
+        "identifier": "0654ce0e-4c98-3b7c-9857-6a72a77f65ef",
+        "instanceIdentifier": "a9fea526-01a0-1000-211e-16c1f53eb204",
+        "name": "Lua script",
+        "comments": "",
+        "position": {
+          "x": 0.0,
+          "y": 200.0
+        },
+        "type": "org.apache.nifi.processors.script.ExecuteScript",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-scripting-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "Script File": null,
+          "Script Engine": "lua",
+          "Script Body": "local ff = session:get()\n",
+          "Module Directory": null
+        },
+        "propertyDescriptors": {
+          "Script File": {
+            "name": "Script File",
+            "displayName": "Script File",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "resourceDefinition": {
+              "cardinality": "SINGLE",
+              "resourceTypes": [
+                "FILE"
+              ]
+            }
+          },
+          "Script Engine": {
+            "name": "Script Engine",
+            "displayName": "Script Engine",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Script Body": {
+            "name": "Script Body",
+            "displayName": "Script Body",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Module Directory": {
+            "name": "Module Directory",
+            "displayName": "Module Directory",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "resourceDefinition": {
+              "cardinality": "MULTIPLE",
+              "resourceTypes": [
+                "DIRECTORY",
+                "FILE"
+              ]
+            }
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "success",
+          "failure"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
+      },
+      {
+        "identifier": "998e4182-c18c-394d-9fba-65704c81883c",
+        "instanceIdentifier": "a9feaa98-01a0-1000-5a33-cac6027be457",
         "name": "Record transform in Groovy",
         "comments": "",
         "position": {
@@ -185,251 +425,11 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
       },
       {
-        "identifier": "3e961959-7f6a-32a2-ae3d-c30d784282d3",
-        "instanceIdentifier": "a9d5e23e-01a0-1000-2332-f57633b76d0a",
-        "name": "Ruby script",
-        "comments": "",
-        "position": {
-          "x": 800.0,
-          "y": 0.0
-        },
-        "type": "org.apache.nifi.processors.script.ExecuteScript",
-        "bundle": {
-          "group": "org.apache.nifi",
-          "artifact": "nifi-scripting-nar",
-          "version": "1.28.1"
-        },
-        "properties": {
-          "Script File": null,
-          "Script Engine": "ruby",
-          "Script Body": "ff = session.get\n",
-          "Module Directory": null
-        },
-        "propertyDescriptors": {
-          "Script File": {
-            "name": "Script File",
-            "displayName": "Script File",
-            "identifiesControllerService": false,
-            "sensitive": false,
-            "resourceDefinition": {
-              "cardinality": "SINGLE",
-              "resourceTypes": [
-                "FILE"
-              ]
-            }
-          },
-          "Script Engine": {
-            "name": "Script Engine",
-            "displayName": "Script Engine",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Script Body": {
-            "name": "Script Body",
-            "displayName": "Script Body",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Module Directory": {
-            "name": "Module Directory",
-            "displayName": "Module Directory",
-            "identifiesControllerService": false,
-            "sensitive": false,
-            "resourceDefinition": {
-              "cardinality": "MULTIPLE",
-              "resourceTypes": [
-                "DIRECTORY",
-                "FILE"
-              ]
-            }
-          }
-        },
-        "style": {},
-        "schedulingPeriod": "0 sec",
-        "schedulingStrategy": "TIMER_DRIVEN",
-        "executionNode": "ALL",
-        "penaltyDuration": "30 sec",
-        "yieldDuration": "1 sec",
-        "bulletinLevel": "WARN",
-        "runDurationMillis": 0,
-        "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [
-          "success",
-          "failure"
-        ],
-        "scheduledState": "ENABLED",
-        "retryCount": 10,
-        "retriedRelationships": [],
-        "backoffMechanism": "PENALIZE_FLOWFILE",
-        "maxBackoffPeriod": "10 mins",
-        "componentType": "PROCESSOR",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
-      },
-      {
-        "identifier": "a64b0e60-fe39-329c-b23a-b8306379c5f6",
-        "instanceIdentifier": "a9d5e0df-01a0-1000-889a-78e372aaf3ce",
-        "name": "Jython script",
-        "comments": "",
-        "position": {
-          "x": 0.0,
-          "y": 0.0
-        },
-        "type": "org.apache.nifi.processors.script.ExecuteScript",
-        "bundle": {
-          "group": "org.apache.nifi",
-          "artifact": "nifi-scripting-nar",
-          "version": "1.28.1"
-        },
-        "properties": {
-          "Script File": null,
-          "Script Engine": "python",
-          "Script Body": "flowFile = session.get()\n",
-          "Module Directory": null
-        },
-        "propertyDescriptors": {
-          "Script File": {
-            "name": "Script File",
-            "displayName": "Script File",
-            "identifiesControllerService": false,
-            "sensitive": false,
-            "resourceDefinition": {
-              "cardinality": "SINGLE",
-              "resourceTypes": [
-                "FILE"
-              ]
-            }
-          },
-          "Script Engine": {
-            "name": "Script Engine",
-            "displayName": "Script Engine",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Script Body": {
-            "name": "Script Body",
-            "displayName": "Script Body",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Module Directory": {
-            "name": "Module Directory",
-            "displayName": "Module Directory",
-            "identifiesControllerService": false,
-            "sensitive": false,
-            "resourceDefinition": {
-              "cardinality": "MULTIPLE",
-              "resourceTypes": [
-                "DIRECTORY",
-                "FILE"
-              ]
-            }
-          }
-        },
-        "style": {},
-        "schedulingPeriod": "0 sec",
-        "schedulingStrategy": "TIMER_DRIVEN",
-        "executionNode": "ALL",
-        "penaltyDuration": "30 sec",
-        "yieldDuration": "1 sec",
-        "bulletinLevel": "WARN",
-        "runDurationMillis": 0,
-        "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [
-          "success",
-          "failure"
-        ],
-        "scheduledState": "ENABLED",
-        "retryCount": 10,
-        "retriedRelationships": [],
-        "backoffMechanism": "PENALIZE_FLOWFILE",
-        "maxBackoffPeriod": "10 mins",
-        "componentType": "PROCESSOR",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
-      },
-      {
-        "identifier": "5a2da578-ced4-3b6e-8148-faaa61d140fa",
-        "instanceIdentifier": "a9d5e2c0-01a0-1000-8fab-e7a370888032",
-        "name": "Scripted processor in Jython",
-        "comments": "",
-        "position": {
-          "x": 800.0,
-          "y": 200.0
-        },
-        "type": "org.apache.nifi.processors.script.InvokeScriptedProcessor",
-        "bundle": {
-          "group": "org.apache.nifi",
-          "artifact": "nifi-scripting-nar",
-          "version": "1.28.1"
-        },
-        "properties": {
-          "Script File": null,
-          "Script Engine": "python",
-          "Script Body": "class P: pass\n",
-          "Module Directory": null
-        },
-        "propertyDescriptors": {
-          "Script File": {
-            "name": "Script File",
-            "displayName": "Script File",
-            "identifiesControllerService": false,
-            "sensitive": false,
-            "resourceDefinition": {
-              "cardinality": "SINGLE",
-              "resourceTypes": [
-                "FILE"
-              ]
-            }
-          },
-          "Script Engine": {
-            "name": "Script Engine",
-            "displayName": "Script Engine",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Script Body": {
-            "name": "Script Body",
-            "displayName": "Script Body",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Module Directory": {
-            "name": "Module Directory",
-            "displayName": "Module Directory",
-            "identifiesControllerService": false,
-            "sensitive": false,
-            "resourceDefinition": {
-              "cardinality": "MULTIPLE",
-              "resourceTypes": [
-                "DIRECTORY",
-                "FILE"
-              ]
-            }
-          }
-        },
-        "style": {},
-        "schedulingPeriod": "0 sec",
-        "schedulingStrategy": "TIMER_DRIVEN",
-        "executionNode": "ALL",
-        "penaltyDuration": "30 sec",
-        "yieldDuration": "1 sec",
-        "bulletinLevel": "WARN",
-        "runDurationMillis": 0,
-        "concurrentlySchedulableTaskCount": 1,
-        "autoTerminatedRelationships": [],
-        "scheduledState": "ENABLED",
-        "retryCount": 10,
-        "retriedRelationships": [],
-        "backoffMechanism": "PENALIZE_FLOWFILE",
-        "maxBackoffPeriod": "10 mins",
-        "componentType": "PROCESSOR",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
-      },
-      {
-        "identifier": "6925d916-e53c-3a1f-9f05-20ba03cb58d8",
-        "instanceIdentifier": "a9d5e21c-01a0-1000-3c3d-0191df76c54e",
+        "identifier": "7ad6f9f1-6fcb-3aa7-b9ac-d879ac2abc3a",
+        "instanceIdentifier": "a9fea4fe-01a0-1000-f7bc-b96f659621d5",
         "name": "ECMAScript script",
         "comments": "",
         "position": {
@@ -506,15 +506,15 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
       },
       {
-        "identifier": "9926eea7-d64e-3489-86b8-0391f1d3f82d",
-        "instanceIdentifier": "a9d5e25f-01a0-1000-ff16-5ce31115e55c",
-        "name": "Lua script",
+        "identifier": "41973c1c-3741-3f12-ab59-04af22667160",
+        "instanceIdentifier": "a9fea53a-01a0-1000-d132-078119ae679a",
+        "name": "Groovy script",
         "comments": "",
         "position": {
-          "x": 0.0,
+          "x": 400.0,
           "y": 200.0
         },
         "type": "org.apache.nifi.processors.script.ExecuteScript",
@@ -525,8 +525,8 @@
         },
         "properties": {
           "Script File": null,
-          "Script Engine": "lua",
-          "Script Body": "local ff = session:get()\n",
+          "Script Engine": "Groovy",
+          "Script Body": "def ff = session.get()\n",
           "Module Directory": null
         },
         "propertyDescriptors": {
@@ -587,7 +587,7 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
       }
     ],
     "inputPorts": [],
@@ -597,79 +597,8 @@
     "funnels": [],
     "controllerServices": [
       {
-        "identifier": "52117bb0-c550-39c8-8ee2-a06b1a34f16f",
-        "instanceIdentifier": "a9d5e965-01a0-1000-b049-62daad71ace2",
-        "name": "Reader in Groovy",
-        "comments": "",
-        "type": "org.apache.nifi.record.script.ScriptedReader",
-        "bundle": {
-          "group": "org.apache.nifi",
-          "artifact": "nifi-scripting-nar",
-          "version": "1.28.1"
-        },
-        "properties": {
-          "Script File": null,
-          "Script Engine": "Groovy",
-          "Script Body": "class R {}\n",
-          "Module Directory": null
-        },
-        "propertyDescriptors": {
-          "Script File": {
-            "name": "Script File",
-            "displayName": "Script File",
-            "identifiesControllerService": false,
-            "sensitive": false,
-            "resourceDefinition": {
-              "cardinality": "SINGLE",
-              "resourceTypes": [
-                "FILE"
-              ]
-            }
-          },
-          "Script Engine": {
-            "name": "Script Engine",
-            "displayName": "Script Engine",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Script Body": {
-            "name": "Script Body",
-            "displayName": "Script Body",
-            "identifiesControllerService": false,
-            "sensitive": false
-          },
-          "Module Directory": {
-            "name": "Module Directory",
-            "displayName": "Module Directory",
-            "identifiesControllerService": false,
-            "sensitive": false,
-            "resourceDefinition": {
-              "cardinality": "MULTIPLE",
-              "resourceTypes": [
-                "DIRECTORY",
-                "FILE"
-              ]
-            }
-          }
-        },
-        "controllerServiceApis": [
-          {
-            "type": "org.apache.nifi.serialization.RecordReaderFactory",
-            "bundle": {
-              "group": "org.apache.nifi",
-              "artifact": "nifi-standard-services-api-nar",
-              "version": "1.28.1"
-            }
-          }
-        ],
-        "scheduledState": "DISABLED",
-        "bulletinLevel": "WARN",
-        "componentType": "CONTROLLER_SERVICE",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
-      },
-      {
-        "identifier": "dd632224-f869-32ba-8986-46c6f1015ae2",
-        "instanceIdentifier": "a9d5e894-01a0-1000-7032-7ea02eb2f626",
+        "identifier": "6b6471c3-5d7f-3fe2-897f-4cc386a87acf",
+        "instanceIdentifier": "a9feaaa9-01a0-1000-776c-70eb2f7e5c2f",
         "name": "Lookup in Jython",
         "comments": "",
         "type": "org.apache.nifi.lookup.script.ScriptedLookupService",
@@ -736,7 +665,78 @@
         "scheduledState": "DISABLED",
         "bulletinLevel": "WARN",
         "componentType": "CONTROLLER_SERVICE",
-        "groupIdentifier": "a9aa5724-ca3c-32f5-8406-61ba1419ff32"
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
+      },
+      {
+        "identifier": "92bab471-18bb-3856-9ca6-df762f7c6125",
+        "instanceIdentifier": "a9feab70-01a0-1000-7db1-9027e0bd27d9",
+        "name": "Reader in Groovy",
+        "comments": "",
+        "type": "org.apache.nifi.record.script.ScriptedReader",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-scripting-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "Script File": null,
+          "Script Engine": "Groovy",
+          "Script Body": "class R {}\n",
+          "Module Directory": null
+        },
+        "propertyDescriptors": {
+          "Script File": {
+            "name": "Script File",
+            "displayName": "Script File",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "resourceDefinition": {
+              "cardinality": "SINGLE",
+              "resourceTypes": [
+                "FILE"
+              ]
+            }
+          },
+          "Script Engine": {
+            "name": "Script Engine",
+            "displayName": "Script Engine",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Script Body": {
+            "name": "Script Body",
+            "displayName": "Script Body",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Module Directory": {
+            "name": "Module Directory",
+            "displayName": "Module Directory",
+            "identifiesControllerService": false,
+            "sensitive": false,
+            "resourceDefinition": {
+              "cardinality": "MULTIPLE",
+              "resourceTypes": [
+                "DIRECTORY",
+                "FILE"
+              ]
+            }
+          }
+        },
+        "controllerServiceApis": [
+          {
+            "type": "org.apache.nifi.serialization.RecordReaderFactory",
+            "bundle": {
+              "group": "org.apache.nifi",
+              "artifact": "nifi-standard-services-api-nar",
+              "version": "1.28.1"
+            }
+          }
+        ],
+        "scheduledState": "DISABLED",
+        "bulletinLevel": "WARN",
+        "componentType": "CONTROLLER_SERVICE",
+        "groupIdentifier": "cc9dc7e7-5707-3646-b36e-9add52bf0b10"
       }
     ],
     "variables": {},

@@ -13,7 +13,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5dd58-01a0-1000-50f0-8dc4399c102a",
+        "id": "a9fea014-01a0-1000-d72b-4451e9f98928",
         "kind": "PROCESSOR",
         "name": "Build URL attribute",
         "path": "/Variables",
@@ -39,7 +39,7 @@
         "variable": "port"
       },
       "location": {
-        "id": "a9d5dd58-01a0-1000-50f0-8dc4399c102a",
+        "id": "a9fea014-01a0-1000-d72b-4451e9f98928",
         "kind": "PROCESSOR",
         "name": "Build URL attribute",
         "path": "/Variables",
@@ -65,7 +65,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5dcdf-01a0-1000-45bb-ca683e110296",
+        "id": "a9fe9fae-01a0-1000-2652-c5afe6610c91",
         "kind": "PROCESSOR",
         "name": "Generate with host text",
         "path": "/Variables",
@@ -90,7 +90,7 @@
         "variable": "port"
       },
       "location": {
-        "id": "a9d5dcdf-01a0-1000-45bb-ca683e110296",
+        "id": "a9fe9fae-01a0-1000-2652-c5afe6610c91",
         "kind": "PROCESSOR",
         "name": "Generate with host text",
         "path": "/Variables",
@@ -115,7 +115,7 @@
         "variable": "port"
       },
       "location": {
-        "id": "a9d5dc67-01a0-1000-8571-6cfe1cebba2d",
+        "id": "a9fe9f1b-01a0-1000-ce0a-4d3fe1abf99d",
         "kind": "PROCESSOR",
         "name": "Listen on variable port",
         "path": "/Variables",
@@ -140,7 +140,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5dd76-01a0-1000-d9f9-fbd922a7f62c",
+        "id": "a9fea02d-01a0-1000-c1ff-bbc41a093670",
         "kind": "PROCESSOR",
         "name": "Log literal dollar text",
         "path": "/Variables",
@@ -164,7 +164,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5dcfa-01a0-1000-e1b4-5bf83fb153bd",
+        "id": "a9fe9fcc-01a0-1000-6c73-c09d3d710896",
         "kind": "PROCESSOR",
         "name": "Put to shadowed directory",
         "path": "/Variables",
@@ -190,7 +190,7 @@
         "variable": "shared"
       },
       "location": {
-        "id": "a9d5dd8d-01a0-1000-8562-e52e3a1a8974",
+        "id": "a9fea041-01a0-1000-f4fa-163764330dd2",
         "kind": "PROCESSOR",
         "name": "Tail with function",
         "path": "/Variables",
@@ -212,7 +212,7 @@
         "variable": "bad name!"
       },
       "location": {
-        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
+        "id": "a9fe9e75-01a0-1000-414d-eabdfff8040f",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/Variables",
@@ -235,7 +235,7 @@
         "variable": "bad name!"
       },
       "location": {
-        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
+        "id": "a9fe9e75-01a0-1000-414d-eabdfff8040f",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/Variables",
@@ -257,7 +257,7 @@
         "variable": "unused.var"
       },
       "location": {
-        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
+        "id": "a9fe9e75-01a0-1000-414d-eabdfff8040f",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/Variables",
@@ -279,7 +279,7 @@
         "names": "bad name!, host, port, shared, unused.var"
       },
       "location": {
-        "id": "a9d5dbd0-01a0-1000-33cf-5d35a56a7c32",
+        "id": "a9fe9e75-01a0-1000-414d-eabdfff8040f",
         "kind": "PROCESS_GROUP",
         "name": "Variables",
         "path": "/Variables",
@@ -302,7 +302,7 @@
         "names": "path, shared"
       },
       "location": {
-        "id": "a9d5ddaf-01a0-1000-08e2-2eb48c1c175e",
+        "id": "a9fea070-01a0-1000-35ca-d75ccb1ef5b9",
         "kind": "PROCESS_GROUP",
         "name": "Child",
         "path": "/Variables/Child",
@@ -327,7 +327,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5ddde-01a0-1000-560c-0470f8d93b3d",
+        "id": "a9fea09e-01a0-1000-b8d0-79463c2e2625",
         "kind": "PROCESSOR",
         "name": "Generate with parent host",
         "path": "/Variables/Child",
@@ -352,7 +352,7 @@
         "variable": "path"
       },
       "location": {
-        "id": "a9d5ddca-01a0-1000-12e2-a177dfe76fa8",
+        "id": "a9fea08a-01a0-1000-df45-e38e1645738a",
         "kind": "PROCESSOR",
         "name": "Get from variable path",
         "path": "/Variables/Child",
@@ -377,7 +377,7 @@
         "variable": "host"
       },
       "location": {
-        "id": "a9d5de0f-01a0-1000-e58d-c2d8c2c2d2c7",
+        "id": "a9fea0d1-01a0-1000-cfc3-699df4292b90",
         "kind": "PROCESSOR",
         "name": "Generate with inherited host",
         "path": "/Variables/Child/Grandchild",
@@ -402,7 +402,7 @@
         "variable": "path"
       },
       "location": {
-        "id": "a9d5ddfc-01a0-1000-419f-7fffe6888ac8",
+        "id": "a9fea0be-01a0-1000-9beb-842244c26f4a",
         "kind": "PROCESSOR",
         "name": "Get from inherited path",
         "path": "/Variables/Child/Grandchild",
@@ -427,7 +427,7 @@
         "variable": "shared"
       },
       "location": {
-        "id": "a9d5ddfc-01a0-1000-419f-7fffe6888ac8",
+        "id": "a9fea0be-01a0-1000-9beb-842244c26f4a",
         "kind": "PROCESSOR",
         "name": "Get from inherited path",
         "path": "/Variables/Child/Grandchild",
@@ -447,7 +447,7 @@
   "input": {
     "kind": "definition",
     "name": "variables.json",
-    "sha256": "52ed61360a83dc8efe935096c391b6257896fc67a072858b4437c34e664dc3e6"
+    "sha256": "ddad9de678efb757f153930c9cfdfabdf8b3e657b325df5fb0a406af2b949a50"
   },
   "summary": {
     "bundle_versions": {

@@ -1,7 +1,7 @@
 {
   "flowContents": {
-    "identifier": "4c4821cc-40b8-3424-b33d-1795da3d20c3",
-    "instanceIdentifier": "a9d5eaa2-01a0-1000-c309-93d774c73d25",
+    "identifier": "7ef8dee9-d793-3f1c-a60f-0dca729ea46b",
+    "instanceIdentifier": "a9feac7b-01a0-1000-60a6-fb0c01d6768f",
     "name": "Deprecated Properties",
     "comments": "",
     "position": {
@@ -12,8 +12,8 @@
     "remoteProcessGroups": [],
     "processors": [
       {
-        "identifier": "c950633c-d70a-34fa-b480-632ab368e873",
-        "instanceIdentifier": "a9d5eaaa-01a0-1000-0edb-e8c02571fb8e",
+        "identifier": "6f2b8fe9-e45e-3bde-a6b3-a64c639a5906",
+        "instanceIdentifier": "a9feac82-01a0-1000-86c3-97c64ed17d40",
         "name": "Invoke through proxy",
         "comments": "",
         "position": {
@@ -323,7 +323,7 @@
         "backoffMechanism": "PENALIZE_FLOWFILE",
         "maxBackoffPeriod": "10 mins",
         "componentType": "PROCESSOR",
-        "groupIdentifier": "4c4821cc-40b8-3424-b33d-1795da3d20c3"
+        "groupIdentifier": "7ef8dee9-d793-3f1c-a60f-0dca729ea46b"
       }
     ],
     "inputPorts": [],
