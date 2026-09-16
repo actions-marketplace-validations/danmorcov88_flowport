@@ -27,9 +27,11 @@ jobs:
   pypi:
     name: Publish to PyPI
     needs: build
-    runs-on: ubuntu-latest
     # Trusted publishing: register this repository, workflow (release.yml) and
-    # environment (pypi) as a publisher of the PyPI project first.
+    # environment (pypi) as a publisher of the PyPI project, then set the
+    # repository variable PYPI_PUBLISH to "true".
+    if: vars.PYPI_PUBLISH == 'true'
+    runs-on: ubuntu-latest
     environment: pypi
     permissions:
       id-token: write
