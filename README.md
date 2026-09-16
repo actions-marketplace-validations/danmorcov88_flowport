@@ -39,6 +39,15 @@ In GitHub Actions:
     command: analyze --fail-on blocker
 ```
 
+| Input | Default | Meaning |
+|---|---|---|
+| `file` | (required) | The flow file: `flow.json.gz`, `flow.json` or a flow definition |
+| `command` | `analyze --fail-on blocker` | flowport command and options, without the file; for example `analyze --format json --output report.json` or `migrate all --output migrated/` |
+| `python-version` | `3.12` | Python version used to run flowport |
+
+The step fails when `analyze` finds something at or above `--fail-on`, so the
+report (or the migrated output) can be uploaded as an artifact in a later step.
+
 ## Usage
 
 ```bash
