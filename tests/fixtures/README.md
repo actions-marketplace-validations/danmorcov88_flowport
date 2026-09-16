@@ -8,7 +8,10 @@ python tools/make_fixtures.py --nifi-version 1.28.1
 ```
 
 Regeneration produces new component identifiers, so golden files must be
-refreshed afterwards (`pytest --update-golden`).
+refreshed afterwards (`pytest --update-golden`). Besides the analyzer
+reports, `tests/golden/nifi-1.28.1/migrate-variables/` holds the migrated
+flow, `changes.json` and the post-migration report of `flow.json.gz`,
+`definitions/variables.json` and `definitions/existing-context.json`.
 
 ## `nifi-1.28.1/`
 

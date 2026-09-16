@@ -18,3 +18,22 @@ Ideas that came up during development and are outside the current phase.
 - **Rule reference generated from the catalog** (planned for Phase 5).
 - **Generated large fixture as a committed file** was rejected: 50 MB in git.
   The performance test generates it on the fly instead.
+- **Collision and visibility checks in `analyze`.** `NIFI2-VARIABLE-PARAMETER-COLLISION`
+  and `NIFI2-VARIABLE-REFERENCE-NOT-VISIBLE` are only produced by
+  `migrate variables`; `analyze` could predict them so that users see them
+  before migrating.
+- **Inherit a created context into an existing one.** When an existing
+  parameter context sits between the group that defines a variable and the
+  group that uses it, flowport reports `...-NOT-VISIBLE` instead of adding
+  the created context to `inheritedParameterContexts` of the existing one.
+  Automatic inheritance needs cycle detection (a context can be assigned to
+  several groups) and changes a context the user owns.
+- **Parameter context referenced by name but missing from the file.** The
+  migration treats it as a boundary that resolves nothing. Real exports
+  always include the referenced contexts.
+- **`--fail-on` for `migrate`.** The command exits 0 whenever it writes; a
+  threshold on the remaining findings, as in `analyze`, would help in CI.
+- **Rewriting `${var:function()}` to `${ #{var}:function() }`.** The user
+  guide documents the form; still left MANUAL because the function may rely
+  on the FlowFile-attribute fallback of the original expression.
+

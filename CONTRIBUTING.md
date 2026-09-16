@@ -51,6 +51,22 @@ pytest -m integration
 The component inventory (`src/flowport/catalog/generated/`) is not edited by
 hand; run `python tools/build_catalog.py <from> <to>` to regenerate it.
 
+## Changing a migration
+
+Transforms live in `src/flowport/transforms/`. They edit the raw document
+through the model (`node.raw` is the parsed JSON object itself), record every
+edit as a `Change`, and leave everything they cannot fix as a finding. When
+you change what a migration produces:
+
+1. Refresh the golden files under `tests/golden/nifi-1.28.1/migrate-*/` with
+   `pytest --update-golden` and read the diff; the migrated flow, the change
+   log and the post-migration report are all golden.
+2. Add a synthetic case to `tests/unit/test_migrate_variables.py` for the new
+   behavior.
+3. Run `pytest -m integration` (Docker) to load the result into a real NiFi
+   1.x and confirm no component gains a validation error. If NiFi's behavior
+   is the reason for the change, write it down in `docs/dev/`.
+
 ## Commits
 
 Use [Conventional Commits](https://www.conventionalcommits.org/):

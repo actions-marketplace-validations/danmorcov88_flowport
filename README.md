@@ -1,15 +1,15 @@
 # flowport
 
 A migration tool for Apache NiFi: analyze NiFi 1.x flows for NiFi 2.x
-incompatibilities and, in later versions, apply the changes that can be made
-safely.
+incompatibilities and apply the changes that can be made safely.
 
 flowport works offline on files. It never modifies its input. Every finding
 points to the exact component (process group path, name, id) and links to the
 official Apache source (wiki page or JIRA issue) that documents the change.
 
-> Status: v0.1, analyzer only. Automatic migration of variables, templates and
-> component replacements is planned. See "Roadmap".
+> Status: v0.2. `analyze` reports incompatibilities; `migrate variables`
+> converts process group variables to parameter contexts. Template conversion
+> and component replacements are planned. See "Roadmap".
 
 ## Install
 
@@ -39,12 +39,67 @@ that it converts the flow to `flow.json.gz`, as the
 [Apache migration guidance](https://cwiki.apache.org/confluence/display/NIFI/Migration+Guidance)
 recommends.
 
+### Migrating variables
+
+```bash
+flowport migrate variables flow.json.gz --output migrated/flow.json.gz
+flowport migrate variables flow.json.gz --output migrated/flow.json.gz --dry-run   # show changes only
+flowport migrate variables flow.json.gz --output migrated/flow.json.gz --keep-unused
+```
+
+NiFi 2.x removed the Variable Registry and silently drops process group
+variables when a flow loads. `migrate variables` converts them to parameter
+contexts and writes three files next to the output: the migrated flow (same
+kind as the input, gzip when the name ends in `.gz`), `changes.json` with
+every edit, and `report.md` with the findings that remain.
+
+The output is still a NiFi 1.x flow. Load it on your 1.x instance, check it,
+then upgrade. What the command does:
+
+1. **One parameter context per process group that defines variables**, named
+   `<group name> Variables` (a number is appended when the name is taken). A
+   context inherits from the nearest ancestor context, so a variable that a
+   child group used from its parent keeps resolving. Groups that only use
+   inherited variables are assigned the nearest ancestor context, because a
+   process group does not inherit its parent's context on its own.
+2. **A group that already has a parameter context** gets the parameters added
+   to that context, unless a variable name collides with a parameter the
+   context resolves (its own or inherited). On a collision nothing changes in
+   that group and `NIFI2-VARIABLE-PARAMETER-COLLISION` is reported.
+3. **`${name}` becomes `#{name}` only where that cannot change behavior**: the
+   property evaluates Expression Language against the Variable Registry only
+   (not FlowFile attributes, which take priority over variables on 1.x), the
+   reference has no functions, the property is not sensitive, and the parameter
+   resolves through the group's context. Only the `${name}` span is replaced;
+   `${host}:8080` becomes `#{host}:8080`. Everything else stays a finding
+   (`...-ATTRIBUTE-SCOPE`, `...-FUNCTION`, `...-SENSITIVE`, `...-NOT-VISIBLE`),
+   with the parameter already created so the manual edit is a one-liner.
+4. **Properties without Expression Language support are left alone**: the
+   text was never evaluated.
+5. **Variable names that are not valid parameter names** (anything but letters,
+   digits, `-`, `_`, `.` and space) are not migrated.
+6. **Unused variables** are reported and skipped unless `--keep-unused`.
+
+A variable is removed from the group only once every evaluated reference to
+it was rewritten. A variable with a reference that needs a decision stays, so
+the flow keeps working on 1.x; the report shows what is left. Parameters are
+created non-sensitive, since variables never are.
+
+One thing to expect on 1.x: some validators (for example "directory exists")
+skip the check while a value contains `${...}` and validate the literal once a
+parameter is substituted, so a migrated component can become invalid where the
+configured value was wrong all along.
+
+Same input, same output: generated identifiers derive from the source group
+id, and every list is ordered, so the command can run in CI and the result can
+be diffed.
+
 ### Exit codes
 
 | Code | Meaning |
 |---|---|
-| 0 | No finding at or above the `--fail-on` threshold |
-| 1 | At least one finding at or above the threshold |
+| 0 | No finding at or above the `--fail-on` threshold (`analyze`); migration written (`migrate`) |
+| 1 | At least one finding at or above the threshold (`analyze`) |
 | 2 | Input or internal error |
 
 ### Severities
@@ -53,12 +108,14 @@ recommends.
 |---|---|
 | BLOCKER | NiFi 2.x does not start, or the component loads as an invalid ghost |
 | MANUAL | Needs a human decision; the tool will not change it |
-| AUTO_FIXABLE | A later `flowport migrate` command can fix it safely |
+| AUTO_FIXABLE | A `flowport migrate` command can fix it safely |
 | INFO | Works, but worth knowing |
 
 The severities were established by loading the test fixtures into a real
 NiFi 2.12.0 instance; see
-[docs/dev/nifi2-load-experiment.md](docs/dev/nifi2-load-experiment.md).
+[docs/dev/nifi2-load-experiment.md](docs/dev/nifi2-load-experiment.md). The
+variables migration was verified on a real NiFi 1.28.1; see
+[docs/dev/variables-migration.md](docs/dev/variables-migration.md).
 
 ## What it checks (NiFi 1.28.1 to 2.12.0)
 
@@ -80,6 +137,9 @@ NiFi 2.12.0 instance; see
 | NIFI2-VARIABLE-REFERENCE-FUNCTION | MANUAL | `${var:function()}` |
 | NIFI2-VARIABLE-REFERENCE-NO-EL | INFO | `${var}` in a property without Expression Language |
 | NIFI2-VARIABLE-REFERENCE-UNKNOWN-SCOPE | MANUAL | `${var}` in a property of an unknown component type |
+| NIFI2-VARIABLE-REFERENCE-SENSITIVE | MANUAL | `${var}` in a sensitive property (only a sensitive parameter may be referenced there) |
+| NIFI2-VARIABLE-PARAMETER-COLLISION | MANUAL | Variable name already resolved by the group's parameter context (reported by `migrate variables`) |
+| NIFI2-VARIABLE-REFERENCE-NOT-VISIBLE | MANUAL | Parameter created for the variable is not visible through the group's own context (reported by `migrate variables`) |
 | NIFI2-VARIABLE-UNUSED | INFO | Variable that nothing references |
 | NIFI2-VARIABLE-NAME | MANUAL | Variable name that is not a valid parameter name |
 | NIFI2-TEMPLATE | MANUAL | Template stored in the flow (dropped silently by 2.x) |
@@ -102,8 +162,6 @@ rules in `src/flowport/catalog/manual.yaml` each cite an Apache source.
 
 ## Roadmap
 
-- v0.2: `flowport migrate variables` converts process group variables to
-  parameter contexts.
 - v0.3: `flowport migrate templates` converts XML templates to flow definitions.
 - v0.4: `flowport migrate components` applies documented 1:1 replacements.
 - v1.0: validation against a running NiFi 2.x, PyPI and Docker packaging,
@@ -117,6 +175,7 @@ ruff check .
 mypy
 pytest                 # unit and golden tests
 pytest -m slow         # large generated input (about 40 s)
+pytest -m integration  # loads the migrated fixture into NiFi 1.28.1 (Docker)
 pytest --update-golden # refresh expected reports on purpose
 ```
 
