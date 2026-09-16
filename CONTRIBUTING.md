@@ -46,3 +46,17 @@ the integration tests.
 Use [Conventional Commits](https://www.conventionalcommits.org/):
 `feat:`, `fix:`, `test:`, `docs:`, `ci:`, `refactor:`, `chore:`.
 Keep each commit to one logical change.
+
+## Releasing
+
+1. Bump `version` in `pyproject.toml` and `__version__` in
+   `src/flowport/__init__.py`, commit as `chore: release X.Y.Z`.
+2. Tag `vX.Y.Z` and push with `--follow-tags`. The release workflow builds
+   the distributions, publishes them to PyPI (once the trusted publisher is
+   registered and the repository variable `PYPI_PUBLISH` is `true`), pushes
+   the image to `ghcr.io/danmorcov88/flowport` and attaches the files to the
+   GitHub release.
+3. Move the `v1` tag to the new release so that `uses: danmorcov88/flowport@v1`
+   picks it up: `git tag -f v1 vX.Y.Z && git push -f origin v1`.
+4. Write the release notes on GitHub.
+

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "flowport"
-version = "0.4.0"
+version = "1.0.0"
 description = "Analyze and migrate Apache NiFi 1.x flows for NiFi 2.x"
 readme = "README.md"
 license = "Apache-2.0"
