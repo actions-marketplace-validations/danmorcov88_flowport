@@ -156,25 +156,11 @@ _SOURCE_HELP = "NiFi release the flow comes from."
 _TARGET_HELP = "NiFi release to migrate to."
 
 
-def _run_flow_migration(
-    command: str,
-    flow_file: Path,
-    output: Path,
-    *,
-    dry_run: bool,
-    source_version: str,
-    target_version: str,
-    migrate: Callable[[Flow, Catalog], MigrationResult],
-    report_extra: dict[str, Any] | None = None,
-) -> None:
-    """Load, migrate, print a summary and write flow + changes.json + report.md."""
+def _load_for_migration(
+    flow_file: Path, output: Path, source_version: str, target_version: str
+) -> tuple[Flow, Catalog]:
     from flowport.catalog import load_catalog
     from flowport.loaders import load
-    from flowport.reports import build_report, render
-    from flowport.rules import Finding
-    from flowport.rules import analyze as run_rules
-    from flowport.transforms import CHANGE_KINDS, render_changes
-    from flowport.writers import write
 
     try:
         catalog = load_catalog(source_version, target_version)
@@ -185,13 +171,39 @@ def _run_flow_migration(
     if output.resolve() == flow_file.resolve():
         stderr.print("[red]error:[/red] the output must be a different file than the input")
         raise typer.Exit(EXIT_ERROR)
+    return flow, catalog
 
+
+def _run_flow_migration(
+    command: str,
+    flow_file: Path,
+    output: Path,
+    *,
+    dry_run: bool,
+    source_version: str,
+    target_version: str,
+    migrate: Callable[[Flow, Catalog], MigrationResult],
+    report_extra: dict[str, Any] | None = None,
+    console: Console | None = None,
+) -> tuple[MigrationResult, Catalog]:
+    """Load, migrate, print a summary and write flow + changes.json + report.md.
+
+    Returns the result so that a caller can go on (``migrate all``); on a dry
+    run nothing is written.
+    """
+    from flowport.reports import build_report, render
+    from flowport.rules import Finding
+    from flowport.rules import analyze as run_rules
+    from flowport.transforms import CHANGE_KINDS, render_changes
+    from flowport.writers import write
+
+    flow, catalog = _load_for_migration(flow_file, output, source_version, target_version)
     result = migrate(flow, catalog)
     result.flow.source_name = output.name
     findings = sorted([*run_rules(result.flow, catalog), *result.findings], key=Finding.sort_key)
     counts = result.counts()
 
-    console = Console()
+    console = console or Console()
     console.print(
         f"[bold]flowport[/bold] {__version__}  {command}  "
         f"input: {flow_file.name} ({flow.kind.value})"
@@ -226,7 +238,7 @@ def _run_flow_migration(
     )
     if dry_run:
         console.print("[yellow]dry run:[/yellow] nothing written")
-        raise typer.Exit(EXIT_OK)
+        return result, catalog
 
     write(result.flow, output)
     report = build_report(result.flow, findings, catalog, output)
@@ -243,7 +255,7 @@ def _run_flow_migration(
     changes_path.write_text(render_changes(result.changes), encoding="utf-8", newline="\n")
     report_path.write_text(render(report, "markdown"), encoding="utf-8", newline="\n")
     console.print(f"Wrote {output}, {changes_path} and {report_path}")
-    raise typer.Exit(EXIT_OK)
+    return result, catalog
 
 
 @migrate_app.command("variables")
@@ -282,6 +294,7 @@ def migrate_variables_command(
         migrate=lambda flow, catalog: migrate_variables(flow, catalog, keep_unused=keep_unused),
         report_extra={"keep_unused": keep_unused},
     )
+    raise typer.Exit(EXIT_OK)
 
 
 @migrate_app.command("components")
@@ -316,6 +329,93 @@ def migrate_components_command(
         target_version=target_version,
         migrate=migrate_components,
     )
+    raise typer.Exit(EXIT_OK)
+
+
+@migrate_app.command("all")
+def migrate_all_command(
+    flow_file: Annotated[Path, typer.Argument(help=_FLOW_FILE_HELP)],
+    output: Annotated[
+        Path,
+        typer.Option(
+            "--output",
+            "-o",
+            help="Directory for the migrated flow (same file name as the input), changes.json, "
+            "report.md and templates/.",
+        ),
+    ],
+    keep_unused: Annotated[
+        bool,
+        typer.Option("--keep-unused", help="Also convert variables that nothing references."),
+    ] = False,
+    dry_run: Annotated[bool, typer.Option("--dry-run", help=_DRY_RUN_HELP)] = False,
+    source_version: Annotated[
+        str, typer.Option("--source-version", help=_SOURCE_HELP)
+    ] = DEFAULT_SOURCE_VERSION,
+    target_version: Annotated[
+        str, typer.Option("--target-version", help=_TARGET_HELP)
+    ] = DEFAULT_TARGET_VERSION,
+) -> None:
+    """Run every migration: variables, then components, then templates.
+
+    Writes the migrated flow, one changes.json and one report.md for the flow,
+    and a flow definition plus report for every template under templates/.
+    """
+    from flowport.transforms.pipeline import migrate_all
+
+    console = Console()
+    flow_output = output / flow_file.name
+    holder: dict[str, Any] = {}
+
+    def run(flow: Flow, catalog: Catalog) -> MigrationResult:
+        pipeline = migrate_all(flow, catalog, keep_unused=keep_unused)
+        holder["templates"] = pipeline.templates
+        return pipeline.flow_result
+
+    _, catalog = _run_flow_migration(
+        "migrate all",
+        flow_file,
+        flow_output,
+        dry_run=dry_run,
+        source_version=source_version,
+        target_version=target_version,
+        migrate=run,
+        report_extra={
+            "keep_unused": keep_unused,
+            "note": "Variables, components and templates were migrated. The findings below "
+            "describe the migrated flow; see `changes.json` for every edit and templates/ "
+            "for the converted templates.",
+        },
+        console=console,
+    )
+    templates = holder.get("templates") or []
+    console.print(f"Templates converted: {len(templates)}")
+    if dry_run:
+        raise typer.Exit(EXIT_OK)
+    for name, item in zip(
+        _unique_slugs([c.source.name for c in templates]), templates, strict=True
+    ):
+        _write_converted_template(
+            item, output / "templates" / f"{name}.json", flow_file.name, catalog, console
+        )
+    raise typer.Exit(EXIT_OK)
+
+
+def _unique_slugs(names: list[str]) -> list[str]:
+    """File-name slugs for template names, numbered when two templates collide."""
+    from flowport.transforms.templates import slugify
+
+    used: set[str] = set()
+    result: list[str] = []
+    for name in names:
+        slug = slugify(name)
+        candidate, counter = slug, 1
+        while candidate in used:
+            counter += 1
+            candidate = f"{slug}-{counter}"
+        used.add(candidate)
+        result.append(candidate)
+    return result
 
 
 def _write_converted_template(
@@ -378,7 +478,7 @@ def migrate_templates_command(
     from flowport.loaders import load
     from flowport.loaders.templates import templates_in_flow
     from flowport.model import InputKind
-    from flowport.transforms.templates import convert_and_analyze, slugify
+    from flowport.transforms.templates import convert_and_analyze
 
     try:
         catalog = load_catalog(source_version, target_version)
@@ -401,18 +501,11 @@ def migrate_templates_command(
     if not sources:
         console.print("No templates in this flow; nothing written.")
         raise typer.Exit(EXIT_OK)
-    used: set[str] = set()
-    for source in sources:
-        slug = slugify(source.name)
-        candidate, counter = slug, 1
-        while candidate in used:
-            counter += 1
-            candidate = f"{slug}-{counter}"
-        used.add(candidate)
-        converted = convert_and_analyze(source, catalog)
-        _write_converted_template(
-            converted, output / f"{candidate}.json", flow_file.name, catalog, console
-        )
+    converted = [convert_and_analyze(source, catalog) for source in sources]
+    for name, item in zip(
+        _unique_slugs([c.source.name for c in converted]), converted, strict=True
+    ):
+        _write_converted_template(item, output / f"{name}.json", flow_file.name, catalog, console)
     raise typer.Exit(EXIT_OK)
 
 
