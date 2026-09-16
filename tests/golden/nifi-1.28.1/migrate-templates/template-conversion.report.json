@@ -1,0 +1,28 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [],
+  "input": {
+    "kind": "definition",
+    "name": "Template Conversion Template"
+  },
+  "summary": {
+    "bundle_versions": {
+      "1.28.1": 6
+    },
+    "by_category": {},
+    "by_rule": {},
+    "by_severity": {
+      "AUTO_FIXABLE": 0,
+      "BLOCKER": 0,
+      "INFO": 0,
+      "MANUAL": 0
+    },
+    "components": 6,
+    "process_groups": 2,
+    "total": 0
+  },
+  "warnings": []
+}

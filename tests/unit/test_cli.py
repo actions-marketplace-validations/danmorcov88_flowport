@@ -173,3 +173,74 @@ def test_migrate_variables_keep_unused(definitions_dir: Path, tmp_path: Path) ->
     added = {c["property"] for c in changes if c["kind"] == "add-parameter"}
     assert "unused.var" in added
     assert out.read_bytes()[:1] == b"{"  # same kind as the input, no gzip without .gz
+
+
+def test_migrate_templates_writes_one_definition_and_report_per_template(
+    flow_gz: Path, tmp_path: Path
+) -> None:
+    before = hashlib.sha256(flow_gz.read_bytes()).hexdigest()
+    out = tmp_path / "templates"
+    result = runner.invoke(app, ["migrate", "templates", str(flow_gz), "--output", str(out)])
+    assert result.exit_code == 0, result.output
+    assert hashlib.sha256(flow_gz.read_bytes()).hexdigest() == before
+    assert sorted(p.name for p in out.iterdir()) == [
+        "removed-components-template.json",
+        "removed-components-template.report.md",
+        "template-conversion-template.json",
+        "template-conversion-template.report.md",
+    ]
+    definition = json.loads((out / "template-conversion-template.json").read_text("utf-8"))
+    assert definition["flowContents"]["name"] == "Template Conversion Template"
+    assert definition["flowEncodingVersion"] == "1.0"
+    report = (out / "removed-components-template.report.md").read_text(encoding="utf-8")
+    assert "## Migration" in report
+    assert "NIFI2-REMOVED-COMPONENT" in report
+    assert "processors converted | 4" in report
+    # the converted definition is itself valid analyzer input
+    assert (
+        runner.invoke(app, ["analyze", str(out / "template-conversion-template.json")]).exit_code
+        == 0
+    )
+
+
+def test_migrate_templates_rejects_a_definition_and_handles_no_templates(
+    definitions_dir: Path, tmp_path: Path
+) -> None:
+    result = runner.invoke(
+        app, ["migrate", "templates", str(definitions_dir / "clean.json"), "-o", str(tmp_path)]
+    )
+    assert result.exit_code == 2
+    empty = tmp_path / "empty.json"
+    empty.write_text('{"rootGroup": {"name": "root"}, "templates": []}', encoding="utf-8")
+    result = runner.invoke(app, ["migrate", "templates", str(empty), "-o", str(tmp_path / "out")])
+    assert result.exit_code == 0
+    assert "No templates" in result.output
+    assert not (tmp_path / "out").exists()
+
+
+def test_migrate_template_converts_an_xml_export(fixtures_dir: Path, tmp_path: Path) -> None:
+    xml = fixtures_dir / "nifi-1.28.1" / "templates" / "template-conversion.xml"
+    out = tmp_path / "sub" / "converted.json"
+    result = runner.invoke(app, ["migrate", "template", str(xml), "-o", str(out)])
+    assert result.exit_code == 0, result.output
+    assert out.exists() and (tmp_path / "sub" / "converted.report.md").exists()
+    # same result as from the flow's copy of the template
+    from_flow = tmp_path / "flow"
+    runner.invoke(
+        app,
+        [
+            "migrate",
+            "templates",
+            str(fixtures_dir / "nifi-1.28.1" / "flow.json.gz"),
+            "-o",
+            str(from_flow),
+        ],
+    )
+    assert out.read_bytes() == (from_flow / "template-conversion-template.json").read_bytes()
+    assert runner.invoke(app, ["migrate", "template", str(xml), "-o", str(xml)]).exit_code == 2
+    assert (
+        runner.invoke(
+            app, ["migrate", "template", str(tmp_path / "nope.xml"), "-o", str(out)]
+        ).exit_code
+        == 2
+    )

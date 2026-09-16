@@ -1,0 +1,125 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "3e0f5e4a-fb07-3ef1-0000-000000000000",
+        "kind": "PROCESSOR",
+        "name": "Fetch checksum",
+        "path": "/Removed Components Template",
+        "type": "org.apache.nifi.processors.standard.GetHTTP"
+      },
+      "message": "GetHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: UpdateAttribute (org.apache.nifi.processors.attributes.UpdateAttribute)."
+      },
+      "location": {
+        "id": "d1e62bcc-57ba-3b37-0000-000000000000",
+        "kind": "PROCESSOR",
+        "name": "Hash attribute",
+        "path": "/Removed Components Template",
+        "type": "org.apache.nifi.processors.standard.HashAttribute"
+      },
+      "message": "HashAttribute does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: UpdateAttribute (org.apache.nifi.processors.attributes.UpdateAttribute).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: CryptographicHashContent (org.apache.nifi.processors.standard.CryptographicHashContent)."
+      },
+      "location": {
+        "id": "13fee864-c477-3c3a-0000-000000000000",
+        "kind": "PROCESSOR",
+        "name": "Hash content",
+        "path": "/Removed Components Template",
+        "type": "org.apache.nifi.processors.standard.HashContent"
+      },
+      "message": "HashContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: CryptographicHashContent (org.apache.nifi.processors.standard.CryptographicHashContent).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "a0b37ad3-03c3-3e0d-0000-000000000000",
+        "kind": "PROCESSOR",
+        "name": "Post to listener",
+        "path": "/Removed Components Template",
+        "type": "org.apache.nifi.processors.standard.PostHTTP"
+      },
+      "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    }
+  ],
+  "input": {
+    "kind": "definition",
+    "name": "Removed Components Template"
+  },
+  "summary": {
+    "bundle_versions": {
+      "1.28.1": 4
+    },
+    "by_category": {
+      "removed-component": 4
+    },
+    "by_rule": {
+      "NIFI2-REMOVED-COMPONENT": 4
+    },
+    "by_severity": {
+      "AUTO_FIXABLE": 0,
+      "BLOCKER": 4,
+      "INFO": 0,
+      "MANUAL": 0
+    },
+    "components": 4,
+    "process_groups": 1,
+    "total": 4
+  },
+  "warnings": []
+}

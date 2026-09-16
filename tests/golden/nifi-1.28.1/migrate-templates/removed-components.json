@@ -1,0 +1,411 @@
+{
+  "flowContents": {
+    "identifier": "2f1caad3-57cf-32b5-0000-000000000000",
+    "name": "Removed Components Template",
+    "comments": "Fixture template Removed Components Template",
+    "position": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "processGroups": [],
+    "remoteProcessGroups": [],
+    "processors": [
+      {
+        "identifier": "13fee864-c477-3c3a-0000-000000000000",
+        "name": "Hash content",
+        "comments": "",
+        "position": {
+          "x": 0.0,
+          "y": 400.0
+        },
+        "type": "org.apache.nifi.processors.standard.HashContent",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "Hash Attribute Name": "hash.value",
+          "Hash Algorithm": "SHA-256"
+        },
+        "propertyDescriptors": {
+          "Hash Attribute Name": {
+            "name": "Hash Attribute Name",
+            "displayName": "Hash Attribute Name",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Hash Algorithm": {
+            "name": "Hash Algorithm",
+            "displayName": "Hash Algorithm",
+            "identifiesControllerService": false,
+            "sensitive": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "failure",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "2f1caad3-57cf-32b5-0000-000000000000"
+      },
+      {
+        "identifier": "3e0f5e4a-fb07-3ef1-0000-000000000000",
+        "name": "Fetch checksum",
+        "comments": "",
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "type": "org.apache.nifi.processors.standard.GetHTTP",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "URL": "https://example.org/nifi.sha256",
+          "Filename": "nifi.sha256",
+          "Connection Timeout": "30 sec",
+          "Data Timeout": "30 sec",
+          "Follow Redirects": "false",
+          "redirect-cookie-policy": "default"
+        },
+        "propertyDescriptors": {
+          "URL": {
+            "name": "URL",
+            "displayName": "URL",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Filename": {
+            "name": "Filename",
+            "displayName": "Filename",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "SSL Context Service": {
+            "name": "SSL Context Service",
+            "displayName": "SSL Context Service",
+            "identifiesControllerService": true,
+            "sensitive": false
+          },
+          "Username": {
+            "name": "Username",
+            "displayName": "Username",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Password": {
+            "name": "Password",
+            "displayName": "Password",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Connection Timeout": {
+            "name": "Connection Timeout",
+            "displayName": "Connection Timeout",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Data Timeout": {
+            "name": "Data Timeout",
+            "displayName": "Data Timeout",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "User Agent": {
+            "name": "User Agent",
+            "displayName": "User Agent",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Accept Content-Type": {
+            "name": "Accept Content-Type",
+            "displayName": "Accept Content-Type",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Follow Redirects": {
+            "name": "Follow Redirects",
+            "displayName": "Follow Redirects",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "redirect-cookie-policy": {
+            "name": "redirect-cookie-policy",
+            "displayName": "redirect-cookie-policy",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "proxy-configuration-service": {
+            "name": "proxy-configuration-service",
+            "displayName": "proxy-configuration-service",
+            "identifiesControllerService": true,
+            "sensitive": false
+          },
+          "Proxy Host": {
+            "name": "Proxy Host",
+            "displayName": "Proxy Host",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Proxy Port": {
+            "name": "Proxy Port",
+            "displayName": "Proxy Port",
+            "identifiesControllerService": false,
+            "sensitive": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "2f1caad3-57cf-32b5-0000-000000000000"
+      },
+      {
+        "identifier": "a0b37ad3-03c3-3e0d-0000-000000000000",
+        "name": "Post to listener",
+        "comments": "",
+        "position": {
+          "x": 0.0,
+          "y": 200.0
+        },
+        "type": "org.apache.nifi.processors.standard.PostHTTP",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "URL": "http://localhost:8081/contentListener",
+          "Max Batch Size": "100 MB",
+          "Send as FlowFile": "false",
+          "Compression Level": "0",
+          "Connection Timeout": "30 sec",
+          "Data Timeout": "30 sec",
+          "User Agent": "Apache-HttpClient/4.5.14 (Java/11.0.25)",
+          "Content-Type": "${mime.type}"
+        },
+        "propertyDescriptors": {
+          "URL": {
+            "name": "URL",
+            "displayName": "URL",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Max Batch Size": {
+            "name": "Max Batch Size",
+            "displayName": "Max Batch Size",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Max Data to Post per Second": {
+            "name": "Max Data to Post per Second",
+            "displayName": "Max Data to Post per Second",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "SSL Context Service": {
+            "name": "SSL Context Service",
+            "displayName": "SSL Context Service",
+            "identifiesControllerService": true,
+            "sensitive": false
+          },
+          "Username": {
+            "name": "Username",
+            "displayName": "Username",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Password": {
+            "name": "Password",
+            "displayName": "Password",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Send as FlowFile": {
+            "name": "Send as FlowFile",
+            "displayName": "Send as FlowFile",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Use Chunked Encoding": {
+            "name": "Use Chunked Encoding",
+            "displayName": "Use Chunked Encoding",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Compression Level": {
+            "name": "Compression Level",
+            "displayName": "Compression Level",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Connection Timeout": {
+            "name": "Connection Timeout",
+            "displayName": "Connection Timeout",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Data Timeout": {
+            "name": "Data Timeout",
+            "displayName": "Data Timeout",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Attributes to Send as HTTP Headers (Regex)": {
+            "name": "Attributes to Send as HTTP Headers (Regex)",
+            "displayName": "Attributes to Send as HTTP Headers (Regex)",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "User Agent": {
+            "name": "User Agent",
+            "displayName": "User Agent",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "proxy-configuration-service": {
+            "name": "proxy-configuration-service",
+            "displayName": "proxy-configuration-service",
+            "identifiesControllerService": true,
+            "sensitive": false
+          },
+          "Proxy Host": {
+            "name": "Proxy Host",
+            "displayName": "Proxy Host",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Proxy Port": {
+            "name": "Proxy Port",
+            "displayName": "Proxy Port",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "Content-Type": {
+            "name": "Content-Type",
+            "displayName": "Content-Type",
+            "identifiesControllerService": false,
+            "sensitive": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 0,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "failure",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "2f1caad3-57cf-32b5-0000-000000000000"
+      },
+      {
+        "identifier": "d1e62bcc-57ba-3b37-0000-000000000000",
+        "name": "Hash attribute",
+        "comments": "",
+        "position": {
+          "x": 0.0,
+          "y": 600.0
+        },
+        "type": "org.apache.nifi.processors.standard.HashAttribute",
+        "bundle": {
+          "group": "org.apache.nifi",
+          "artifact": "nifi-standard-nar",
+          "version": "1.28.1"
+        },
+        "properties": {
+          "Hash Value Attribute Key": "label-hash",
+          "label": ".*"
+        },
+        "propertyDescriptors": {
+          "Hash Value Attribute Key": {
+            "name": "Hash Value Attribute Key",
+            "displayName": "Hash Value Attribute Key",
+            "identifiesControllerService": false,
+            "sensitive": false
+          },
+          "label": {
+            "name": "label",
+            "displayName": "label",
+            "identifiesControllerService": false,
+            "sensitive": false
+          }
+        },
+        "style": {},
+        "schedulingPeriod": "0 sec",
+        "schedulingStrategy": "TIMER_DRIVEN",
+        "executionNode": "ALL",
+        "penaltyDuration": "30 sec",
+        "yieldDuration": "1 sec",
+        "bulletinLevel": "WARN",
+        "runDurationMillis": 25,
+        "concurrentlySchedulableTaskCount": 1,
+        "autoTerminatedRelationships": [
+          "failure",
+          "success"
+        ],
+        "scheduledState": "ENABLED",
+        "retryCount": 10,
+        "retriedRelationships": [],
+        "backoffMechanism": "PENALIZE_FLOWFILE",
+        "maxBackoffPeriod": "10 mins",
+        "componentType": "PROCESSOR",
+        "groupIdentifier": "2f1caad3-57cf-32b5-0000-000000000000"
+      }
+    ],
+    "inputPorts": [],
+    "outputPorts": [],
+    "connections": [],
+    "labels": [],
+    "funnels": [],
+    "controllerServices": [],
+    "variables": {},
+    "componentType": "PROCESS_GROUP"
+  },
+  "externalControllerServices": {},
+  "parameterContexts": {},
+  "flowEncodingVersion": "1.0",
+  "parameterProviders": {},
+  "latest": false
+}
