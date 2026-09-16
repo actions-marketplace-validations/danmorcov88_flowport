@@ -911,7 +911,8 @@ def rewrite_custom_processor(node: Any) -> int:
 
 
 def write_json(path: Path, data: Any) -> None:
-    path.write_text(json.dumps(data, indent=2, sort_keys=False) + "\n", encoding="utf-8")
+    with path.open("w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(data, indent=2, sort_keys=False) + "\n")
 
 
 def export(nifi: NiFi, out_dir: Path, groups: dict[str, str], templates: dict[str, str]) -> None:
