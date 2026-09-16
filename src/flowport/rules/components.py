@@ -60,6 +60,8 @@ class ComponentInventoryRule(Rule):
                     to_bundle=f"{renamed.to_bundle_group}:{renamed.to_bundle_artifact}",
                 )
                 continue
+            if catalog.knows_target_type(type_name) and not catalog.knows_type(type_name):
+                continue  # already a type of the target release (for example after a replacement)
             if not catalog.knows_type(type_name):
                 yield ctx.finding(
                     "NIFI2-UNKNOWN-COMPONENT",

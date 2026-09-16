@@ -3,7 +3,7 @@
 # Every extension type of Apache NiFi 1.28.1 with its properties and the
 # Expression Language scope of each (NONE, VARIABLE_REGISTRY, ENVIRONMENT or
 # FLOWFILE_ATTRIBUTES). "dynamic" is the scope of dynamic properties when the
-# type supports them.
+# type supports them; "relationships" lists the relationships of processors.
 #
 version: 1.28.1
 generated: '2026-09-16'
@@ -21,6 +21,11 @@ types:
       Output Type: NONE
       Prepend Element Value: FLOWFILE_ATTRIBUTES
       URL: FLOWFILE_ATTRIBUTES
+    relationships:
+    - element not found
+    - success
+    - original
+    - invalid html
   org.apache.nifi.ModifyHTMLElement:
     kind: PROCESSOR
     properties:
@@ -29,6 +34,11 @@ types:
       HTML Character Encoding: NONE
       Modified Value: FLOWFILE_ATTRIBUTES
       Output Type: NONE
+    relationships:
+    - element not found
+    - success
+    - original
+    - invalid html
   org.apache.nifi.PutHTMLElement:
     kind: PROCESSOR
     properties:
@@ -36,6 +46,11 @@ types:
       Element Insert Location Type: NONE
       HTML Character Encoding: NONE
       Put Value: FLOWFILE_ATTRIBUTES
+    relationships:
+    - element not found
+    - success
+    - original
+    - invalid html
   org.apache.nifi.accumulo.controllerservices.AccumuloService:
     kind: CONTROLLER_SERVICE
     properties:
@@ -71,6 +86,9 @@ types:
       timestamp-field: FLOWFILE_ATTRIBUTES
       visibility-path: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.accumulo.processors.ScanAccumulo:
     kind: PROCESSOR
     properties:
@@ -88,6 +106,9 @@ types:
       record-writer: NONE
       start-key: FLOWFILE_ATTRIBUTES
       start-key-inclusive: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.amqp.processors.ConsumeAMQP:
     kind: PROCESSOR
     properties:
@@ -109,6 +130,8 @@ types:
       remove.curly.braces: NONE
       ssl-client-auth: NONE
       ssl-context-service: NONE
+    relationships:
+    - success
   org.apache.nifi.amqp.processors.PublishAMQP:
     kind: PROCESSOR
     properties:
@@ -125,6 +148,9 @@ types:
       header.separator: NONE
       ssl-client-auth: NONE
       ssl-context-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.atlas.reporting.ReportLineageToAtlas:
     kind: REPORTING_TASK
     properties:
@@ -220,6 +246,8 @@ types:
       capture-change-mysql-username: VARIABLE_REGISTRY
       events-per-flowfile-strategy: NONE
       number-of-events-per-flowfile: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.cef.CEFReader:
     kind: CONTROLLER_SERVICE
     properties:
@@ -650,6 +678,9 @@ types:
       HBase Client Service: NONE
       Table Name: FLOWFILE_ATTRIBUTES
       delete-hbase-cell-separator: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.hbase.DeleteHBaseRow:
     kind: PROCESSOR
     properties:
@@ -662,6 +693,9 @@ types:
       delete-hb-row-id-location: NONE
       delete-hb-separator: FLOWFILE_ATTRIBUTES
       delete-visibility-label: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.hbase.FetchHBaseRow:
     kind: PROCESSOR
     properties:
@@ -675,6 +709,10 @@ types:
       Row Identifier: FLOWFILE_ATTRIBUTES
       Table Name: FLOWFILE_ATTRIBUTES
       hbase-fetch-row-authorizations: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - not found
   org.apache.nifi.hbase.GetHBase:
     kind: PROCESSOR
     properties:
@@ -686,6 +724,8 @@ types:
       Initial Time Range: NONE
       Table Name: VARIABLE_REGISTRY
       hbase-fetch-row-authorizations: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.hbase.HBase_1_1_2_ClientMapCacheService:
     kind: CONTROLLER_SERVICE
     properties:
@@ -771,6 +811,9 @@ types:
       Table Name: FLOWFILE_ATTRIBUTES
       timestamp: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.hbase.PutHBaseJSON:
     kind: PROCESSOR
     properties:
@@ -785,6 +828,9 @@ types:
       Table Name: FLOWFILE_ATTRIBUTES
       timestamp: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.hbase.PutHBaseRecord:
     kind: PROCESSOR
     properties:
@@ -802,6 +848,9 @@ types:
       record-reader: NONE
       timestamp-field-name: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.hbase.ScanHBase:
     kind: PROCESSOR
     properties:
@@ -821,6 +870,10 @@ types:
       scanhbase-table-name: FLOWFILE_ATTRIBUTES
       scanhbase-time-range-max: FLOWFILE_ATTRIBUTES
       scanhbase-time-range-min: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.http.StandardHttpContextMap:
     kind: CONTROLLER_SERVICE
     properties:
@@ -884,6 +937,9 @@ types:
       record-reader: NONE
       record-writer: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - parse.failure
   org.apache.nifi.jms.processors.PublishJMS:
     kind: PROCESSOR
     properties:
@@ -911,6 +967,9 @@ types:
       record-reader: NONE
       record-writer: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.json.JsonPathReader:
     kind: CONTROLLER_SERVICE
     properties:
@@ -1210,6 +1269,9 @@ types:
       Geo Database File: VARIABLE_REGISTRY
       IP Address Attribute: FLOWFILE_ATTRIBUTES
       Log Level: FLOWFILE_ATTRIBUTES
+    relationships:
+    - not found
+    - found
   org.apache.nifi.processors.GeoEnrichIPRecord:
     kind: PROCESSOR
     properties:
@@ -1225,12 +1287,19 @@ types:
       geo-enrich-ip-record-reader: NONE
       geo-enrich-ip-record-writer: NONE
       geo-enrich-ip-split-found-not-found: NONE
+    relationships:
+    - not found
+    - original
+    - found
   org.apache.nifi.processors.ISPEnrichIP:
     kind: PROCESSOR
     properties:
       Geo Database File: VARIABLE_REGISTRY
       IP Address Attribute: FLOWFILE_ATTRIBUTES
       Log Level: FLOWFILE_ATTRIBUTES
+    relationships:
+    - not found
+    - found
   org.apache.nifi.processors.PutIoTDBRecord:
     kind: PROCESSOR
     properties:
@@ -1244,6 +1313,9 @@ types:
       Schema Template: FLOWFILE_ATTRIBUTES
       Time Field: FLOWFILE_ATTRIBUTES
       Username: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.QueryIoTDBRecord:
     kind: PROCESSOR
     properties:
@@ -1254,6 +1326,9 @@ types:
       Query: FLOWFILE_ATTRIBUTES
       Record Writer: NONE
       Username: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.airtable.QueryAirtableTable:
     kind: PROCESSOR
     properties:
@@ -1267,6 +1342,8 @@ types:
       query-time-window-lag: VARIABLE_REGISTRY
       table-id: VARIABLE_REGISTRY
       web-client-service-provider: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.asana.GetAsanaObject:
     kind: PROCESSOR
     properties:
@@ -1278,6 +1355,10 @@ types:
       asana-tag-name: NONE
       asana-team-name: NONE
       distributed-cache-service: NONE
+    relationships:
+    - removed
+    - new
+    - updated
   org.apache.nifi.processors.attributes.UpdateAttribute:
     kind: PROCESSOR
     properties:
@@ -1286,18 +1367,26 @@ types:
       Store State: NONE
       canonical-value-lookup-cache-size: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.avro.ConvertAvroToJSON:
     kind: PROCESSOR
     properties:
       Avro schema: NONE
       JSON container options: NONE
       Wrap Single Record: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.avro.ExtractAvroMetadata:
     kind: PROCESSOR
     properties:
       Count Items: NONE
       Fingerprint Algorithm: NONE
       Metadata Keys: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.avro.SplitAvro:
     kind: PROCESSOR
     properties:
@@ -1305,6 +1394,10 @@ types:
       Output Strategy: NONE
       Split Strategy: NONE
       Transfer Metadata: NONE
+    relationships:
+    - failure
+    - original
+    - split
   org.apache.nifi.processors.aws.cloudwatch.PutCloudWatchMetric:
     kind: PROCESSOR
     properties:
@@ -1330,6 +1423,9 @@ types:
       sampleCount: FLOWFILE_ATTRIBUTES
       sum: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.credentials.provider.service.AWSCredentialsProviderControllerService:
     kind: CONTROLLER_SERVICE
     properties:
@@ -1374,6 +1470,10 @@ types:
       proxy-configuration-service: NONE
       proxy-user-name: NONE
       proxy-user-password: NONE
+    relationships:
+    - unprocessed
+    - success
+    - failure
   org.apache.nifi.processors.aws.dynamodb.GetDynamoDB:
     kind: PROCESSOR
     properties:
@@ -1398,6 +1498,11 @@ types:
       proxy-configuration-service: NONE
       proxy-user-name: NONE
       proxy-user-password: NONE
+    relationships:
+    - unprocessed
+    - success
+    - failure
+    - not found
   org.apache.nifi.processors.aws.dynamodb.PutDynamoDB:
     kind: PROCESSOR
     properties:
@@ -1423,6 +1528,10 @@ types:
       proxy-configuration-service: NONE
       proxy-user-name: NONE
       proxy-user-password: NONE
+    relationships:
+    - unprocessed
+    - success
+    - failure
   org.apache.nifi.processors.aws.dynamodb.PutDynamoDBRecord:
     kind: PROCESSOR
     properties:
@@ -1438,6 +1547,10 @@ types:
       record-reader: NONE
       sort-key-field: VARIABLE_REGISTRY
       sort-key-strategy: NONE
+    relationships:
+    - unprocessed
+    - success
+    - failure
   org.apache.nifi.processors.aws.kinesis.firehose.PutKinesisFirehose:
     kind: PROCESSOR
     properties:
@@ -1456,6 +1569,9 @@ types:
       proxy-configuration-service: NONE
       proxy-user-name: NONE
       proxy-user-password: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.kinesis.stream.ConsumeKinesisStream:
     kind: PROCESSOR
     properties:
@@ -1479,6 +1595,8 @@ types:
       kinesis-stream-name: NONE
       proxy-configuration-service: NONE
     dynamic: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.aws.kinesis.stream.PutKinesisStream:
     kind: PROCESSOR
     properties:
@@ -1498,6 +1616,9 @@ types:
       proxy-configuration-service: NONE
       proxy-user-name: NONE
       proxy-user-password: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.lambda.PutLambda:
     kind: PROCESSOR
     properties:
@@ -1515,6 +1636,9 @@ types:
       proxy-configuration-service: NONE
       proxy-user-name: NONE
       proxy-user-password: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.ml.polly.GetAwsPollyJobStatus:
     kind: PROCESSOR
     properties:
@@ -1525,6 +1649,12 @@ types:
       aws-region: NONE
       awsTaskId: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
+    relationships:
+    - throttled
+    - running
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.aws.ml.polly.StartAwsPollyJob:
     kind: PROCESSOR
     properties:
@@ -1534,6 +1664,10 @@ types:
       SSL Context Service: NONE
       aws-region: NONE
       json-payload: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.aws.ml.textract.GetAwsTextractJobStatus:
     kind: PROCESSOR
     properties:
@@ -1545,6 +1679,12 @@ types:
       awsTaskId: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
       textract-type: FLOWFILE_ATTRIBUTES
+    relationships:
+    - throttled
+    - running
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.aws.ml.textract.StartAwsTextractJob:
     kind: PROCESSOR
     properties:
@@ -1555,6 +1695,10 @@ types:
       aws-region: NONE
       json-payload: FLOWFILE_ATTRIBUTES
       textract-type: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.aws.ml.transcribe.GetAwsTranscribeJobStatus:
     kind: PROCESSOR
     properties:
@@ -1565,6 +1709,12 @@ types:
       aws-region: NONE
       awsTaskId: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
+    relationships:
+    - throttled
+    - running
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.aws.ml.transcribe.StartAwsTranscribeJob:
     kind: PROCESSOR
     properties:
@@ -1574,6 +1724,10 @@ types:
       SSL Context Service: NONE
       aws-region: NONE
       json-payload: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.aws.ml.translate.GetAwsTranslateJobStatus:
     kind: PROCESSOR
     properties:
@@ -1584,6 +1738,12 @@ types:
       aws-region: NONE
       awsTaskId: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
+    relationships:
+    - throttled
+    - running
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.aws.ml.translate.StartAwsTranslateJob:
     kind: PROCESSOR
     properties:
@@ -1593,6 +1753,10 @@ types:
       SSL Context Service: NONE
       aws-region: NONE
       json-payload: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.aws.s3.CopyS3Object:
     kind: PROCESSOR
     properties:
@@ -1616,6 +1780,9 @@ types:
       custom-signer-class-name: VARIABLE_REGISTRY
       custom-signer-module-location: VARIABLE_REGISTRY
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.s3.DeleteS3Object:
     kind: PROCESSOR
     properties:
@@ -1644,6 +1811,9 @@ types:
       proxy-configuration-service: NONE
       proxy-user-name: NONE
       proxy-user-password: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.s3.FetchS3Object:
     kind: PROCESSOR
     properties:
@@ -1670,6 +1840,9 @@ types:
       range-length: FLOWFILE_ATTRIBUTES
       range-start: FLOWFILE_ATTRIBUTES
       requester-pays: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.s3.GetS3ObjectMetadata:
     kind: PROCESSOR
     properties:
@@ -1690,6 +1863,10 @@ types:
       custom-signer-class-name: VARIABLE_REGISTRY
       custom-signer-module-location: VARIABLE_REGISTRY
       proxy-configuration-service: NONE
+    relationships:
+    - not found
+    - failure
+    - found
   org.apache.nifi.processors.aws.s3.ListS3:
     kind: PROCESSOR
     properties:
@@ -1725,6 +1902,8 @@ types:
       use-versions: NONE
       write-s3-object-tags: NONE
       write-s3-user-metadata: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.aws.s3.PutS3Object:
     kind: PROCESSOR
     properties:
@@ -1770,6 +1949,9 @@ types:
       use-chunked-encoding: NONE
       use-path-style-access: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.s3.TagS3Object:
     kind: PROCESSOR
     properties:
@@ -1795,6 +1977,9 @@ types:
       tag-key: FLOWFILE_ATTRIBUTES
       tag-value: FLOWFILE_ATTRIBUTES
       version: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.s3.encryption.StandardS3EncryptionService:
     kind: CONTROLLER_SERVICE
     properties:
@@ -1824,6 +2009,9 @@ types:
       proxy-user-name: VARIABLE_REGISTRY
       proxy-user-password: VARIABLE_REGISTRY
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.sqs.DeleteSQS:
     kind: PROCESSOR
     properties:
@@ -1841,6 +2029,9 @@ types:
       Secret Key: VARIABLE_REGISTRY
       proxy-user-name: VARIABLE_REGISTRY
       proxy-user-password: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.sqs.GetSQS:
     kind: PROCESSOR
     properties:
@@ -1862,6 +2053,8 @@ types:
       Visibility Timeout: NONE
       proxy-user-name: VARIABLE_REGISTRY
       proxy-user-password: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.aws.sqs.PutSQS:
     kind: PROCESSOR
     properties:
@@ -1882,6 +2075,9 @@ types:
       proxy-user-name: VARIABLE_REGISTRY
       proxy-user-password: VARIABLE_REGISTRY
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.aws.wag.InvokeAWSGatewayApi:
     kind: PROCESSOR
     properties:
@@ -1910,6 +2106,12 @@ types:
       proxy-user-name: NONE
       proxy-user-password: NONE
     dynamic: NONE
+    relationships:
+    - Original
+    - Failure
+    - Retry
+    - No Retry
+    - Response
   org.apache.nifi.processors.azure.cosmos.document.PutAzureCosmosDBRecord:
     kind: PROCESSOR
     properties:
@@ -1923,6 +2125,9 @@ types:
       azure-cosmos-db-uri: NONE
       insert-batch-size: NONE
       record-reader: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.eventhub.ConsumeAzureEventHub:
     kind: PROCESSOR
     properties:
@@ -1947,6 +2152,9 @@ types:
       storage-container-name: VARIABLE_REGISTRY
       storage-sas-token: VARIABLE_REGISTRY
       use-managed-identity: NONE
+    relationships:
+    - success
+    - parse.failure
   org.apache.nifi.processors.azure.eventhub.GetAzureEventHub:
     kind: PROCESSOR
     properties:
@@ -1963,6 +2171,8 @@ types:
       Transport Type: NONE
       proxy-configuration-service: NONE
       use-managed-identity: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.azure.eventhub.PutAzureEventHub:
     kind: PROCESSOR
     properties:
@@ -1976,6 +2186,9 @@ types:
       partitioning-key-attribute-name: NONE
       proxy-configuration-service: NONE
       use-managed-identity: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.DeleteAzureBlobStorage:
     kind: PROCESSOR
     properties:
@@ -1988,6 +2201,9 @@ types:
       storage-credentials-service: NONE
       storage-endpoint-suffix: FLOWFILE_ATTRIBUTES
       storage-sas-token: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.DeleteAzureBlobStorage_v12:
     kind: PROCESSOR
     properties:
@@ -1996,6 +2212,9 @@ types:
       delete-snapshots-option: NONE
       proxy-configuration-service: NONE
       storage-credentials-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.DeleteAzureDataLakeStorage:
     kind: PROCESSOR
     properties:
@@ -2005,6 +2224,9 @@ types:
       filesystem-name: FLOWFILE_ATTRIBUTES
       filesystem-object-type: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.FetchAzureBlobStorage:
     kind: PROCESSOR
     properties:
@@ -2021,6 +2243,9 @@ types:
       storage-credentials-service: NONE
       storage-endpoint-suffix: FLOWFILE_ATTRIBUTES
       storage-sas-token: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.FetchAzureBlobStorage_v12:
     kind: PROCESSOR
     properties:
@@ -2033,6 +2258,9 @@ types:
       range-length: FLOWFILE_ATTRIBUTES
       range-start: FLOWFILE_ATTRIBUTES
       storage-credentials-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.FetchAzureDataLakeStorage:
     kind: PROCESSOR
     properties:
@@ -2044,6 +2272,9 @@ types:
       proxy-configuration-service: NONE
       range-length: FLOWFILE_ATTRIBUTES
       range-start: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.ListAzureBlobStorage:
     kind: PROCESSOR
     properties:
@@ -2064,6 +2295,8 @@ types:
       storage-credentials-service: NONE
       storage-endpoint-suffix: FLOWFILE_ATTRIBUTES
       storage-sas-token: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.azure.storage.ListAzureBlobStorage_v12:
     kind: PROCESSOR
     properties:
@@ -2080,6 +2313,8 @@ types:
       proxy-configuration-service: NONE
       record-writer: NONE
       storage-credentials-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.azure.storage.ListAzureDataLakeStorage:
     kind: PROCESSOR
     properties:
@@ -2100,6 +2335,8 @@ types:
       proxy-configuration-service: NONE
       record-writer: NONE
       recurse-subdirectories: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.azure.storage.MoveAzureDataLakeStorage:
     kind: PROCESSOR
     properties:
@@ -2111,6 +2348,9 @@ types:
       proxy-configuration-service: NONE
       source-directory-name: FLOWFILE_ATTRIBUTES
       source-filesystem-name: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.PutAzureBlobStorage:
     kind: PROCESSOR
     properties:
@@ -2126,6 +2366,9 @@ types:
       storage-credentials-service: NONE
       storage-endpoint-suffix: FLOWFILE_ATTRIBUTES
       storage-sas-token: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.PutAzureBlobStorage_v12:
     kind: PROCESSOR
     properties:
@@ -2140,6 +2383,9 @@ types:
       create-container: NONE
       proxy-configuration-service: NONE
       storage-credentials-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.PutAzureDataLakeStorage:
     kind: PROCESSOR
     properties:
@@ -2153,6 +2399,9 @@ types:
       filesystem-name: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
       writing-strategy: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.queue.GetAzureQueueStorage:
     kind: PROCESSOR
     properties:
@@ -2166,6 +2415,8 @@ types:
       storage-queue-name: FLOWFILE_ATTRIBUTES
       storage-sas-token: FLOWFILE_ATTRIBUTES
       visibility-timeout: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.azure.storage.queue.GetAzureQueueStorage_v12:
     kind: PROCESSOR
     properties:
@@ -2177,6 +2428,8 @@ types:
       Visibility Timeout: NONE
       proxy-configuration-service: NONE
       storage-endpoint-suffix: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.azure.storage.queue.PutAzureQueueStorage:
     kind: PROCESSOR
     properties:
@@ -2189,6 +2442,9 @@ types:
       storage-sas-token: FLOWFILE_ATTRIBUTES
       time-to-live: NONE
       visibility-delay: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.azure.storage.queue.PutAzureQueueStorage_v12:
     kind: PROCESSOR
     properties:
@@ -2199,11 +2455,17 @@ types:
       Visibility Timeout: NONE
       proxy-configuration-service: NONE
       storage-endpoint-suffix: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.box.FetchBoxFile:
     kind: PROCESSOR
     properties:
       box-client-service: NONE
       box-file-id: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.box.ListBoxFile:
     kind: PROCESSOR
     properties:
@@ -2216,6 +2478,8 @@ types:
       min-age: NONE
       record-writer: NONE
       recursive-search: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.box.PutBoxFile:
     kind: PROCESSOR
     properties:
@@ -2226,6 +2490,9 @@ types:
       create-folder: NONE
       file-name: FLOWFILE_ATTRIBUTES
       subfolder-name: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.cassandra.PutCassandraQL:
     kind: PROCESSOR
     properties:
@@ -2241,6 +2508,10 @@ types:
       Username: VARIABLE_REGISTRY
       cassandra-connection-provider: NONE
       putcql-stmt-cache-size: VARIABLE_REGISTRY
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.cassandra.PutCassandraRecord:
     kind: PROCESSOR
     properties:
@@ -2259,6 +2530,9 @@ types:
       put-cassandra-record-table: FLOWFILE_ATTRIBUTES
       put-cassandra-record-update-keys: FLOWFILE_ATTRIBUTES
       put-cassandra-record-update-method: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.cassandra.QueryCassandra:
     kind: PROCESSOR
     properties:
@@ -2279,10 +2553,17 @@ types:
       cassandra-connection-provider: NONE
       qdbt-output-batch-size: VARIABLE_REGISTRY
       timestamp-format-pattern: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.ccda.ExtractCCDAAttributes:
     kind: PROCESSOR
     properties:
       skip-validation: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.cipher.DecryptContent:
     kind: PROCESSOR
     properties:
@@ -2290,18 +2571,27 @@ types:
       cipher-algorithm-padding: NONE
       key-specification: NONE
       key-specification-format: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.cipher.DecryptContentAge:
     kind: PROCESSOR
     properties:
       Private Key Identities: NONE
       Private Key Identity Resources: NONE
       Private Key Source: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.cipher.DecryptContentCompatibility:
     kind: PROCESSOR
     properties:
       encryption-scheme: NONE
       key-derivation-strategy: NONE
       password: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.cipher.EncryptContentAge:
     kind: PROCESSOR
     properties:
@@ -2309,6 +2599,9 @@ types:
       Public Key Recipient Resources: NONE
       Public Key Recipients: NONE
       Public Key Source: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.cipher.VerifyContentMAC:
     kind: PROCESSOR
     properties:
@@ -2317,6 +2610,9 @@ types:
       message-authentication-code-encoding: NONE
       secret-key: NONE
       secret-key-encoding: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.compress.ModifyCompression:
     kind: PROCESSOR
     properties:
@@ -2324,6 +2620,9 @@ types:
       Output Compression Level: NONE
       Output Compression Strategy: NONE
       Output Filename Strategy: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.couchbase.GetCouchbaseKey:
     kind: PROCESSOR
     properties:
@@ -2332,6 +2631,11 @@ types:
       document-id: FLOWFILE_ATTRIBUTES
       document-type: NONE
       put-to-attribute: FLOWFILE_ATTRIBUTES
+    relationships:
+    - retry
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.couchbase.PutCouchbaseKey:
     kind: PROCESSOR
     properties:
@@ -2341,6 +2645,10 @@ types:
       document-type: NONE
       persist-to: NONE
       replicate-to: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.cybersecurity.CompareFuzzyHash:
     kind: PROCESSOR
     properties:
@@ -2349,20 +2657,34 @@ types:
       HASH_LIST_FILE: NONE
       MATCHING_MODE: NONE
       MATCH_THRESHOLD: NONE
+    relationships:
+    - failure
+    - not-found
+    - found
   org.apache.nifi.processors.cybersecurity.FuzzyHashContent:
     kind: PROCESSOR
     properties:
       ATTRIBUTE_NAME: NONE
       HASH_ALGORITHM: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.document.ExtractDocumentText:
     kind: PROCESSOR
     properties: {}
+    relationships:
+    - extracted
+    - failure
+    - original
   org.apache.nifi.processors.dropbox.FetchDropbox:
     kind: PROCESSOR
     properties:
       dropbox-credential-service: NONE
       file: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.dropbox.ListDropbox:
     kind: PROCESSOR
     properties:
@@ -2376,6 +2698,8 @@ types:
       proxy-configuration-service: NONE
       record-writer: NONE
       recursive-search: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.dropbox.PutDropbox:
     kind: PROCESSOR
     properties:
@@ -2386,6 +2710,9 @@ types:
       file-name: FLOWFILE_ATTRIBUTES
       folder: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.elasticsearch.ConsumeElasticsearch:
     kind: PROCESSOR
     properties:
@@ -2412,6 +2739,9 @@ types:
       es-rest-size: FLOWFILE_ATTRIBUTES
       es-rest-sort-order: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - aggregations
+    - hits
   org.apache.nifi.processors.elasticsearch.DeleteByQueryElasticsearch:
     kind: PROCESSOR
     properties:
@@ -2423,6 +2753,10 @@ types:
       el-rest-query-definition-style: NONE
       el-rest-type: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.elasticsearch.FetchElasticsearchHttp:
     kind: PROCESSOR
     properties:
@@ -2443,6 +2777,11 @@ types:
       proxy-password: VARIABLE_REGISTRY
       proxy-username: VARIABLE_REGISTRY
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - retry
+    - success
+    - failure
+    - not found
   org.apache.nifi.processors.elasticsearch.GetElasticsearch:
     kind: PROCESSOR
     properties:
@@ -2453,6 +2792,11 @@ types:
       get-es-destination: NONE
       get-es-id: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - retry
+    - document
+    - not_found
+    - failure
   org.apache.nifi.processors.elasticsearch.JsonQueryElasticsearch:
     kind: PROCESSOR
     properties:
@@ -2474,6 +2818,11 @@ types:
       es-rest-query-sort: FLOWFILE_ATTRIBUTES
       es-rest-size: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - aggregations
+    - failure
+    - original
+    - hits
   org.apache.nifi.processors.elasticsearch.PaginatedJsonQueryElasticsearch:
     kind: PROCESSOR
     properties:
@@ -2497,6 +2846,11 @@ types:
       es-rest-query-sort: FLOWFILE_ATTRIBUTES
       es-rest-size: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - aggregations
+    - failure
+    - original
+    - hits
   org.apache.nifi.processors.elasticsearch.PutElasticsearchHttp:
     kind: PROCESSOR
     properties:
@@ -2518,6 +2872,10 @@ types:
       put-es-index-op: FLOWFILE_ATTRIBUTES
       put-es-type: FLOWFILE_ATTRIBUTES
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.elasticsearch.PutElasticsearchHttpRecord:
     kind: PROCESSOR
     properties:
@@ -2547,6 +2905,10 @@ types:
       put-es-record-type: FLOWFILE_ATTRIBUTES
       suppress-nulls: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.elasticsearch.PutElasticsearchJson:
     kind: PROCESSOR
     properties:
@@ -2565,6 +2927,11 @@ types:
       put-es-record-index-op: FLOWFILE_ATTRIBUTES
       put-es-record-log-error-responses: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - retry
+    - success
+    - failure
+    - errors
   org.apache.nifi.processors.elasticsearch.PutElasticsearchRecord:
     kind: PROCESSOR
     properties:
@@ -2594,6 +2961,12 @@ types:
       put-es-record-scripted-upsert-path: FLOWFILE_ATTRIBUTES
       put-es-record-type-record-path: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - retry
+    - success
+    - successful_records
+    - failure
+    - errors
   org.apache.nifi.processors.elasticsearch.QueryElasticsearchHttp:
     kind: PROCESSOR
     properties:
@@ -2619,6 +2992,10 @@ types:
       query-es-type: FLOWFILE_ATTRIBUTES
       routing-query-info-strategy: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.elasticsearch.ScrollElasticsearchHttp:
     kind: PROCESSOR
     properties:
@@ -2642,6 +3019,9 @@ types:
       scroll-es-sort: FLOWFILE_ATTRIBUTES
       scroll-es-type: FLOWFILE_ATTRIBUTES
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.elasticsearch.SearchElasticsearch:
     kind: PROCESSOR
     properties:
@@ -2665,6 +3045,9 @@ types:
       es-rest-query-sort: FLOWFILE_ATTRIBUTES
       es-rest-size: FLOWFILE_ATTRIBUTES
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - aggregations
+    - hits
   org.apache.nifi.processors.elasticsearch.UpdateByQueryElasticsearch:
     kind: PROCESSOR
     properties:
@@ -2677,6 +3060,10 @@ types:
       el-rest-script: FLOWFILE_ATTRIBUTES
       el-rest-type: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.email.ConsumeEWS:
     kind: PROCESSOR
     properties:
@@ -2692,6 +3079,8 @@ types:
       mail-ews-version: NONE
       password: VARIABLE_REGISTRY
       user: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.email.ConsumeIMAP:
     kind: PROCESSOR
     properties:
@@ -2707,6 +3096,8 @@ types:
       password: VARIABLE_REGISTRY
       port: VARIABLE_REGISTRY
       user: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.email.ConsumePOP3:
     kind: PROCESSOR
     properties:
@@ -2720,17 +3111,30 @@ types:
       password: VARIABLE_REGISTRY
       port: VARIABLE_REGISTRY
       user: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.email.ExtractEmailAttachments:
     kind: PROCESSOR
     properties: {}
+    relationships:
+    - failure
+    - original
+    - attachments
   org.apache.nifi.processors.email.ExtractEmailHeaders:
     kind: PROCESSOR
     properties:
       CAPTURED_HEADERS: NONE
       STRICT_ADDRESS_PARSING: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.email.ExtractTNEFAttachments:
     kind: PROCESSOR
     properties: {}
+    relationships:
+    - failure
+    - original
+    - attachments
   org.apache.nifi.processors.email.ListenSMTP:
     kind: PROCESSOR
     properties:
@@ -2741,6 +3145,8 @@ types:
       SMTP_PORT: NONE
       SMTP_TIMEOUT: NONE
       SSL_CONTEXT_SERVICE: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.enrich.QueryDNS:
     kind: PROCESSOR
     properties:
@@ -2751,6 +3157,9 @@ types:
       QUERY_INPUT: FLOWFILE_ATTRIBUTES
       QUERY_PARSER: NONE
       QUERY_PARSER_INPUT: NONE
+    relationships:
+    - not found
+    - found
   org.apache.nifi.processors.enrich.QueryWhois:
     kind: PROCESSOR
     properties:
@@ -2764,10 +3173,18 @@ types:
       WHOIS_SERVER: NONE
       WHOIS_SERVER_PORT: NONE
       WHOIS_TIMEOUT: NONE
+    relationships:
+    - not found
+    - found
   org.apache.nifi.processors.evtx.ParseEvtx:
     kind: PROCESSOR
     properties:
       granularity: NONE
+    relationships:
+    - success
+    - failure
+    - original
+    - bad chunk
   org.apache.nifi.processors.gcp.bigquery.PutBigQuery:
     kind: PROCESSOR
     properties:
@@ -2781,6 +3198,9 @@ types:
       bq.transfer.type: NONE
       gcp-project-id: VARIABLE_REGISTRY
       gcp-retry-count: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.bigquery.PutBigQueryBatch:
     kind: PROCESSOR
     properties:
@@ -2808,6 +3228,9 @@ types:
       gcp-proxy-user-password: VARIABLE_REGISTRY
       gcp-retry-count: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.bigquery.PutBigQueryStreaming:
     kind: PROCESSOR
     properties:
@@ -2824,6 +3247,9 @@ types:
       gcp-proxy-user-password: VARIABLE_REGISTRY
       gcp-retry-count: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.credentials.service.GCPCredentialsControllerService:
     kind: CONTROLLER_SERVICE
     properties:
@@ -2842,6 +3268,9 @@ types:
       drive-file-id: FLOWFILE_ATTRIBUTES
       gcp-credentials-provider-service: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.drive.ListGoogleDrive:
     kind: PROCESSOR
     properties:
@@ -2855,6 +3284,8 @@ types:
       proxy-configuration-service: NONE
       record-writer: NONE
       recursive-search: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.gcp.drive.PutGoogleDrive:
     kind: PROCESSOR
     properties:
@@ -2865,6 +3296,9 @@ types:
       folder-id: FLOWFILE_ATTRIBUTES
       gcp-credentials-provider-service: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.pubsub.ConsumeGCPubSub:
     kind: PROCESSOR
     properties:
@@ -2874,6 +3308,8 @@ types:
       gcp-pubsub-publish-batch-size: NONE
       gcp-pubsub-subscription: VARIABLE_REGISTRY
       proxy-configuration-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.gcp.pubsub.PublishGCPubSub:
     kind: PROCESSOR
     properties:
@@ -2891,6 +3327,10 @@ types:
       gcp-pubsub-topic: VARIABLE_REGISTRY
       proxy-configuration-service: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.gcp.pubsub.lite.ConsumeGCPubSubLite:
     kind: PROCESSOR
     properties:
@@ -2898,6 +3338,8 @@ types:
       gcp-bytes-outstanding: VARIABLE_REGISTRY
       gcp-messages-outstanding: VARIABLE_REGISTRY
       gcp-pubsub-subscription: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.gcp.pubsub.lite.PublishGCPubSubLite:
     kind: PROCESSOR
     properties:
@@ -2908,6 +3350,9 @@ types:
       gcp-pubsub-publish-batch-size: NONE
       gcp-pubsub-topic: VARIABLE_REGISTRY
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.storage.DeleteGCSObject:
     kind: PROCESSOR
     properties:
@@ -2923,6 +3368,9 @@ types:
       gcs-key: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
       storage-api-url: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.storage.FetchGCSObject:
     kind: PROCESSOR
     properties:
@@ -2941,6 +3389,9 @@ types:
       gcs-server-side-encryption-key: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
       storage-api-url: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.storage.ListGCSBucket:
     kind: PROCESSOR
     properties:
@@ -2961,6 +3412,8 @@ types:
       proxy-configuration-service: NONE
       record-writer: NONE
       storage-api-url: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.gcp.storage.PutGCSObject:
     kind: PROCESSOR
     properties:
@@ -2984,16 +3437,29 @@ types:
       proxy-configuration-service: NONE
       storage-api-url: VARIABLE_REGISTRY
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.vision.GetGcpVisionAnnotateFilesOperationStatus:
     kind: PROCESSOR
     properties:
       gcp-credentials-provider-service: NONE
       operationKey: FLOWFILE_ATTRIBUTES
+    relationships:
+    - running
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.gcp.vision.GetGcpVisionAnnotateImagesOperationStatus:
     kind: PROCESSOR
     properties:
       gcp-credentials-provider-service: NONE
       operationKey: FLOWFILE_ATTRIBUTES
+    relationships:
+    - running
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.gcp.vision.StartGcpVisionAnnotateFilesOperation:
     kind: PROCESSOR
     properties:
@@ -3001,6 +3467,9 @@ types:
       json-payload: FLOWFILE_ATTRIBUTES
       output-bucket: FLOWFILE_ATTRIBUTES
       vision-feature-type: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.gcp.vision.StartGcpVisionAnnotateImagesOperation:
     kind: PROCESSOR
     properties:
@@ -3008,6 +3477,9 @@ types:
       json-payload: FLOWFILE_ATTRIBUTES
       output-bucket: FLOWFILE_ATTRIBUTES
       vision-feature-type: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.geohash.GeohashRecord:
     kind: PROCESSOR
     properties:
@@ -3020,6 +3492,10 @@ types:
       record-reader: NONE
       record-writer: NONE
       routing-strategy: NONE
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.gettcp.GetTCP:
     kind: PROCESSOR
     properties:
@@ -3029,11 +3505,18 @@ types:
       receive-buffer-size: NONE
       reconnect-interval: NONE
     dynamic: NONE
+    relationships:
+    - Partial
+    - Success
   org.apache.nifi.processors.graph.ExecuteGraphQuery:
     kind: PROCESSOR
     properties:
       graph-client-service: NONE
       graph-query: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.graph.ExecuteGraphQueryRecord:
     kind: PROCESSOR
     properties:
@@ -3042,6 +3525,10 @@ types:
       record-script: FLOWFILE_ATTRIBUTES
       writer-service: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - response
+    - failure
+    - original
   org.apache.nifi.processors.groovyx.ExecuteGroovyScript:
     kind: PROCESSOR
     properties:
@@ -3050,6 +3537,9 @@ types:
       groovyx-script-body: NONE
       groovyx-script-file: VARIABLE_REGISTRY
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.grpc.InvokeGRPC:
     kind: PROCESSOR
     properties:
@@ -3061,6 +3551,12 @@ types:
       SSL Context Service: NONE
       Send FlowFile Content: NONE
       Use SSL/TLS: NONE
+    relationships:
+    - Original
+    - Failure
+    - Retry
+    - No Retry
+    - Response
   org.apache.nifi.processors.grpc.ListenGRPC:
     kind: PROCESSOR
     properties:
@@ -3070,6 +3566,8 @@ types:
       Max Message Size: NONE
       SSL Context Service: NONE
       Use TLS: NONE
+    relationships:
+    - Success
   org.apache.nifi.processors.hadoop.CreateHadoopSequenceFile:
     kind: PROCESSOR
     properties:
@@ -3083,6 +3581,9 @@ types:
       compression type: NONE
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hadoop.DeleteHDFS:
     kind: PROCESSOR
     properties:
@@ -3096,6 +3597,9 @@ types:
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
       recursive: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hadoop.FetchHDFS:
     kind: PROCESSOR
     properties:
@@ -3109,6 +3613,10 @@ types:
       Kerberos Relogin Period: VARIABLE_REGISTRY
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
+    relationships:
+    - success
+    - comms.failure
+    - failure
   org.apache.nifi.processors.hadoop.GetHDFS:
     kind: PROCESSOR
     properties:
@@ -3132,6 +3640,8 @@ types:
       Recurse Subdirectories: NONE
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.hadoop.GetHDFSFileInfo:
     kind: PROCESSOR
     properties:
@@ -3153,6 +3663,11 @@ types:
       gethdfsfileinfo-recurse-subdirs: NONE
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
+    relationships:
+    - success
+    - not found
+    - failure
+    - original
   org.apache.nifi.processors.hadoop.GetHDFSSequenceFile:
     kind: PROCESSOR
     properties:
@@ -3177,6 +3692,8 @@ types:
       Recurse Subdirectories: NONE
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.hadoop.ListHDFS:
     kind: PROCESSOR
     properties:
@@ -3195,6 +3712,8 @@ types:
       maximum-file-age: NONE
       minimum-file-age: NONE
       record-writer: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.hadoop.MoveHDFS:
     kind: PROCESSOR
     properties:
@@ -3214,6 +3733,9 @@ types:
       Remote Owner: NONE
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hadoop.PutHDFS:
     kind: PROCESSOR
     properties:
@@ -3237,6 +3759,9 @@ types:
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
       writing-strategy: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hadoop.inotify.GetHDFSEvents:
     kind: PROCESSOR
     properties:
@@ -3253,6 +3778,8 @@ types:
       Poll Duration: NONE
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.hive.ConvertAvroToORC:
     kind: PROCESSOR
     properties:
@@ -3261,6 +3788,9 @@ types:
       orc-config-resources: NONE
       orc-hive-table-name: FLOWFILE_ATTRIBUTES
       orc-stripe-size: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hive.PutHive3QL:
     kind: PROCESSOR
     properties:
@@ -3270,6 +3800,10 @@ types:
       hive3-query-timeout: FLOWFILE_ATTRIBUTES
       rollback-on-failure: NONE
       statement-delimiter: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.hive.PutHive3Streaming:
     kind: PROCESSOR
     properties:
@@ -3287,6 +3821,10 @@ types:
       kerberos-principal: VARIABLE_REGISTRY
       record-reader: NONE
       rollback-on-failure: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.hive.PutHiveQL:
     kind: PROCESSOR
     properties:
@@ -3295,6 +3833,10 @@ types:
       hive-charset: NONE
       rollback-on-failure: NONE
       statement-delimiter: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.hive.PutHiveStreaming:
     kind: PROCESSOR
     properties:
@@ -3314,6 +3856,10 @@ types:
       hive-stream-transactions-per-batch: FLOWFILE_ATTRIBUTES
       kerberos-credentials-service: NONE
       rollback-on-failure: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.hive.PutHive_1_1QL:
     kind: PROCESSOR
     properties:
@@ -3322,6 +3868,10 @@ types:
       hive-charset: NONE
       rollback-on-failure: NONE
       statement-delimiter: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.hive.SelectHive3QL:
     kind: PROCESSOR
     properties:
@@ -3342,6 +3892,9 @@ types:
       hive3-dbcp-service: NONE
       hive3-query-timeout: FLOWFILE_ATTRIBUTES
       use-logical-types: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hive.SelectHiveQL:
     kind: PROCESSOR
     properties:
@@ -3360,6 +3913,9 @@ types:
       hive-post-query: FLOWFILE_ATTRIBUTES
       hive-pre-query: FLOWFILE_ATTRIBUTES
       hive-query: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hive.SelectHive_1_1QL:
     kind: PROCESSOR
     properties:
@@ -3378,6 +3934,9 @@ types:
       hive-post-query: FLOWFILE_ATTRIBUTES
       hive-pre-query: FLOWFILE_ATTRIBUTES
       hive-query: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hive.TriggerHiveMetaStoreEvent:
     kind: PROCESSOR
     properties:
@@ -3389,6 +3948,9 @@ types:
       kerberos-user-service: NONE
       path: FLOWFILE_ATTRIBUTES
       table-name: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hive.UpdateHive3Table:
     kind: PROCESSOR
     properties:
@@ -3403,6 +3965,9 @@ types:
       hive3-table-name: FLOWFILE_ATTRIBUTES
       hive3-update-field-names: NONE
       record-reader: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hive.UpdateHiveTable:
     kind: PROCESSOR
     properties:
@@ -3417,6 +3982,9 @@ types:
       hive-table-name: FLOWFILE_ATTRIBUTES
       hive-update-field-names: NONE
       record-reader: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hive.UpdateHive_1_1Table:
     kind: PROCESSOR
     properties:
@@ -3431,6 +3999,9 @@ types:
       hive11-update-field-names: NONE
       hive11query-timeout: FLOWFILE_ATTRIBUTES
       record-reader: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hl7.ExtractHL7Attributes:
     kind: PROCESSOR
     properties:
@@ -3439,11 +4010,17 @@ types:
       parse-segment-fields: NONE
       skip-validation: NONE
       use-segment-names: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.hl7.RouteHL7:
     kind: PROCESSOR
     properties:
       Character Encoding: FLOWFILE_ATTRIBUTES
     dynamic: NONE
+    relationships:
+    - failure
+    - original
   org.apache.nifi.processors.hubspot.GetHubSpot:
     kind: PROCESSOR
     properties:
@@ -3454,6 +4031,8 @@ types:
       object-type: NONE
       result-limit: VARIABLE_REGISTRY
       web-client-service-provider: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.iceberg.PutIceberg:
     kind: PROCESSOR
     properties:
@@ -3470,10 +4049,16 @@ types:
       table-name: FLOWFILE_ATTRIBUTES
       unmatched-column-behavior: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.image.ExtractImageMetadata:
     kind: PROCESSOR
     properties:
       Max Number of Attributes: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.image.ResizeImage:
     kind: PROCESSOR
     properties:
@@ -3481,6 +4066,9 @@ types:
       Image Width (in pixels): FLOWFILE_ATTRIBUTES
       Scaling Algorithm: NONE
       keep-ratio: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.jolt.record.JoltTransformRecord:
     kind: PROCESSOR
     properties:
@@ -3491,6 +4079,10 @@ types:
       jolt-record-spec: FLOWFILE_ATTRIBUTES
       jolt-record-transform: NONE
       jolt-record-transform-cache-size: NONE
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.jslt.JSLTTransformJSON:
     kind: PROCESSOR
     properties:
@@ -3499,6 +4091,9 @@ types:
       jslt-transform-result-filter: NONE
       jslt-transform-transformation: FLOWFILE_ATTRIBUTES
       jslt-transform-transformation-strategy: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.kafka.pubsub.ConsumeKafkaRecord_1_0:
     kind: PROCESSOR
     properties:
@@ -3522,6 +4117,9 @@ types:
       topic: VARIABLE_REGISTRY
       topic_type: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - parse.failure
   org.apache.nifi.processors.kafka.pubsub.ConsumeKafkaRecord_2_0:
     kind: PROCESSOR
     properties:
@@ -3552,6 +4150,9 @@ types:
       topic: VARIABLE_REGISTRY
       topic_type: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - parse.failure
   org.apache.nifi.processors.kafka.pubsub.ConsumeKafkaRecord_2_6:
     kind: PROCESSOR
     properties:
@@ -3587,6 +4188,9 @@ types:
       topic: VARIABLE_REGISTRY
       topic_type: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - parse.failure
   org.apache.nifi.processors.kafka.pubsub.ConsumeKafka_1_0:
     kind: PROCESSOR
     properties:
@@ -3609,6 +4213,8 @@ types:
       topic: VARIABLE_REGISTRY
       topic_type: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.kafka.pubsub.ConsumeKafka_2_0:
     kind: PROCESSOR
     properties:
@@ -3638,6 +4244,8 @@ types:
       topic: VARIABLE_REGISTRY
       topic_type: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.kafka.pubsub.ConsumeKafka_2_6:
     kind: PROCESSOR
     properties:
@@ -3669,6 +4277,8 @@ types:
       topic: VARIABLE_REGISTRY
       topic_type: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.kafka.pubsub.PublishKafkaRecord_1_0:
     kind: PROCESSOR
     properties:
@@ -3695,6 +4305,9 @@ types:
       transactional-id-prefix: VARIABLE_REGISTRY
       use-transactions: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.kafka.pubsub.PublishKafkaRecord_2_0:
     kind: PROCESSOR
     properties:
@@ -3727,6 +4340,9 @@ types:
       transactional-id-prefix: VARIABLE_REGISTRY
       use-transactions: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.kafka.pubsub.PublishKafkaRecord_2_6:
     kind: PROCESSOR
     properties:
@@ -3763,6 +4379,9 @@ types:
       transactional-id-prefix: VARIABLE_REGISTRY
       use-transactions: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.kafka.pubsub.PublishKafka_1_0:
     kind: PROCESSOR
     properties:
@@ -3788,6 +4407,9 @@ types:
       transactional-id-prefix: VARIABLE_REGISTRY
       use-transactions: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.kafka.pubsub.PublishKafka_2_0:
     kind: PROCESSOR
     properties:
@@ -3820,6 +4442,9 @@ types:
       transactional-id-prefix: VARIABLE_REGISTRY
       use-transactions: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.kafka.pubsub.PublishKafka_2_6:
     kind: PROCESSOR
     properties:
@@ -3853,6 +4478,9 @@ types:
       transactional-id-prefix: VARIABLE_REGISTRY
       use-transactions: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.kudu.PutKudu:
     kind: PROCESSOR
     properties:
@@ -3878,6 +4506,9 @@ types:
       kudu-sasl-protocol-name: VARIABLE_REGISTRY
       record-reader: NONE
       worker-count: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.media.ExtractMediaMetadata:
     kind: PROCESSOR
     properties:
@@ -3885,6 +4516,9 @@ types:
       Max Number of Attributes: NONE
       Metadata Key Filter: NONE
       Metadata Key Prefix: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.mongodb.DeleteMongo:
     kind: PROCESSOR
     properties:
@@ -3897,6 +4531,9 @@ types:
       mongo-client-service: NONE
       ssl-client-auth: NONE
       ssl-context-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.mongodb.GetMongo:
     kind: PROCESSOR
     properties:
@@ -3918,6 +4555,10 @@ types:
       ssl-client-auth: NONE
       ssl-context-service: NONE
       use-pretty-printing: NONE
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.mongodb.GetMongoRecord:
     kind: PROCESSOR
     properties:
@@ -3932,6 +4573,10 @@ types:
       mongo-client-service: NONE
       mongo-query-attribute: FLOWFILE_ATTRIBUTES
       mongodb-schema-name: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.mongodb.PutMongo:
     kind: PROCESSOR
     properties:
@@ -3948,6 +4593,9 @@ types:
       putmongo-update-query: FLOWFILE_ATTRIBUTES
       ssl-client-auth: NONE
       ssl-context-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.mongodb.PutMongoRecord:
     kind: PROCESSOR
     properties:
@@ -3964,6 +4612,9 @@ types:
       ssl-context-service: NONE
       update-key-fields: NONE
       update-mode: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.mongodb.RunMongoAggregation:
     kind: PROCESSOR
     properties:
@@ -3981,6 +4632,10 @@ types:
       results-per-flowfile: NONE
       ssl-client-auth: NONE
       ssl-context-service: NONE
+    relationships:
+    - results
+    - failure
+    - original
   org.apache.nifi.processors.mongodb.gridfs.DeleteGridFS:
     kind: PROCESSOR
     properties:
@@ -3990,6 +4645,9 @@ types:
       gridfs-database-name: FLOWFILE_ATTRIBUTES
       gridfs-file-name: FLOWFILE_ATTRIBUTES
       mongo-query-attribute: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.mongodb.gridfs.FetchGridFS:
     kind: PROCESSOR
     properties:
@@ -4000,6 +4658,10 @@ types:
       gridfs-query: FLOWFILE_ATTRIBUTES
       mongo-operation-mode: NONE
       mongo-query-attribute: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.mongodb.gridfs.PutGridFS:
     kind: PROCESSOR
     properties:
@@ -4011,6 +4673,10 @@ types:
       putgridfs-enforce-uniqueness: NONE
       putgridfs-hash-attribute: VARIABLE_REGISTRY
       putgridfs-properties-prefix: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - duplicate
+    - failure
   org.apache.nifi.processors.mqtt.ConsumeMQTT:
     kind: PROCESSOR
     properties:
@@ -4036,6 +4702,9 @@ types:
       message-demarcator: VARIABLE_REGISTRY
       record-reader: NONE
       record-writer: NONE
+    relationships:
+    - parse.failure
+    - Message
   org.apache.nifi.processors.mqtt.PublishMQTT:
     kind: PROCESSOR
     properties:
@@ -4059,10 +4728,17 @@ types:
       message-demarcator: VARIABLE_REGISTRY
       record-reader: NONE
       record-writer: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.network.ParseNetflowv5:
     kind: PROCESSOR
     properties:
       FIELDS_DESTINATION: NONE
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.opentelemetry.ListenOTLP:
     kind: PROCESSOR
     properties:
@@ -4073,6 +4749,8 @@ types:
       Queue Capacity: NONE
       SSL Context Service: NONE
       Worker Threads: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.orc.PutORC:
     kind: PROCESSOR
     properties:
@@ -4096,15 +4774,23 @@ types:
       record-reader: NONE
       remote-group: NONE
       remote-owner: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.parquet.CalculateParquetOffsets:
     kind: PROCESSOR
     properties:
       Records Per Split: FLOWFILE_ATTRIBUTES
       Zero Content Output: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.parquet.CalculateParquetRowGroupOffsets:
     kind: PROCESSOR
     properties:
       Zero Content Output: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.parquet.ConvertAvroToParquet:
     kind: PROCESSOR
     properties:
@@ -4116,6 +4802,9 @@ types:
       page-size: FLOWFILE_ATTRIBUTES
       row-group-size: FLOWFILE_ATTRIBUTES
       writer-version: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.parquet.FetchParquet:
     kind: PROCESSOR
     properties:
@@ -4129,6 +4818,10 @@ types:
       kerberos-credentials-service: NONE
       kerberos-user-service: NONE
       record-writer: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.parquet.PutParquet:
     kind: PROCESSOR
     properties:
@@ -4157,12 +4850,19 @@ types:
       remove-crc-files: NONE
       row-group-size: FLOWFILE_ATTRIBUTES
       writer-version: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.pgp.DecryptContentPGP:
     kind: PROCESSOR
     properties:
       decryption-strategy: NONE
       passphrase: NONE
       private-key-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.pgp.EncryptContentPGP:
     kind: PROCESSOR
     properties:
@@ -4172,6 +4872,9 @@ types:
       public-key-search: FLOWFILE_ATTRIBUTES
       public-key-service: NONE
       symmetric-key-algorithm: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.pgp.SignContentPGP:
     kind: PROCESSOR
     properties:
@@ -4181,10 +4884,16 @@ types:
       private-key-id: FLOWFILE_ATTRIBUTES
       private-key-service: NONE
       signing-strategy: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.pgp.VerifyContentPGP:
     kind: PROCESSOR
     properties:
       public-key-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.poi.ConvertExcelToCSVProcessor:
     kind: PROCESSOR
     properties:
@@ -4204,11 +4913,19 @@ types:
       excel-format-booleans: NONE
       excel-format-values: NONE
       extract-sheets: FLOWFILE_ATTRIBUTES
+    relationships:
+    - original
+    - success
+    - failure
   org.apache.nifi.processors.poi.SplitExcel:
     kind: PROCESSOR
     properties:
       Password: NONE
       Protection Type: NONE
+    relationships:
+    - failure
+    - original
+    - split
   org.apache.nifi.processors.rethinkdb.DeleteRethinkDB:
     kind: PROCESSOR
     properties:
@@ -4222,6 +4939,10 @@ types:
       rethinkdb-return-result: FLOWFILE_ATTRIBUTES
       rethinkdb-table: NONE
       rethinkdb-username: NONE
+    relationships:
+    - success
+    - not_found
+    - failure
   org.apache.nifi.processors.rethinkdb.GetRethinkDB:
     kind: PROCESSOR
     properties:
@@ -4235,6 +4956,10 @@ types:
       rethinkdb-read-mode: FLOWFILE_ATTRIBUTES
       rethinkdb-table: NONE
       rethinkdb-username: NONE
+    relationships:
+    - success
+    - not_found
+    - failure
   org.apache.nifi.processors.rethinkdb.PutRethinkDB:
     kind: PROCESSOR
     properties:
@@ -4248,6 +4973,9 @@ types:
       rethinkdb-port: NONE
       rethinkdb-table: NONE
       rethinkdb-username: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.riemann.PutRiemann:
     kind: PROCESSOR
     properties:
@@ -4265,6 +4993,9 @@ types:
       Timeout: NONE
       Transport Protocol: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.salesforce.PutSalesforceObject:
     kind: PROCESSOR
     properties:
@@ -4273,6 +5004,9 @@ types:
       record-reader: NONE
       salesforce-api-version: VARIABLE_REGISTRY
       salesforce-url: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.salesforce.QuerySalesforceObject:
     kind: PROCESSOR
     properties:
@@ -4290,6 +5024,10 @@ types:
       salesforce-api-version: VARIABLE_REGISTRY
       salesforce-url: VARIABLE_REGISTRY
       sobject-name: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.script.ExecuteScript:
     kind: PROCESSOR
     properties:
@@ -4298,6 +5036,9 @@ types:
       Script Engine: NONE
       Script File: VARIABLE_REGISTRY
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.script.InvokeScriptedProcessor:
     kind: PROCESSOR
     properties:
@@ -4315,6 +5056,10 @@ types:
       Script Body: NONE
       Script Engine: NONE
       Script File: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.script.ScriptedPartitionRecord:
     kind: PROCESSOR
     properties:
@@ -4324,6 +5069,10 @@ types:
       Script Body: NONE
       Script Engine: NONE
       Script File: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.script.ScriptedTransformRecord:
     kind: PROCESSOR
     properties:
@@ -4333,6 +5082,9 @@ types:
       Script Body: NONE
       Script Engine: NONE
       Script File: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.script.ScriptedValidateRecord:
     kind: PROCESSOR
     properties:
@@ -4342,6 +5094,11 @@ types:
       Script Body: NONE
       Script Engine: NONE
       Script File: VARIABLE_REGISTRY
+    relationships:
+    - valid
+    - invalid
+    - failure
+    - original
   org.apache.nifi.processors.shopify.GetShopify:
     kind: PROCESSOR
     properties:
@@ -4362,6 +5119,8 @@ types:
       result-limit: VARIABLE_REGISTRY
       store-domain: VARIABLE_REGISTRY
       web-client-service-provider: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.slack.PostSlack:
     kind: PROCESSOR
     properties:
@@ -4376,6 +5135,9 @@ types:
       text: FLOWFILE_ATTRIBUTES
       upload-flowfile: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.slack.PublishSlack:
     kind: PROCESSOR
     properties:
@@ -4387,6 +5149,10 @@ types:
       Message Text: FLOWFILE_ATTRIBUTES
       Publish Strategy: NONE
       Thread Timestamp: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - rate limited
+    - failure
   org.apache.nifi.processors.slack.PutSlack:
     kind: PROCESSOR
     properties:
@@ -4398,6 +5164,9 @@ types:
       webhook-text: FLOWFILE_ATTRIBUTES
       webhook-url: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.smb.FetchSmb:
     kind: PROCESSOR
     properties:
@@ -4406,6 +5175,9 @@ types:
       Destination Directory: FLOWFILE_ATTRIBUTES
       remote-file: FLOWFILE_ATTRIBUTES
       smb-client-provider-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.smb.GetSmbFile:
     kind: PROCESSOR
     properties:
@@ -4427,6 +5199,8 @@ types:
       smb-dialect: NONE
       timeout: NONE
       use-encryption: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.smb.ListSmb:
     kind: PROCESSOR
     properties:
@@ -4443,6 +5217,8 @@ types:
       record-writer: NONE
       smb-client-provider-service: NONE
       target-system-timestamp-precision: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.smb.PutSmbFile:
     kind: PROCESSOR
     properties:
@@ -4461,10 +5237,17 @@ types:
       smb-dialect: NONE
       timeout: NONE
       use-encryption: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.snowflake.GetSnowflakeIngestStatus:
     kind: PROCESSOR
     properties:
       ingest-manager-provider: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.snowflake.PutSnowflakeInternalStage:
     kind: PROCESSOR
     properties:
@@ -4474,10 +5257,16 @@ types:
       schema: VARIABLE_REGISTRY
       snowflake-connection-provider: NONE
       table: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.snowflake.StartSnowflakeIngest:
     kind: PROCESSOR
     properties:
       ingest-manager-provider: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.solr.GetSolr:
     kind: PROCESSOR
     properties:
@@ -4504,6 +5293,8 @@ types:
       kerberos-password: NONE
       kerberos-principal: VARIABLE_REGISTRY
       kerberos-user-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.solr.PutSolrContentStream:
     kind: PROCESSOR
     properties:
@@ -4527,6 +5318,10 @@ types:
       kerberos-principal: VARIABLE_REGISTRY
       kerberos-user-service: NONE
     dynamic: NONE
+    relationships:
+    - success
+    - failure
+    - connection_failure
   org.apache.nifi.processors.solr.PutSolrRecord:
     kind: PROCESSOR
     properties:
@@ -4552,6 +5347,10 @@ types:
       kerberos-user-service: NONE
       put-solr-record-record-reader: NONE
     dynamic: NONE
+    relationships:
+    - success
+    - failure
+    - connection_failure
   org.apache.nifi.processors.solr.QuerySolr:
     kind: PROCESSOR
     properties:
@@ -4581,6 +5380,12 @@ types:
       solr_param_sort: FLOWFILE_ATTRIBUTES
       solr_param_start: FLOWFILE_ATTRIBUTES
     dynamic: NONE
+    relationships:
+    - stats
+    - results
+    - facets
+    - failure
+    - original
   org.apache.nifi.processors.splunk.GetSplunk:
     kind: PROCESSOR
     properties:
@@ -4603,6 +5408,8 @@ types:
       Time Zone: NONE
       Token: NONE
       Username: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.splunk.PutSplunk:
     kind: PROCESSOR
     properties:
@@ -4615,6 +5422,9 @@ types:
       Protocol: NONE
       SSL Context Service: NONE
       Timeout: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.splunk.PutSplunkHTTP:
     kind: PROCESSOR
     properties:
@@ -4633,6 +5443,9 @@ types:
       request-channel: VARIABLE_REGISTRY
       source: FLOWFILE_ATTRIBUTES
       source-type: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.splunk.QuerySplunkIndexingStatus:
     kind: PROCESSOR
     properties:
@@ -4647,6 +5460,11 @@ types:
       max-query-size: NONE
       request-channel: VARIABLE_REGISTRY
       ttl: NONE
+    relationships:
+    - success
+    - unacknowledged
+    - undetermined
+    - failure
   org.apache.nifi.processors.standard.AttributesToCSV:
     kind: PROCESSOR
     properties:
@@ -4656,6 +5474,9 @@ types:
       include-core-attributes: NONE
       include-schema: NONE
       null-value: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.AttributesToJSON:
     kind: PROCESSOR
     properties:
@@ -4666,16 +5487,25 @@ types:
       Null Value: NONE
       Pretty Print: NONE
       attributes-to-json-regex: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.Base64EncodeContent:
     kind: PROCESSOR
     properties:
       Mode: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.CalculateRecordStats:
     kind: PROCESSOR
     properties:
       record-stats-limit: FLOWFILE_ATTRIBUTES
       record-stats-reader: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.CompressContent:
     kind: PROCESSOR
     properties:
@@ -4683,6 +5513,9 @@ types:
       Compression Level: NONE
       Mode: NONE
       Update Filename: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ControlRate:
     kind: PROCESSOR
     properties:
@@ -4693,11 +5526,16 @@ types:
       Rate Control Criteria: NONE
       Rate Controlled Attribute: NONE
       Time Duration: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ConvertCharacterSet:
     kind: PROCESSOR
     properties:
       Input Character Set: FLOWFILE_ATTRIBUTES
       Output Character Set: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ConvertJSONToSQL:
     kind: PROCESSOR
     properties:
@@ -4714,12 +5552,19 @@ types:
       jts-quoted-table-identifiers: NONE
       jts-sql-param-attr-prefix: FLOWFILE_ATTRIBUTES
       table-schema-cache-size: NONE
+    relationships:
+    - sql
+    - failure
+    - original
   org.apache.nifi.processors.standard.ConvertRecord:
     kind: PROCESSOR
     properties:
       include-zero-record-flowfiles: NONE
       record-reader: NONE
       record-writer: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.CountText:
     kind: PROCESSOR
     properties:
@@ -4730,6 +5575,9 @@ types:
       text-line-count: NONE
       text-line-nonempty-count: NONE
       text-word-count: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.CryptographicHashAttribute:
     kind: PROCESSOR
     properties:
@@ -4738,11 +5586,17 @@ types:
       hash_algorithm: NONE
       missing_attr_policy: NONE
     dynamic: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.CryptographicHashContent:
     kind: PROCESSOR
     properties:
       fail_when_empty: NONE
       hash_algorithm: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.DebugFlow:
     kind: PROCESSOR
     properties:
@@ -4768,6 +5622,9 @@ types:
       No FlowFile Yield Iterations: NONE
       OnTrigger Pause Time: NONE
       Write Iterations: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.DeduplicateRecord:
     kind: PROCESSOR
     properties:
@@ -4783,11 +5640,20 @@ types:
       record-reader: NONE
       record-writer: NONE
     dynamic: NONE
+    relationships:
+    - duplicate
+    - non-duplicate
+    - failure
+    - original
   org.apache.nifi.processors.standard.DeleteFile:
     kind: PROCESSOR
     properties:
       Directory Path: FLOWFILE_ATTRIBUTES
       Filename: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - not found
+    - failure
   org.apache.nifi.processors.standard.DeleteSFTP:
     kind: PROCESSOR
     properties:
@@ -4816,6 +5682,10 @@ types:
       Use Compression: NONE
       Username: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - not found
+    - failure
   org.apache.nifi.processors.standard.DetectDuplicate:
     kind: PROCESSOR
     properties:
@@ -4824,21 +5694,32 @@ types:
       Cache The Entry Identifier: NONE
       Distributed Cache Service: NONE
       FlowFile Description: FLOWFILE_ATTRIBUTES
+    relationships:
+    - duplicate
+    - non-duplicate
+    - failure
   org.apache.nifi.processors.standard.DistributeLoad:
     kind: PROCESSOR
     properties:
       Distribution Strategy: NONE
       Number of Relationships: NONE
     dynamic: NONE
+    relationships:
+    - '1'
   org.apache.nifi.processors.standard.DuplicateFlowFile:
     kind: PROCESSOR
     properties:
       Number of Copies: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.standard.EncodeContent:
     kind: PROCESSOR
     properties:
       Encoding: NONE
       Mode: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.EncryptContent:
     kind: PROCESSOR
     properties:
@@ -4853,6 +5734,9 @@ types:
       public-key-user-id: NONE
       public-keyring-file: NONE
       raw-key-hex: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.EnforceOrder:
     kind: PROCESSOR
     properties:
@@ -4863,6 +5747,12 @@ types:
       maximum-order: FLOWFILE_ATTRIBUTES
       order-attribute: NONE
       wait-timeout: NONE
+    relationships:
+    - overtook
+    - skipped
+    - success
+    - wait
+    - failure
   org.apache.nifi.processors.standard.EvaluateJsonPath:
     kind: PROCESSOR
     properties:
@@ -4872,6 +5762,10 @@ types:
       Path Not Found Behavior: NONE
       Return Type: NONE
     dynamic: NONE
+    relationships:
+    - failure
+    - unmatched
+    - matched
   org.apache.nifi.processors.standard.EvaluateXPath:
     kind: PROCESSOR
     properties:
@@ -4879,6 +5773,10 @@ types:
       Return Type: NONE
       Validate DTD: NONE
     dynamic: NONE
+    relationships:
+    - failure
+    - unmatched
+    - matched
   org.apache.nifi.processors.standard.EvaluateXQuery:
     kind: PROCESSOR
     properties:
@@ -4888,6 +5786,10 @@ types:
       'Output: Omit XML Declaration': NONE
       Validate DTD: NONE
     dynamic: NONE
+    relationships:
+    - failure
+    - unmatched
+    - matched
   org.apache.nifi.processors.standard.ExecuteProcess:
     kind: PROCESSOR
     properties:
@@ -4899,6 +5801,8 @@ types:
       Redirect Error Stream: NONE
       Working Directory: VARIABLE_REGISTRY
     dynamic: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ExecuteSQL:
     kind: PROCESSOR
     properties:
@@ -4917,6 +5821,9 @@ types:
       sql-post-query: FLOWFILE_ATTRIBUTES
       sql-pre-query: FLOWFILE_ATTRIBUTES
     dynamic: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ExecuteSQLRecord:
     kind: PROCESSOR
     properties:
@@ -4935,6 +5842,9 @@ types:
       sql-post-query: FLOWFILE_ATTRIBUTES
       sql-pre-query: FLOWFILE_ATTRIBUTES
     dynamic: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ExecuteStreamCommand:
     kind: PROCESSOR
     properties:
@@ -4948,6 +5858,10 @@ types:
       Working Directory: FLOWFILE_ATTRIBUTES
       argumentsStrategy: NONE
     dynamic: NONE
+    relationships:
+    - output stream
+    - nonzero status
+    - original
   org.apache.nifi.processors.standard.ExtractGrok:
     kind: PROCESSOR
     properties:
@@ -4958,11 +5872,17 @@ types:
       Keep Empty Captures: NONE
       Maximum Buffer Size: NONE
       Named captures only: NONE
+    relationships:
+    - unmatched
+    - matched
   org.apache.nifi.processors.standard.ExtractRecordSchema:
     kind: PROCESSOR
     properties:
       cache-size: NONE
       record-reader: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ExtractText:
     kind: PROCESSOR
     properties:
@@ -4982,6 +5902,9 @@ types:
       extract-text-enable-named-groups: NONE
       extract-text-enable-repeating-capture-group: NONE
     dynamic: NONE
+    relationships:
+    - unmatched
+    - matched
   org.apache.nifi.processors.standard.FetchDistributedMapCache:
     kind: PROCESSOR
     properties:
@@ -4990,6 +5913,10 @@ types:
       Distributed Cache Service: NONE
       Max Length To Put In Attribute: NONE
       Put Cache Value In Attribute: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - not-found
   org.apache.nifi.processors.standard.FetchFTP:
     kind: PROCESSOR
     properties:
@@ -5015,6 +5942,11 @@ types:
       fetchfiletransfer-notfound-loglevel: NONE
       ftp-use-utf8: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - comms.failure
+    - not.found
+    - permission.denied
   org.apache.nifi.processors.standard.FetchFile:
     kind: PROCESSOR
     properties:
@@ -5024,6 +5956,11 @@ types:
       Log level when permission denied: NONE
       Move Conflict Strategy: NONE
       Move Destination Directory: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - not.found
+    - permission.denied
+    - failure
   org.apache.nifi.processors.standard.FetchSFTP:
     kind: PROCESSOR
     properties:
@@ -5055,6 +5992,11 @@ types:
       Username: FLOWFILE_ATTRIBUTES
       fetchfiletransfer-notfound-loglevel: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - comms.failure
+    - not.found
+    - permission.denied
   org.apache.nifi.processors.standard.FilterAttribute:
     kind: PROCESSOR
     properties:
@@ -5062,6 +6004,8 @@ types:
       Filter Mode: NONE
       Filtered Attributes: FLOWFILE_ATTRIBUTES
       Filtered Attributes Pattern: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.standard.FlattenJson:
     kind: PROCESSOR
     properties:
@@ -5071,9 +6015,15 @@ types:
       flatten-json-separator: FLOWFILE_ATTRIBUTES
       flatten-mode: NONE
       ignore-reserved-characters: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ForkEnrichment:
     kind: PROCESSOR
     properties: {}
+    relationships:
+    - enrichment
+    - original
   org.apache.nifi.processors.standard.ForkRecord:
     kind: PROCESSOR
     properties:
@@ -5082,6 +6032,10 @@ types:
       record-reader: NONE
       record-writer: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - failure
+    - original
+    - fork
   org.apache.nifi.processors.standard.GenerateFlowFile:
     kind: PROCESSOR
     properties:
@@ -5093,6 +6047,8 @@ types:
       generate-ff-custom-text: VARIABLE_REGISTRY
       mime-type: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.standard.GenerateRecord:
     kind: PROCESSOR
     properties:
@@ -5102,6 +6058,8 @@ types:
       record-writer: NONE
       schema-text: VARIABLE_REGISTRY
     dynamic: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.GenerateTableFetch:
     kind: PROCESSOR
     properties:
@@ -5117,6 +6075,9 @@ types:
       gen-table-fetch-partition-size: FLOWFILE_ATTRIBUTES
       gen-table-output-flowfile-on-zero-results: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.GetFTP:
     kind: PROCESSOR
     properties:
@@ -5147,6 +6108,8 @@ types:
       follow-symlink: NONE
       ftp-use-utf8: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.GetFile:
     kind: PROCESSOR
     properties:
@@ -5162,6 +6125,8 @@ types:
       Path Filter: NONE
       Polling Interval: NONE
       Recurse Subdirectories: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.GetHTTP:
     kind: PROCESSOR
     properties:
@@ -5180,6 +6145,8 @@ types:
       proxy-configuration-service: NONE
       redirect-cookie-policy: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.standard.GetJMSQueue:
     kind: PROCESSOR
     properties:
@@ -5195,6 +6162,8 @@ types:
       SSL Context Service: NONE
       URL: NONE
       Username: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.GetJMSTopic:
     kind: PROCESSOR
     properties:
@@ -5211,6 +6180,8 @@ types:
       URL: NONE
       Use Durable Subscription: NONE
       Username: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.GetSFTP:
     kind: PROCESSOR
     properties:
@@ -5247,6 +6218,8 @@ types:
       Username: FLOWFILE_ATTRIBUTES
       follow-symlink: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.HandleHttpRequest:
     kind: PROCESSOR
     properties:
@@ -5270,6 +6243,8 @@ types:
       multipart-read-buffer-size: NONE
       multipart-request-max-size: NONE
       parameters-to-attributes: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.HandleHttpResponse:
     kind: PROCESSOR
     properties:
@@ -5277,22 +6252,33 @@ types:
       HTTP Context Map: NONE
       HTTP Status Code: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.HashAttribute:
     kind: PROCESSOR
     properties:
       Hash Value Attribute Key: NONE
     dynamic: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.HashContent:
     kind: PROCESSOR
     properties:
       Hash Algorithm: NONE
       Hash Attribute Name: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.IdentifyMimeType:
     kind: PROCESSOR
     properties:
       config-body: NONE
       config-file: VARIABLE_REGISTRY
       use-filename-in-detection: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.InvokeHTTP:
     kind: PROCESSOR
     properties:
@@ -5336,6 +6322,12 @@ types:
       set-form-filename: NONE
       use-etag: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - Original
+    - Failure
+    - Retry
+    - No Retry
+    - Response
   org.apache.nifi.processors.standard.JoinEnrichment:
     kind: PROCESSOR
     properties:
@@ -5349,6 +6341,11 @@ types:
       Timeout: NONE
       dbf-default-precision: FLOWFILE_ATTRIBUTES
       dbf-default-scale: FLOWFILE_ATTRIBUTES
+    relationships:
+    - timeout
+    - joined
+    - failure
+    - original
   org.apache.nifi.processors.standard.JoltTransformJSON:
     kind: PROCESSOR
     properties:
@@ -5359,6 +6356,9 @@ types:
       jolt-spec: FLOWFILE_ATTRIBUTES
       jolt-transform: NONE
       pretty_print: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ListDatabaseTables:
     kind: PROCESSOR
     properties:
@@ -5370,6 +6370,8 @@ types:
       list-db-tables-schema-pattern: NONE
       list-db-tables-types: NONE
       record-writer: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListFTP:
     kind: PROCESSOR
     properties:
@@ -5403,6 +6405,8 @@ types:
       proxy-configuration-service: NONE
       record-writer: NONE
       target-system-timestamp-precision: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListFile:
     kind: PROCESSOR
     properties:
@@ -5428,6 +6432,8 @@ types:
       record-writer: NONE
       target-system-timestamp-precision: NONE
       track-performance: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListSFTP:
     kind: PROCESSOR
     properties:
@@ -5471,6 +6477,8 @@ types:
       proxy-configuration-service: NONE
       record-writer: NONE
       target-system-timestamp-precision: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListenFTP:
     kind: PROCESSOR
     properties:
@@ -5479,6 +6487,8 @@ types:
       password: VARIABLE_REGISTRY
       ssl-context-service: NONE
       username: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListenHTTP:
     kind: PROCESSOR
     properties:
@@ -5499,6 +6509,8 @@ types:
       multipart-request-max-size: NONE
       record-reader: NONE
       record-writer: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListenRELP:
     kind: PROCESSOR
     properties:
@@ -5513,6 +6525,8 @@ types:
       Port: VARIABLE_REGISTRY
       Receive Buffer Size: NONE
       SSL Context Service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListenSyslog:
     kind: PROCESSOR
     properties:
@@ -5530,6 +6544,9 @@ types:
       Receive Buffer Size: NONE
       SSL Context Service: NONE
       socket-keep-alive: NONE
+    relationships:
+    - success
+    - invalid
   org.apache.nifi.processors.standard.ListenTCP:
     kind: PROCESSOR
     properties:
@@ -5547,6 +6564,8 @@ types:
       idle-timeout: NONE
       max-receiving-threads: NONE
       pool-receive-buffers: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListenTCPRecord:
     kind: PROCESSOR
     properties:
@@ -5561,6 +6580,8 @@ types:
       record-reader: NONE
       record-writer: NONE
       ssl-context-service: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListenUDP:
     kind: PROCESSOR
     properties:
@@ -5574,6 +6595,8 @@ types:
       Receive Buffer Size: NONE
       Sending Host: VARIABLE_REGISTRY
       Sending Host Port: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.standard.ListenUDPRecord:
     kind: PROCESSOR
     properties:
@@ -5589,6 +6612,9 @@ types:
       record-writer: NONE
       sending-host: VARIABLE_REGISTRY
       sending-host-port: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - parse.failure
   org.apache.nifi.processors.standard.LogAttribute:
     kind: PROCESSOR
     properties:
@@ -5602,18 +6628,26 @@ types:
       attributes-to-ignore-regex: NONE
       attributes-to-log-regex: NONE
       character-set: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.standard.LogMessage:
     kind: PROCESSOR
     properties:
       log-level: FLOWFILE_ATTRIBUTES
       log-message: FLOWFILE_ATTRIBUTES
       log-prefix: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.standard.LookupAttribute:
     kind: PROCESSOR
     properties:
       include-empty-values: NONE
       lookup-service: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - failure
+    - unmatched
+    - matched
   org.apache.nifi.processors.standard.LookupRecord:
     kind: PROCESSOR
     properties:
@@ -5626,6 +6660,9 @@ types:
       result-record-path: FLOWFILE_ATTRIBUTES
       routing-strategy: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.MergeContent:
     kind: PROCESSOR
     properties:
@@ -5647,6 +6684,10 @@ types:
       Minimum Number of Entries: NONE
       Tar Modified Time: FLOWFILE_ATTRIBUTES
       mergecontent-metadata-strategy: NONE
+    relationships:
+    - failure
+    - original
+    - merged
   org.apache.nifi.processors.standard.MergeRecord:
     kind: PROCESSOR
     properties:
@@ -5661,12 +6702,18 @@ types:
       min-records: VARIABLE_REGISTRY
       record-reader: NONE
       record-writer: NONE
+    relationships:
+    - failure
+    - original
+    - merged
   org.apache.nifi.processors.standard.ModifyBytes:
     kind: PROCESSOR
     properties:
       End Offset: FLOWFILE_ATTRIBUTES
       Remove All Content: NONE
       Start Offset: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.standard.MonitorActivity:
     kind: PROCESSOR
     properties:
@@ -5679,6 +6726,10 @@ types:
       Reset State on Restart: NONE
       Threshold Duration: VARIABLE_REGISTRY
       Wait for Activity: NONE
+    relationships:
+    - inactive
+    - success
+    - activity.restored
   org.apache.nifi.processors.standard.Notify:
     kind: PROCESSOR
     properties:
@@ -5688,10 +6739,16 @@ types:
       signal-buffer-count: NONE
       signal-counter-delta: FLOWFILE_ATTRIBUTES
       signal-counter-name: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.PackageFlowFile:
     kind: PROCESSOR
     properties:
       max-batch-size: NONE
+    relationships:
+    - success
+    - original
   org.apache.nifi.processors.standard.ParseCEF:
     kind: PROCESSOR
     properties:
@@ -5702,22 +6759,35 @@ types:
       INCLUDE_CUSTOM_EXTENSIONS: NONE
       TIME_REPRESENTATION: NONE
       VALIDATE_DATA: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ParseSyslog:
     kind: PROCESSOR
     properties:
       Character Set: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ParseSyslog5424:
     kind: PROCESSOR
     properties:
       Character Set: NONE
       include_policy: NONE
       nil_policy: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.PartitionRecord:
     kind: PROCESSOR
     properties:
       record-reader: NONE
       record-writer: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.standard.PostHTTP:
     kind: PROCESSOR
     properties:
@@ -5738,6 +6808,9 @@ types:
       User Agent: NONE
       Username: NONE
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutDatabaseRecord:
     kind: PROCESSOR
     properties:
@@ -5764,6 +6837,10 @@ types:
       put-db-record-update-keys: FLOWFILE_ATTRIBUTES
       rollback-on-failure: NONE
       table-schema-cache-size: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutDistributedMapCache:
     kind: PROCESSOR
     properties:
@@ -5771,6 +6848,9 @@ types:
       Cache update strategy: NONE
       Distributed Cache Service: NONE
       Max cache entry size: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutEmail:
     kind: PROCESSOR
     properties:
@@ -5797,6 +6877,9 @@ types:
       input-character-set: NONE
       oauth2-access-token-provider: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutFTP:
     kind: PROCESSOR
     properties:
@@ -5827,6 +6910,10 @@ types:
       ftp-use-utf8: NONE
       proxy-configuration-service: NONE
     dynamic: NONE
+    relationships:
+    - success
+    - reject
+    - failure
   org.apache.nifi.processors.standard.PutFile:
     kind: PROCESSOR
     properties:
@@ -5838,6 +6925,9 @@ types:
       Maximum File Count: NONE
       Owner: FLOWFILE_ATTRIBUTES
       Permissions: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutJMS:
     kind: PROCESSOR
     properties:
@@ -5857,12 +6947,19 @@ types:
       SSL Context Service: NONE
       URL: NONE
       Username: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutRecord:
     kind: PROCESSOR
     properties:
       put-record-include-zero-record-results: NONE
       put-record-reader: NONE
       put-record-sink: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutSFTP:
     kind: PROCESSOR
     properties:
@@ -5900,6 +6997,10 @@ types:
       Use Compression: NONE
       Username: FLOWFILE_ATTRIBUTES
       proxy-configuration-service: NONE
+    relationships:
+    - success
+    - reject
+    - failure
   org.apache.nifi.processors.standard.PutSQL:
     kind: PROCESSOR
     properties:
@@ -5911,6 +7012,10 @@ types:
       database-session-autocommit: NONE
       putsql-sql-statement: FLOWFILE_ATTRIBUTES
       rollback-on-failure: NONE
+    relationships:
+    - retry
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutSyslog:
     kind: PROCESSOR
     properties:
@@ -5928,6 +7033,10 @@ types:
       Protocol: NONE
       SSL Context Service: NONE
       Timeout: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
+    - invalid
   org.apache.nifi.processors.standard.PutTCP:
     kind: PROCESSOR
     properties:
@@ -5943,6 +7052,9 @@ types:
       SSL Context Service: NONE
       Timeout: VARIABLE_REGISTRY
       Transmission Strategy: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.PutUDP:
     kind: PROCESSOR
     properties:
@@ -5951,6 +7063,9 @@ types:
       Max Size of Socket Send Buffer: NONE
       Port: VARIABLE_REGISTRY
       Timeout: VARIABLE_REGISTRY
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.QueryDatabaseTable:
     kind: PROCESSOR
     properties:
@@ -5974,6 +7089,8 @@ types:
       qdbt-output-batch-size: VARIABLE_REGISTRY
       transaction-isolation-level: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.standard.QueryDatabaseTableRecord:
     kind: PROCESSOR
     properties:
@@ -5997,6 +7114,8 @@ types:
       qdbtr-normalize: NONE
       qdbtr-record-writer: NONE
     dynamic: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.standard.QueryRecord:
     kind: PROCESSOR
     properties:
@@ -6007,12 +7126,18 @@ types:
       record-reader: NONE
       record-writer: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - failure
+    - original
   org.apache.nifi.processors.standard.RemoveRecordField:
     kind: PROCESSOR
     properties:
       record-reader: NONE
       record-writer: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ReplaceText:
     kind: PROCESSOR
     properties:
@@ -6025,6 +7150,9 @@ types:
       Replacement Value: FLOWFILE_ATTRIBUTES
       Text to Append: FLOWFILE_ATTRIBUTES
       Text to Prepend: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ReplaceTextWithMapping:
     kind: PROCESSOR
     properties:
@@ -6034,6 +7162,9 @@ types:
       Matching Group: VARIABLE_REGISTRY
       Maximum Buffer Size: NONE
       Regular Expression: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.RetryFlowFile:
     kind: PROCESSOR
     properties:
@@ -6043,11 +7174,17 @@ types:
       retry-attribute: VARIABLE_REGISTRY
       reuse-mode: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - retries_exceeded
+    - retry
+    - failure
   org.apache.nifi.processors.standard.RouteOnAttribute:
     kind: PROCESSOR
     properties:
       Routing Strategy: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - unmatched
   org.apache.nifi.processors.standard.RouteOnContent:
     kind: PROCESSOR
     properties:
@@ -6055,6 +7192,8 @@ types:
       Content Buffer Size: NONE
       Match Requirement: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - unmatched
   org.apache.nifi.processors.standard.RouteText:
     kind: PROCESSOR
     properties:
@@ -6065,6 +7204,9 @@ types:
       Matching Strategy: NONE
       Routing Strategy: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - original
+    - unmatched
   org.apache.nifi.processors.standard.SampleRecord:
     kind: PROCESSOR
     properties:
@@ -6076,6 +7218,10 @@ types:
       sample-record-range: FLOWFILE_ATTRIBUTES
       sample-record-reservoir: FLOWFILE_ATTRIBUTES
       sample-record-sampling-strategy: NONE
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.standard.ScanAttribute:
     kind: PROCESSOR
     properties:
@@ -6083,15 +7229,24 @@ types:
       Dictionary File: VARIABLE_REGISTRY
       Dictionary Filter Pattern: NONE
       Match Criteria: NONE
+    relationships:
+    - unmatched
+    - matched
   org.apache.nifi.processors.standard.ScanContent:
     kind: PROCESSOR
     properties:
       Dictionary Encoding: NONE
       Dictionary File: NONE
+    relationships:
+    - unmatched
+    - matched
   org.apache.nifi.processors.standard.SegmentContent:
     kind: PROCESSOR
     properties:
       Segment Size: FLOWFILE_ATTRIBUTES
+    relationships:
+    - segments
+    - original
   org.apache.nifi.processors.standard.SplitContent:
     kind: PROCESSOR
     properties:
@@ -6099,18 +7254,29 @@ types:
       Byte Sequence Format: NONE
       Byte Sequence Location: NONE
       Keep Byte Sequence: NONE
+    relationships:
+    - splits
+    - original
   org.apache.nifi.processors.standard.SplitJson:
     kind: PROCESSOR
     properties:
       JsonPath Expression: NONE
       Max String Length: NONE
       Null Value Representation: NONE
+    relationships:
+    - failure
+    - original
+    - split
   org.apache.nifi.processors.standard.SplitRecord:
     kind: PROCESSOR
     properties:
       Record Reader: NONE
       Record Writer: NONE
       Records Per Split: FLOWFILE_ATTRIBUTES
+    relationships:
+    - failure
+    - splits
+    - original
   org.apache.nifi.processors.standard.SplitText:
     kind: PROCESSOR
     properties:
@@ -6119,10 +7285,18 @@ types:
       Line Split Count: NONE
       Maximum Fragment Size: NONE
       Remove Trailing Newlines: NONE
+    relationships:
+    - failure
+    - original
+    - splits
   org.apache.nifi.processors.standard.SplitXml:
     kind: PROCESSOR
     properties:
       Split Depth: NONE
+    relationships:
+    - failure
+    - original
+    - split
   org.apache.nifi.processors.standard.TailFile:
     kind: PROCESSOR
     properties:
@@ -6140,6 +7314,8 @@ types:
       tailfile-lookup-frequency: NONE
       tailfile-maximum-age: NONE
       tailfile-recursive-lookup: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.standard.TransformXml:
     kind: PROCESSOR
     properties:
@@ -6151,6 +7327,9 @@ types:
       xslt-controller: NONE
       xslt-controller-key: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.UnpackContent:
     kind: PROCESSOR
     properties:
@@ -6158,11 +7337,17 @@ types:
       Packaging Format: NONE
       Password: NONE
       allow-stored-entries-wdd: NONE
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.standard.UpdateCounter:
     kind: PROCESSOR
     properties:
       counter-name: FLOWFILE_ATTRIBUTES
       delta: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.standard.UpdateDatabaseTable:
     kind: PROCESSOR
     properties:
@@ -6180,6 +7365,9 @@ types:
       updatedatabasetable-table-name: FLOWFILE_ATTRIBUTES
       updatedatabasetable-translate-field-names: NONE
       updatedatabasetable-update-field-names: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.UpdateRecord:
     kind: PROCESSOR
     properties:
@@ -6187,6 +7375,9 @@ types:
       record-writer: NONE
       replacement-value-strategy: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.standard.ValidateCsv:
     kind: PROCESSOR
     properties:
@@ -6197,6 +7388,9 @@ types:
       validate-csv-schema: FLOWFILE_ATTRIBUTES
       validate-csv-strategy: NONE
       validate-csv-violations: NONE
+    relationships:
+    - valid
+    - invalid
   org.apache.nifi.processors.standard.ValidateJson:
     kind: PROCESSOR
     properties:
@@ -6205,6 +7399,10 @@ types:
       JSON Schema Version: NONE
       Schema Access Strategy: NONE
       Schema Name: FLOWFILE_ATTRIBUTES
+    relationships:
+    - valid
+    - invalid
+    - failure
   org.apache.nifi.processors.standard.ValidateRecord:
     kind: PROCESSOR
     properties:
@@ -6220,11 +7418,18 @@ types:
       schema-text: FLOWFILE_ATTRIBUTES
       strict-type-checking: NONE
       validation-details-attribute-name: FLOWFILE_ATTRIBUTES
+    relationships:
+    - valid
+    - invalid
+    - failure
   org.apache.nifi.processors.standard.ValidateXml:
     kind: PROCESSOR
     properties:
       Schema File: VARIABLE_REGISTRY
       XML Source Attribute: VARIABLE_REGISTRY
+    relationships:
+    - valid
+    - invalid
   org.apache.nifi.processors.standard.Wait:
     kind: PROCESSOR
     properties:
@@ -6238,12 +7443,21 @@ types:
       wait-buffer-count: NONE
       wait-mode: NONE
       wait-penalty-duration: NONE
+    relationships:
+    - expired
+    - success
+    - wait
+    - failure
   org.apache.nifi.processors.stateful.analysis.AttributeRollingWindow:
     kind: PROCESSOR
     properties:
       Sub-window length: NONE
       Time window: NONE
       Value to track: FLOWFILE_ATTRIBUTES
+    relationships:
+    - set state fail
+    - success
+    - failure
   org.apache.nifi.processors.stateless.ExecuteStateless:
     kind: PROCESSOR
     properties:
@@ -6269,6 +7483,11 @@ types:
       Work Directory: NONE
       additional-nar-directories: NONE
     dynamic: NONE
+    relationships:
+    - timeout
+    - failure
+    - original
+    - output
   org.apache.nifi.processors.twitter.ConsumeTwitter:
     kind: PROCESSOR
     properties:
@@ -6289,6 +7508,8 @@ types:
       stream-endpoint: NONE
       tweet-fields: NONE
       user-fields: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.twitter.GetTwitter:
     kind: PROCESSOR
     properties:
@@ -6303,16 +7524,28 @@ types:
       Twitter Endpoint: NONE
       max-client-error-retries: NONE
     dynamic: NONE
+    relationships:
+    - success
   org.apache.nifi.processors.websocket.ConnectWebSocket:
     kind: PROCESSOR
     properties:
       websocket-client-controller-service: NONE
       websocket-client-id: NONE
+    relationships:
+    - success
+    - text message
+    - binary message
+    - failure
+    - connected
   org.apache.nifi.processors.websocket.ListenWebSocket:
     kind: PROCESSOR
     properties:
       server-url-path: NONE
       websocket-server-controller-service: NONE
+    relationships:
+    - text message
+    - binary message
+    - connected
   org.apache.nifi.processors.websocket.PutWebSocket:
     kind: PROCESSOR
     properties:
@@ -6320,6 +7553,9 @@ types:
       websocket-endpoint-id: FLOWFILE_ATTRIBUTES
       websocket-message-type: FLOWFILE_ATTRIBUTES
       websocket-session-id: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.processors.windows.event.log.ConsumeWindowsEventLog:
     kind: PROCESSOR
     properties:
@@ -6328,6 +7564,8 @@ types:
       maxBuffer: NONE
       maxQueue: NONE
       query: VARIABLE_REGISTRY
+    relationships:
+    - success
   org.apache.nifi.processors.workday.GetWorkdayReport:
     kind: PROCESSOR
     properties:
@@ -6337,6 +7575,10 @@ types:
       Workday Username: FLOWFILE_ATTRIBUTES
       record-reader: NONE
       record-writer: NONE
+    relationships:
+    - success
+    - failure
+    - original
   org.apache.nifi.processors.yandex.YandexTranslate:
     kind: PROCESSOR
     properties:
@@ -6346,6 +7588,10 @@ types:
       Translate Content: NONE
       Yandex API Key: NONE
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - translation.failure
+    - success
+    - comms.failure
   org.apache.nifi.processors.zendesk.GetZendesk:
     kind: PROCESSOR
     properties:
@@ -6357,6 +7603,8 @@ types:
       zendesk-resource: NONE
       zendesk-subdomain: FLOWFILE_ATTRIBUTES
       zendesk-user: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
   org.apache.nifi.processors.zendesk.PutZendeskTicket:
     kind: PROCESSOR
     properties:
@@ -6371,6 +7619,9 @@ types:
       zendesk-type: FLOWFILE_ATTRIBUTES
       zendesk-user: FLOWFILE_ATTRIBUTES
     dynamic: FLOWFILE_ATTRIBUTES
+    relationships:
+    - success
+    - failure
   org.apache.nifi.proxy.StandardProxyConfigurationService:
     kind: CONTROLLER_SERVICE
     properties:
@@ -6995,6 +8246,9 @@ types:
       snmp-textual-oid: NONE
       snmp-timeout: NONE
       snmp-version: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.snmp.processors.ListenTrapSNMP:
     kind: PROCESSOR
     properties:
@@ -7006,6 +8260,9 @@ types:
       snmp-usm-users-json-content: NONE
       snmp-usm-users-source: NONE
       snmp-version: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.snmp.processors.SendTrapSNMP:
     kind: PROCESSOR
     properties:
@@ -7026,6 +8283,9 @@ types:
       snmp-trap-oid-value: FLOWFILE_ATTRIBUTES
       snmp-trap-specific-type: FLOWFILE_ATTRIBUTES
       snmp-version: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.snmp.processors.SetSNMP:
     kind: PROCESSOR
     properties:
@@ -7041,6 +8301,9 @@ types:
       snmp-security-name: NONE
       snmp-timeout: NONE
       snmp-version: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.snowflake.service.SnowflakeComputingConnectionPool:
     kind: CONTROLLER_SERVICE
     properties:
@@ -7089,6 +8352,9 @@ types:
       Application Context config path: NONE
       Receive Timeout: NONE
       Send Timeout: NONE
+    relationships:
+    - success
+    - failure
   org.apache.nifi.ssl.StandardRestrictedSSLContextService:
     kind: CONTROLLER_SERVICE
     properties:

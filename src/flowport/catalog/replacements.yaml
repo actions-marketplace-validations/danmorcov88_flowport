@@ -1,0 +1,166 @@
+# Component replacements that `flowport migrate components` applies.
+#
+# Only 1:1 replacements that an official Apache source documents belong here.
+# Each entry is checked by tests/unit/test_replacements.py against the
+# extension manifests of the target release (type, properties, relationships
+# must exist) and by an end-to-end test that builds the component on NiFi
+# 1.x, migrates it and imports the result into NiFi 2.x.
+#
+# Fields:
+#   from, to        fully qualified type names
+#   kind            PROCESSOR or CONTROLLER_SERVICE
+#   bundle          bundle of the target type (group, artifact); version is taken
+#                   from the target release
+#   sources         Apache sources (manual.yaml source keys or NIFI-xxxx)
+#   properties      old property name -> new property name (omit to keep the name;
+#                   a property left out of every list is copied unchanged when the
+#                   target declares it, dropped with a finding otherwise)
+#   values          new property name -> {old value: new value}
+#   set             new property name -> fixed value
+#   drop            old properties that have no equivalent (dropped; INFO when set)
+#   relationships   old relationship -> list of new relationships (connections
+#                   and auto-terminations are remapped)
+#   terminate       new relationships that did not exist before: auto-terminated
+#   unless          conditions under which the replacement is NOT applied and a
+#                   MANUAL finding is reported instead: {property, equals, reason}
+#   note            what the user should know after the replacement
+
+replacements:
+
+  # ---- documented on "Migrating Deprecated Components and Features for 2.0.0" ----
+
+  - from: org.apache.nifi.processors.standard.Base64EncodeContent
+    to: org.apache.nifi.processors.standard.EncodeContent
+    kind: PROCESSOR
+    bundle: {group: org.apache.nifi, artifact: nifi-standard-nar}
+    sources: [migrating_deprecated, NIFI-11174]
+    set:
+      Encoding: base64
+    note: "EncodeContent is a direct replacement; Mode is kept and Encoding is set to base64."
+
+  - from: org.apache.nifi.processors.standard.GetHTTP
+    to: org.apache.nifi.processors.standard.InvokeHTTP
+    kind: PROCESSOR
+    bundle: {group: org.apache.nifi, artifact: nifi-standard-nar}
+    sources: [migrating_deprecated, NIFI-11174]
+    properties:
+      URL: HTTP URL
+      Username: Request Username
+      Password: Request Password
+      Data Timeout: Socket Read Timeout
+      User Agent: Request User-Agent
+      Follow Redirects: Response Redirects Enabled
+      proxy-configuration-service: Proxy Configuration Service
+    values:
+      Response Redirects Enabled: {"true": "True", "false": "False"}
+    set:
+      HTTP Method: GET
+      Response FlowFile Naming Strategy: URL_PATH
+    drop:
+      - Filename                  # InvokeHTTP derives it from the URL path (naming strategy)
+      - Accept Content-Type       # send it as an Accept header (dynamic property) if needed
+      - redirect-cookie-policy
+      - Proxy Host                # replaced by the Proxy Configuration Service
+      - Proxy Port
+    relationships:
+      success: [Response]
+    terminate: [Original, Retry, No Retry, Failure]
+    note: "InvokeHTTP writes the response to the Response relationship; request-side relationships that GetHTTP did not have are auto-terminated. Unlike GetHTTP, no SSL Context Service is needed for public HTTPS locations."
+
+  - from: org.apache.nifi.processors.standard.PostHTTP
+    to: org.apache.nifi.processors.standard.InvokeHTTP
+    kind: PROCESSOR
+    bundle: {group: org.apache.nifi, artifact: nifi-standard-nar}
+    sources: [migrating_deprecated, NIFI-11174]
+    properties:
+      URL: HTTP URL
+      Username: Request Username
+      Password: Request Password
+      Data Timeout: Socket Read Timeout
+      User Agent: Request User-Agent
+      Content-Type: Request Content-Type
+      Use Chunked Encoding: Request Chunked Transfer-Encoding Enabled
+      Attributes to Send as HTTP Headers (Regex): Request Header Attributes Pattern
+      Compression Level: Request Content-Encoding
+      proxy-configuration-service: Proxy Configuration Service
+    values:
+      Request Content-Encoding: {"0": DISABLED, "1": GZIP, "2": GZIP, "3": GZIP, "4": GZIP, "5": GZIP, "6": GZIP, "7": GZIP, "8": GZIP, "9": GZIP}
+    set:
+      HTTP Method: POST
+    drop:
+      - Max Batch Size            # InvokeHTTP sends one FlowFile per request
+      - Max Data to Post per Second
+      - Send as FlowFile          # checked by "unless" below
+      - Proxy Host
+      - Proxy Port
+    relationships:
+      success: [Original]
+      failure: [Failure, Retry, No Retry]
+    terminate: [Response]
+    unless:
+      - property: Send as FlowFile
+        equals: "true"
+        reason: "the FlowFile packaging mode has no equivalent in InvokeHTTP; package with MergeContent (FlowFile Stream v3) before InvokeHTTP, or pass attributes as headers"
+    note: "InvokeHTTP routes the sent FlowFile to Original on success and to Failure, Retry or No Retry otherwise; the HTTP response body (Response) is auto-terminated as PostHTTP discarded it."
+
+  # ---- renamed types: same component under a new class name and bundle ----
+
+  - from: org.apache.nifi.processors.standard.JoltTransformJSON
+    to: org.apache.nifi.processors.jolt.JoltTransformJSON
+    kind: PROCESSOR
+    bundle: {group: org.apache.nifi, artifact: nifi-jolt-nar}
+    sources: [NIFI-12554, deprecated_components]
+    properties:
+      jolt-transform: Jolt Transform
+      jolt-spec: Jolt Specification
+      jolt-custom-class: Custom Transformation Class Name
+      jolt-custom-modules: Custom Module Directory
+      pretty_print: Pretty Print
+    note: "Same processor in the nifi-jolt-nar bundle; property names changed with the move."
+
+  - from: org.apache.nifi.processors.jolt.record.JoltTransformRecord
+    to: org.apache.nifi.processors.jolt.JoltTransformRecord
+    kind: PROCESSOR
+    bundle: {group: org.apache.nifi, artifact: nifi-jolt-nar}
+    sources: [NIFI-12554, deprecated_components]
+    properties:
+      jolt-record-record-reader: Record Reader
+      jolt-record-record-writer: Record Writer
+      jolt-record-transform: Jolt Transform
+      jolt-record-spec: Jolt Specification
+      jolt-record-custom-class: Custom Transformation Class Name
+      jolt-record-custom-modules: Custom Module Directory
+      jolt-record-transform-cache-size: Transform Cache Size
+    note: "Same processor in the nifi-jolt-nar bundle; property names changed with the move."
+
+  - from: org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer
+    to: org.apache.nifi.distributed.cache.server.map.MapCacheServer
+    kind: CONTROLLER_SERVICE
+    bundle: {group: org.apache.nifi, artifact: nifi-distributed-cache-services-nar}
+    sources: [NIFI-13596, deprecated_components]
+    properties:
+      maximum-read-size: Maximum Read Size
+    note: "Renamed in NiFi 2.0: nothing about the cache is distributed. Processors keep referencing the same service instance."
+
+  - from: org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService
+    to: org.apache.nifi.distributed.cache.client.MapCacheClientService
+    kind: CONTROLLER_SERVICE
+    bundle: {group: org.apache.nifi, artifact: nifi-distributed-cache-services-nar}
+    sources: [NIFI-13596, deprecated_components]
+    note: "Renamed in NiFi 2.0. Processors keep referencing the same service instance."
+
+  - from: org.apache.nifi.distributed.cache.server.DistributedSetCacheServer
+    to: org.apache.nifi.distributed.cache.server.SetCacheServer
+    kind: CONTROLLER_SERVICE
+    bundle: {group: org.apache.nifi, artifact: nifi-distributed-cache-services-nar}
+    sources: [NIFI-13596, deprecated_components]
+    properties:
+      maximum-read-size: Maximum Read Size
+    note: "Renamed in NiFi 2.0 together with the map cache services."
+
+  - from: org.apache.nifi.distributed.cache.client.DistributedSetCacheClientService
+    to: org.apache.nifi.distributed.cache.client.SetCacheClientService
+    kind: CONTROLLER_SERVICE
+    bundle: {group: org.apache.nifi, artifact: nifi-distributed-cache-services-nar}
+    sources: [NIFI-13596, deprecated_components]
+    note: "Renamed in NiFi 2.0 together with the map cache services."
