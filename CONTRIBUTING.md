@@ -34,6 +34,23 @@ Integration tests start NiFi in Docker and are slow:
 pytest -m integration
 ```
 
+## Adding a rule
+
+1. Find the official Apache source (wiki page or JIRA issue) that documents
+   the change. No source, no rule.
+2. Add the rule's metadata (severity, message, suggestion, sources) to
+   `src/flowport/catalog/manual.yaml`.
+3. Add the detection logic in `src/flowport/rules/` and register the rule in
+   `all_rules()`.
+4. Add a case to `tools/make_fixtures.py` so that a real NiFi 1.x instance
+   produces the situation, regenerate the fixtures, and refresh the golden
+   files with `pytest --update-golden`. Add a focused test in
+   `tests/unit/test_rules.py`.
+5. Document the rule in the README table.
+
+The component inventory (`src/flowport/catalog/generated/`) is not edited by
+hand; run `python tools/build_catalog.py <from> <to>` to regenerate it.
+
 ## Commits
 
 Use [Conventional Commits](https://www.conventionalcommits.org/):
