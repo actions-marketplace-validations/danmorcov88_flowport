@@ -9,6 +9,7 @@ from typing import Any
 from pydantic import BaseModel
 
 from flowport.catalog import Catalog
+from flowport.catalog.reference import reference_url
 from flowport.model import Component, ComponentKind, Flow, ProcessGroup, Template
 
 
@@ -50,6 +51,7 @@ class Finding(BaseModel):
     message: str
     suggestion: str
     sources: list[str]
+    reference: str = ""  # link to the rule's section of docs/rules.md
     details: dict[str, str] = {}
 
     def sort_key(self) -> tuple[Any, ...]:
@@ -106,6 +108,7 @@ class Context:
             message=spec.message.format(**fields),
             suggestion=spec.suggestion.format(**fields),
             sources=sources,
+            reference=reference_url(rule_id),
             details=details,
         )
 

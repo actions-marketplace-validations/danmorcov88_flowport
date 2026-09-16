@@ -55,6 +55,9 @@
 - Suggestion: {{ f.suggestion }}
 {% endif %}
 - Sources: {% for s in f.sources %}<{{ s }}>{% if not loop.last %}, {% endif %}{% endfor %}
+{% if f.reference %}
+- Reference: <{{ f.reference }}>
+{% endif %}
 
 
 {% endfor %}

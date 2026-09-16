@@ -81,4 +81,6 @@ def print_report(report: dict[str, Any], console: Console, *, verbose: bool = Fa
             if verbose:
                 for source in finding["sources"]:
                     lines.append(f"\n{source}", style="dim")
+                if finding.get("reference"):
+                    lines.append(f"\n{finding['reference']}", style="dim")
             console.print(Padding(lines, (0, 0, 0, 4)))

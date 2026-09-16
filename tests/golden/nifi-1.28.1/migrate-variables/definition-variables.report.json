@@ -20,6 +20,7 @@
         "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
       },
       "message": "Property 'url' references variable ${host} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-reference-attribute-scope",
       "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
       "severity": "MANUAL",
       "sources": [
@@ -46,6 +47,7 @@
         "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
       },
       "message": "Property 'url' references variable ${port} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'port' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-reference-attribute-scope",
       "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
       "severity": "MANUAL",
       "sources": [
@@ -72,6 +74,7 @@
         "type": "org.apache.nifi.processors.standard.LogAttribute"
       },
       "message": "Property 'Attributes to Log' contains ${host} but does not support Expression Language, so the text was never evaluated on 1.x and nothing changes on 2.x.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-reference-no-el",
       "rule_id": "NIFI2-VARIABLE-REFERENCE-NO-EL",
       "severity": "INFO",
       "sources": [
@@ -96,6 +99,7 @@
         "type": "org.apache.nifi.processors.standard.PutFile"
       },
       "message": "Property 'Directory' references variable ${host} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-reference-attribute-scope",
       "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
       "severity": "MANUAL",
       "sources": [
@@ -122,6 +126,7 @@
         "type": "org.apache.nifi.processors.standard.TailFile"
       },
       "message": "Property 'File to Tail' applies Expression Language functions to variable ${shared} (defined in /Variables). The subject of the expression must change from the variable to a parameter reference.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-reference-function",
       "rule_id": "NIFI2-VARIABLE-REFERENCE-FUNCTION",
       "severity": "MANUAL",
       "sources": [
@@ -144,6 +149,7 @@
         "type": ""
       },
       "message": "Variable 'bad name!' contains characters that are not allowed in a parameter name (letters, digits, '-', '_', '.' and space).",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-name",
       "rule_id": "NIFI2-VARIABLE-NAME",
       "severity": "MANUAL",
       "sources": [
@@ -167,6 +173,7 @@
         "type": ""
       },
       "message": "Variable 'bad name!' is defined here but no property in this group or its children references it.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-unused",
       "rule_id": "NIFI2-VARIABLE-UNUSED",
       "severity": "INFO",
       "sources": [
@@ -189,6 +196,7 @@
         "type": ""
       },
       "message": "Variable 'unused.var' is defined here but no property in this group or its children references it.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-unused",
       "rule_id": "NIFI2-VARIABLE-UNUSED",
       "severity": "INFO",
       "sources": [
@@ -211,6 +219,7 @@
         "type": ""
       },
       "message": "This process group defines 5 variable(s): bad name!, host, port, shared, unused.var. NiFi 2.x removed the Variable Registry and silently drops them when the flow loads.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variables-defined",
       "rule_id": "NIFI2-VARIABLES-DEFINED",
       "severity": "AUTO_FIXABLE",
       "sources": [

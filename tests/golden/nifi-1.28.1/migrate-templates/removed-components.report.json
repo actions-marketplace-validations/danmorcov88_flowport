@@ -17,6 +17,7 @@
         "type": "org.apache.nifi.processors.standard.GetHTTP"
       },
       "message": "GetHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -40,6 +41,7 @@
         "type": "org.apache.nifi.processors.standard.HashAttribute"
       },
       "message": "HashAttribute does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -63,6 +65,7 @@
         "type": "org.apache.nifi.processors.standard.HashContent"
       },
       "message": "HashContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -86,6 +89,7 @@
         "type": "org.apache.nifi.processors.standard.PostHTTP"
       },
       "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [

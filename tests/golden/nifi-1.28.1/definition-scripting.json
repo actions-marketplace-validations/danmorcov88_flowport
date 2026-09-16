@@ -18,6 +18,7 @@
         "type": "org.apache.nifi.processors.script.ExecuteScript"
       },
       "message": "ExecuteScript uses the ECMAScript script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-script-engine",
       "rule_id": "NIFI2-SCRIPT-ENGINE",
       "severity": "BLOCKER",
       "sources": [
@@ -43,6 +44,7 @@
         "type": "org.apache.nifi.processors.script.ExecuteScript"
       },
       "message": "ExecuteScript uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-script-engine",
       "rule_id": "NIFI2-SCRIPT-ENGINE",
       "severity": "BLOCKER",
       "sources": [
@@ -68,6 +70,7 @@
         "type": "org.apache.nifi.lookup.script.ScriptedLookupService"
       },
       "message": "ScriptedLookupService uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Groovy). The component is invalid on 2.x.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-script-engine",
       "rule_id": "NIFI2-SCRIPT-ENGINE",
       "severity": "BLOCKER",
       "sources": [
@@ -93,6 +96,7 @@
         "type": "org.apache.nifi.processors.script.ExecuteScript"
       },
       "message": "ExecuteScript uses the lua script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-script-engine",
       "rule_id": "NIFI2-SCRIPT-ENGINE",
       "severity": "BLOCKER",
       "sources": [
@@ -118,6 +122,7 @@
         "type": "org.apache.nifi.processors.script.ExecuteScript"
       },
       "message": "ExecuteScript uses the ruby script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-script-engine",
       "rule_id": "NIFI2-SCRIPT-ENGINE",
       "severity": "BLOCKER",
       "sources": [
@@ -143,6 +148,7 @@
         "type": "org.apache.nifi.processors.script.InvokeScriptedProcessor"
       },
       "message": "InvokeScriptedProcessor uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Groovy). The component is invalid on 2.x.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-script-engine",
       "rule_id": "NIFI2-SCRIPT-ENGINE",
       "severity": "BLOCKER",
       "sources": [

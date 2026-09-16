@@ -17,6 +17,7 @@
         "type": "org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService"
       },
       "message": "DistributedMapCacheClientService does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -40,6 +41,7 @@
         "type": "org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer"
       },
       "message": "DistributedMapCacheServer does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -63,6 +65,7 @@
         "type": "org.apache.nifi.processors.standard.Base64EncodeContent"
       },
       "message": "Base64EncodeContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -86,6 +89,7 @@
         "type": "org.apache.nifi.processors.standard.GetHTTP"
       },
       "message": "GetHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -110,6 +114,7 @@
         "type": "org.apache.nifi.processors.standard.JoltTransformJSON"
       },
       "message": "JoltTransformJSON does not exist under this class name in NiFi 2.12.0; a component of the same name exists as org.apache.nifi.processors.jolt.JoltTransformJSON in bundle org.apache.nifi:nifi-jolt-nar. NiFi does not map the old name and loads a ghost component.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-renamed-component",
       "rule_id": "NIFI2-RENAMED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -132,6 +137,7 @@
         "type": "org.apache.nifi.processors.jolt.record.JoltTransformRecord"
       },
       "message": "JoltTransformRecord does not exist under this class name in NiFi 2.12.0; a component of the same name exists as org.apache.nifi.processors.jolt.JoltTransformRecord in bundle org.apache.nifi:nifi-jolt-nar. NiFi does not map the old name and loads a ghost component.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-renamed-component",
       "rule_id": "NIFI2-RENAMED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -153,6 +159,7 @@
         "type": "org.apache.nifi.processors.standard.PostHTTP"
       },
       "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -176,6 +183,7 @@
         "type": "org.apache.nifi.processors.standard.PostHTTP"
       },
       "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -199,6 +207,7 @@
         "type": "org.apache.nifi.distributed.cache.client.DistributedSetCacheClientService"
       },
       "message": "DistributedSetCacheClientService does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -221,6 +230,7 @@
         "type": "org.apache.nifi.distributed.cache.server.DistributedSetCacheServer"
       },
       "message": "DistributedSetCacheServer does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [

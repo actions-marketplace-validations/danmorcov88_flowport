@@ -17,6 +17,7 @@
         "type": "com.example.nifi.processors.CustomProcessor"
       },
       "message": "CustomProcessor comes from bundle com.example:example-custom-nar:1.0.0, which is not an Apache NiFi bundle. NARs built against the 1.x API do not load on 2.x; the component becomes a ghost.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-third-party-bundle",
       "rule_id": "NIFI2-THIRD-PARTY-BUNDLE",
       "severity": "MANUAL",
       "sources": [

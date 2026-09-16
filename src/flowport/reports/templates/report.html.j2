@@ -62,7 +62,7 @@
 {% if f.suggestion %}
   <p><strong>Suggestion:</strong> {{ f.suggestion }}</p>
 {% endif %}
-  <div class="sources">{% for s in f.sources %}<a href="{{ s }}">{{ s }}</a>{% endfor %}</div>
+  <div class="sources">{% for s in f.sources %}<a href="{{ s }}">{{ s }}</a>{% endfor %}{% if f.reference %}<a href="{{ f.reference }}">rule reference</a>{% endif %}</div>
 </div>
 {% endfor %}
 {% endfor %}

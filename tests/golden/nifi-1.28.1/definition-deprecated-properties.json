@@ -17,6 +17,7 @@
         "type": "org.apache.nifi.processors.standard.InvokeHTTP"
       },
       "message": "InvokeHTTP is configured with the deprecated proxy properties Proxy Host, Proxy Port, Proxy Type. NiFi 2.x creates a StandardProxyConfigurationService from them when the flow loads.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-invokehttp-proxy-properties",
       "rule_id": "NIFI2-INVOKEHTTP-PROXY-PROPERTIES",
       "severity": "INFO",
       "sources": [

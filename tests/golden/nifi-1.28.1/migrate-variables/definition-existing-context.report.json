@@ -19,6 +19,7 @@
         "type": ""
       },
       "message": "This process group defines variable 'host' and already uses parameter context 'Fixture Context', which resolves a parameter of the same name. Adding the variable as a parameter would change what #{host} means for every group using that context, so flowport leaves this group's variables unchanged.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-parameter-collision",
       "rule_id": "NIFI2-VARIABLE-PARAMETER-COLLISION",
       "severity": "MANUAL",
       "sources": [
@@ -43,6 +44,7 @@
         "type": ""
       },
       "message": "This process group defines 2 variable(s): host, retries. NiFi 2.x removed the Variable Registry and silently drops them when the flow loads.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variables-defined",
       "rule_id": "NIFI2-VARIABLES-DEFINED",
       "severity": "AUTO_FIXABLE",
       "sources": [
@@ -68,6 +70,7 @@
         "type": "org.apache.nifi.processors.standard.ListenHTTP"
       },
       "message": "Property 'Base Path' references variable ${host} (defined in /Existing Context). On NiFi 2.x the variable no longer exists, so the expression evaluates to empty unless a FlowFile attribute or environment variable of the same name exists. No validation error will point at this.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-reference",
       "rule_id": "NIFI2-VARIABLE-REFERENCE",
       "severity": "AUTO_FIXABLE",
       "sources": [
@@ -93,6 +96,7 @@
         "type": "org.apache.nifi.processors.standard.ListenHTTP"
       },
       "message": "Property 'Listening Port' references variable ${retries} (defined in /Existing Context). On NiFi 2.x the variable no longer exists, so the expression evaluates to empty unless a FlowFile attribute or environment variable of the same name exists. No validation error will point at this.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-variable-reference",
       "rule_id": "NIFI2-VARIABLE-REFERENCE",
       "severity": "AUTO_FIXABLE",
       "sources": [

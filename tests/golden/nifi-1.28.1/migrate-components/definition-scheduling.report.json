@@ -18,6 +18,7 @@
         "type": "org.apache.nifi.processors.standard.GenerateFlowFile"
       },
       "message": "Run schedule '0 0 6 ? * 1' uses a number for the day of week ('1'). NiFi 1.x (Quartz) counts 1 as Sunday; NiFi 2.x (Spring) counts 1 as Monday, so the schedule shifts by one day without any error.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-cron-numeric-day-of-week",
       "rule_id": "NIFI2-CRON-NUMERIC-DAY-OF-WEEK",
       "severity": "MANUAL",
       "sources": [
@@ -40,6 +41,7 @@
         "type": "org.apache.nifi.processors.standard.GenerateFlowFile"
       },
       "message": "Run schedule '0 0 12 * * ? 2030' has seven fields. NiFi 2.x uses Spring cron expressions, which have no year field, so the component is invalid.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-cron-year-field",
       "rule_id": "NIFI2-CRON-YEAR-FIELD",
       "severity": "BLOCKER",
       "sources": [
@@ -60,6 +62,7 @@
         "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
       },
       "message": "UpdateAttribute used the EVENT_DRIVEN scheduling strategy, which NiFi 2.x removed; it now runs TIMER_DRIVEN with a run schedule of 0 sec.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-scheduling-changed",
       "rule_id": "NIFI2-SCHEDULING-CHANGED",
       "severity": "INFO",
       "sources": [

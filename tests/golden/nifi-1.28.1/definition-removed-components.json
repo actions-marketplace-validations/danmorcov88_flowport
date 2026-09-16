@@ -17,6 +17,7 @@
         "type": "org.apache.nifi.processors.standard.Base64EncodeContent"
       },
       "message": "Base64EncodeContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -40,6 +41,7 @@
         "type": "org.apache.nifi.processors.kafka.pubsub.ConsumeKafka_2_6"
       },
       "message": "ConsumeKafka_2_6 does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -63,6 +65,7 @@
         "type": "org.apache.nifi.processors.standard.ConvertJSONToSQL"
       },
       "message": "ConvertJSONToSQL does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -85,6 +88,7 @@
         "type": "org.apache.nifi.processors.standard.EncryptContent"
       },
       "message": "EncryptContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -108,6 +112,7 @@
         "type": "org.apache.nifi.processors.standard.GetHTTP"
       },
       "message": "GetHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -131,6 +136,7 @@
         "type": "org.apache.nifi.processors.standard.GetJMSQueue"
       },
       "message": "GetJMSQueue does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -154,6 +160,7 @@
         "type": "org.apache.nifi.processors.standard.HashAttribute"
       },
       "message": "HashAttribute does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -177,6 +184,7 @@
         "type": "org.apache.nifi.processors.standard.HashContent"
       },
       "message": "HashContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -201,6 +209,7 @@
         "type": "org.apache.nifi.processors.standard.JoltTransformJSON"
       },
       "message": "JoltTransformJSON does not exist under this class name in NiFi 2.12.0; a component of the same name exists as org.apache.nifi.processors.jolt.JoltTransformJSON in bundle org.apache.nifi:nifi-jolt-nar. NiFi does not map the old name and loads a ghost component.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-renamed-component",
       "rule_id": "NIFI2-RENAMED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -222,6 +231,7 @@
         "type": "org.apache.nifi.processors.standard.ListenRELP"
       },
       "message": "ListenRELP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -245,6 +255,7 @@
         "type": "org.apache.nifi.processors.standard.ListenTCPRecord"
       },
       "message": "ListenTCPRecord does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -268,6 +279,7 @@
         "type": "org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService"
       },
       "message": "DistributedMapCacheClientService does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -291,6 +303,7 @@
         "type": "org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer"
       },
       "message": "DistributedMapCacheServer does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -314,6 +327,7 @@
         "type": "org.apache.nifi.processors.standard.ParseCEF"
       },
       "message": "ParseCEF does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -337,6 +351,7 @@
         "type": "org.apache.nifi.processors.slack.PutSlack"
       },
       "message": "PutSlack does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -360,6 +375,7 @@
         "type": "org.apache.nifi.processors.standard.PostHTTP"
       },
       "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -383,6 +399,7 @@
         "type": "org.apache.nifi.processors.azure.storage.PutAzureBlobStorage"
       },
       "message": "PutAzureBlobStorage does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -406,6 +423,7 @@
         "type": "org.apache.nifi.processors.elasticsearch.PutElasticsearchHttp"
       },
       "message": "PutElasticsearchHttp does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -429,6 +447,7 @@
         "type": "org.apache.nifi.processors.standard.PutJMS"
       },
       "message": "PutJMS does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [

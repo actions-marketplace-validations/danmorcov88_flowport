@@ -20,6 +20,7 @@
         "type": "org.apache.nifi.distributed.cache.client.MapCacheClientService"
       },
       "message": "DistributedMapCacheClientService was replaced by MapCacheClientService (org.apache.nifi.distributed.cache.client.MapCacheClientService). Renamed in NiFi 2.0. Processors keep referencing the same service instance.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
@@ -45,6 +46,7 @@
         "type": "org.apache.nifi.distributed.cache.server.map.MapCacheServer"
       },
       "message": "DistributedMapCacheServer was replaced by MapCacheServer (org.apache.nifi.distributed.cache.server.map.MapCacheServer). Renamed in NiFi 2.0: nothing about the cache is distributed. Processors keep referencing the same service instance.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
@@ -70,6 +72,7 @@
         "type": "org.apache.nifi.processors.standard.EncodeContent"
       },
       "message": "Base64EncodeContent was replaced by EncodeContent (org.apache.nifi.processors.standard.EncodeContent). EncodeContent is a direct replacement; Mode is kept and Encoding is set to base64.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
@@ -95,6 +98,7 @@
         "type": "org.apache.nifi.processors.standard.InvokeHTTP"
       },
       "message": "GetHTTP was replaced by InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP). InvokeHTTP writes the response to the Response relationship; request-side relationships that GetHTTP did not have are auto-terminated. Unlike GetHTTP, no SSL Context Service is needed for public HTTPS locations.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
@@ -119,6 +123,7 @@
         "type": "org.apache.nifi.processors.standard.InvokeHTTP"
       },
       "message": "Property 'Accept Content-Type' of the former GetHTTP was set to 'application/json' and has no equivalent on InvokeHTTP; it was dropped.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-replaced-property-dropped",
       "rule_id": "NIFI2-REPLACED-PROPERTY-DROPPED",
       "severity": "INFO",
       "sources": [
@@ -142,6 +147,7 @@
         "type": "org.apache.nifi.processors.standard.InvokeHTTP"
       },
       "message": "Property 'Filename' of the former GetHTTP was set to 'data.json' and has no equivalent on InvokeHTTP; it was dropped.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-replaced-property-dropped",
       "rule_id": "NIFI2-REPLACED-PROPERTY-DROPPED",
       "severity": "INFO",
       "sources": [
@@ -166,6 +172,7 @@
         "type": "org.apache.nifi.processors.jolt.JoltTransformJSON"
       },
       "message": "JoltTransformJSON was replaced by JoltTransformJSON (org.apache.nifi.processors.jolt.JoltTransformJSON). Same processor in the nifi-jolt-nar bundle; property names changed with the move.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
@@ -191,6 +198,7 @@
         "type": "org.apache.nifi.processors.jolt.JoltTransformRecord"
       },
       "message": "JoltTransformRecord was replaced by JoltTransformRecord (org.apache.nifi.processors.jolt.JoltTransformRecord). Same processor in the nifi-jolt-nar bundle; property names changed with the move.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
@@ -216,6 +224,7 @@
         "type": "org.apache.nifi.processors.standard.InvokeHTTP"
       },
       "message": "PostHTTP was replaced by InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP). InvokeHTTP routes the sent FlowFile to Original on success and to Failure, Retry or No Retry otherwise; the HTTP response body (Response) is auto-terminated as PostHTTP discarded it.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
@@ -238,6 +247,7 @@
         "type": "org.apache.nifi.processors.standard.PostHTTP"
       },
       "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-removed-component",
       "rule_id": "NIFI2-REMOVED-COMPONENT",
       "severity": "BLOCKER",
       "sources": [
@@ -264,6 +274,7 @@
         "type": "org.apache.nifi.processors.standard.PostHTTP"
       },
       "message": "PostHTTP could be replaced by org.apache.nifi.processors.standard.InvokeHTTP, but property 'Send as FlowFile' is set to 'true': the FlowFile packaging mode has no equivalent in InvokeHTTP; package with MergeContent (FlowFile Stream v3) before InvokeHTTP, or pass attributes as headers.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-replacement-skipped",
       "rule_id": "NIFI2-REPLACEMENT-SKIPPED",
       "severity": "MANUAL",
       "sources": [
@@ -289,6 +300,7 @@
         "type": "org.apache.nifi.distributed.cache.client.SetCacheClientService"
       },
       "message": "DistributedSetCacheClientService was replaced by SetCacheClientService (org.apache.nifi.distributed.cache.client.SetCacheClientService). Renamed in NiFi 2.0 together with the map cache services.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
@@ -314,6 +326,7 @@
         "type": "org.apache.nifi.distributed.cache.server.SetCacheServer"
       },
       "message": "DistributedSetCacheServer was replaced by SetCacheServer (org.apache.nifi.distributed.cache.server.SetCacheServer). Renamed in NiFi 2.0 together with the map cache services.",
+      "reference": "https://github.com/danmorcov88/flowport/blob/main/docs/rules.md#nifi2-component-replaced",
       "rule_id": "NIFI2-COMPONENT-REPLACED",
       "severity": "INFO",
       "sources": [
