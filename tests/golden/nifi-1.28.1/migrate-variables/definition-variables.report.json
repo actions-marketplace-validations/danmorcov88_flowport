@@ -1,0 +1,254 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/Variables",
+        "property": "url",
+        "value": "http://${host}:${port}/api",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e115-01a0-1000-546e-6ec5e72cee0c",
+        "kind": "PROCESSOR",
+        "name": "Build URL attribute",
+        "path": "/Variables",
+        "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
+      },
+      "message": "Property 'url' references variable ${host} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
+      ],
+      "suggestion": "If the value must come from configuration, replace the reference with a parameter #{host}. If a FlowFile attribute is intended, no change is needed.",
+      "title": "Variable reference in a property that also reads FlowFile attributes"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/Variables",
+        "property": "url",
+        "value": "http://${host}:${port}/api",
+        "variable": "port"
+      },
+      "location": {
+        "id": "a961e115-01a0-1000-546e-6ec5e72cee0c",
+        "kind": "PROCESSOR",
+        "name": "Build URL attribute",
+        "path": "/Variables",
+        "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
+      },
+      "message": "Property 'url' references variable ${port} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'port' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
+      ],
+      "suggestion": "If the value must come from configuration, replace the reference with a parameter #{port}. If a FlowFile attribute is intended, no change is needed.",
+      "title": "Variable reference in a property that also reads FlowFile attributes"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/Variables",
+        "property": "Attributes to Log",
+        "value": "${host}",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e12d-01a0-1000-cdef-84b31696a260",
+        "kind": "PROCESSOR",
+        "name": "Log literal dollar text",
+        "path": "/Variables",
+        "type": "org.apache.nifi.processors.standard.LogAttribute"
+      },
+      "message": "Property 'Attributes to Log' contains ${host} but does not support Expression Language, so the text was never evaluated on 1.x and nothing changes on 2.x.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-NO-EL",
+      "severity": "INFO",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079"
+      ],
+      "suggestion": "No change needed. Check the value if it was meant to be dynamic.",
+      "title": "Variable-like text in a property without Expression Language support"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/Variables",
+        "property": "Directory",
+        "value": "/tmp/${host}/out",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e0bb-01a0-1000-0a0e-c832baf3769a",
+        "kind": "PROCESSOR",
+        "name": "Put to shadowed directory",
+        "path": "/Variables",
+        "type": "org.apache.nifi.processors.standard.PutFile"
+      },
+      "message": "Property 'Directory' references variable ${host} (defined in /Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
+      ],
+      "suggestion": "If the value must come from configuration, replace the reference with a parameter #{host}. If a FlowFile attribute is intended, no change is needed.",
+      "title": "Variable reference in a property that also reads FlowFile attributes"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/Variables",
+        "property": "File to Tail",
+        "value": "${shared:toUpper()}.log",
+        "variable": "shared"
+      },
+      "location": {
+        "id": "a961e141-01a0-1000-88b2-7983d15f9cc0",
+        "kind": "PROCESSOR",
+        "name": "Tail with function",
+        "path": "/Variables",
+        "type": "org.apache.nifi.processors.standard.TailFile"
+      },
+      "message": "Property 'File to Tail' applies Expression Language functions to variable ${shared} (defined in /Variables). The subject of the expression must change from the variable to a parameter reference.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-FUNCTION",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#referencing-parameters"
+      ],
+      "suggestion": "Rewrite the subject as a parameter reference inside the expression, for example ${ #{shared}:toUpper() } (the parameter is substituted before the expression is evaluated), then test the property on 1.x.",
+      "title": "Variable used with Expression Language functions"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "variable": "bad name!"
+      },
+      "location": {
+        "id": "a961df39-01a0-1000-7275-0a4488a407b2",
+        "kind": "PROCESS_GROUP",
+        "name": "Variables",
+        "path": "/Variables",
+        "type": ""
+      },
+      "message": "Variable 'bad name!' contains characters that are not allowed in a parameter name (letters, digits, '-', '_', '.' and space).",
+      "rule_id": "NIFI2-VARIABLE-NAME",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#name-parameter-restriction"
+      ],
+      "suggestion": "Choose a valid parameter name and update every reference.",
+      "title": "Variable name is not a valid parameter name"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "value": "characters not allowed in parameter names",
+        "variable": "bad name!"
+      },
+      "location": {
+        "id": "a961df39-01a0-1000-7275-0a4488a407b2",
+        "kind": "PROCESS_GROUP",
+        "name": "Variables",
+        "path": "/Variables",
+        "type": ""
+      },
+      "message": "Variable 'bad name!' is defined here but no property in this group or its children references it.",
+      "rule_id": "NIFI2-VARIABLE-UNUSED",
+      "severity": "INFO",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079"
+      ],
+      "suggestion": "Drop it, or keep it as a parameter if other flows depend on it.",
+      "title": "Variable is never referenced"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "value": "never referenced",
+        "variable": "unused.var"
+      },
+      "location": {
+        "id": "a961df39-01a0-1000-7275-0a4488a407b2",
+        "kind": "PROCESS_GROUP",
+        "name": "Variables",
+        "path": "/Variables",
+        "type": ""
+      },
+      "message": "Variable 'unused.var' is defined here but no property in this group or its children references it.",
+      "rule_id": "NIFI2-VARIABLE-UNUSED",
+      "severity": "INFO",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079"
+      ],
+      "suggestion": "Drop it, or keep it as a parameter if other flows depend on it.",
+      "title": "Variable is never referenced"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "count": "5",
+        "names": "bad name!, host, port, shared, unused.var"
+      },
+      "location": {
+        "id": "a961df39-01a0-1000-7275-0a4488a407b2",
+        "kind": "PROCESS_GROUP",
+        "name": "Variables",
+        "path": "/Variables",
+        "type": ""
+      },
+      "message": "This process group defines 5 variable(s): bad name!, host, port, shared, unused.var. NiFi 2.x removed the Variable Registry and silently drops them when the flow loads.",
+      "rule_id": "NIFI2-VARIABLES-DEFINED",
+      "severity": "AUTO_FIXABLE",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Convert the variables to a parameter context (flowport migrate variables) and rewrite the references to #{name}.",
+      "title": "Process group defines variables"
+    }
+  ],
+  "input": {
+    "kind": "definition",
+    "name": "variables.json"
+  },
+  "summary": {
+    "bundle_versions": {
+      "1.28.1": 10
+    },
+    "by_category": {
+      "variables": 9
+    },
+    "by_rule": {
+      "NIFI2-VARIABLE-NAME": 1,
+      "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE": 3,
+      "NIFI2-VARIABLE-REFERENCE-FUNCTION": 1,
+      "NIFI2-VARIABLE-REFERENCE-NO-EL": 1,
+      "NIFI2-VARIABLE-UNUSED": 2,
+      "NIFI2-VARIABLES-DEFINED": 1
+    },
+    "by_severity": {
+      "AUTO_FIXABLE": 1,
+      "BLOCKER": 0,
+      "INFO": 3,
+      "MANUAL": 5
+    },
+    "components": 10,
+    "process_groups": 3,
+    "total": 9
+  },
+  "warnings": []
+}

@@ -1,0 +1,1108 @@
+{
+  "catalog": {
+    "source_version": "1.28.1",
+    "target_version": "2.12.0"
+  },
+  "findings": [
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e452-01a0-1000-b8e5-26d7a77166dd",
+        "kind": "REPORTING_TASK",
+        "name": "Prometheus metrics",
+        "path": "",
+        "type": "org.apache.nifi.reporting.prometheus.PrometheusReportingTask"
+      },
+      "message": "PrometheusReportingTask does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13507"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "custom-nar",
+      "details": {
+        "bundle": "com.example:example-custom-nar:1.0.0"
+      },
+      "location": {
+        "id": "a961f8a1-01a0-1000-5fb7-849e0c9c4ba2",
+        "kind": "PROCESSOR",
+        "name": "Custom Processor",
+        "path": "/NiFi Flow/Custom NAR",
+        "type": "com.example.nifi.processors.CustomProcessor"
+      },
+      "message": "CustomProcessor comes from bundle com.example:example-custom-nar:1.0.0, which is not an Apache NiFi bundle. NARs built against the 1.x API do not load on 2.x; the component becomes a ghost.",
+      "rule_id": "NIFI2-THIRD-PARTY-BUNDLE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-12079"
+      ],
+      "suggestion": "Obtain or build a version of this NAR for the NiFi 2.x API and deploy it before loading the flow.",
+      "title": "Component from a third-party or custom NAR"
+    },
+    {
+      "category": "deprecated-property",
+      "details": {
+        "properties": "Proxy Host, Proxy Port, Proxy Type"
+      },
+      "location": {
+        "id": "a961f888-01a0-1000-14c1-1713725b4e8d",
+        "kind": "PROCESSOR",
+        "name": "Invoke through proxy",
+        "path": "/NiFi Flow/Deprecated Properties",
+        "type": "org.apache.nifi.processors.standard.InvokeHTTP"
+      },
+      "message": "InvokeHTTP is configured with the deprecated proxy properties Proxy Host, Proxy Port, Proxy Type. NiFi 2.x creates a StandardProxyConfigurationService from them when the flow loads.",
+      "rule_id": "NIFI2-INVOKEHTTP-PROXY-PROPERTIES",
+      "severity": "INFO",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "No change needed before the upgrade. After the upgrade, check the generated proxy configuration service and remove the leftover properties.",
+      "title": "InvokeHTTP proxy properties replaced by a controller service"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "context": "Fixture Context",
+        "value": "variable.example.org",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e1de-01a0-1000-1fd9-8c8a3ed2834c",
+        "kind": "PROCESS_GROUP",
+        "name": "Existing Context",
+        "path": "/NiFi Flow/Existing Context",
+        "type": ""
+      },
+      "message": "This process group defines variable 'host' and already uses parameter context 'Fixture Context', which resolves a parameter of the same name. Adding the variable as a parameter would change what #{host} means for every group using that context, so flowport leaves this group's variables unchanged.",
+      "rule_id": "NIFI2-VARIABLE-PARAMETER-COLLISION",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://issues.apache.org/jira/browse/NIFI-8490",
+        "https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#assigning_parameter_context_to_PG"
+      ],
+      "suggestion": "Rename the variable or the parameter, or drop the variable if the parameter value is the intended one, then run the migration again.",
+      "title": "Variable name collides with an existing parameter"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "count": "2",
+        "names": "host, retries"
+      },
+      "location": {
+        "id": "a961e1de-01a0-1000-1fd9-8c8a3ed2834c",
+        "kind": "PROCESS_GROUP",
+        "name": "Existing Context",
+        "path": "/NiFi Flow/Existing Context",
+        "type": ""
+      },
+      "message": "This process group defines 2 variable(s): host, retries. NiFi 2.x removed the Variable Registry and silently drops them when the flow loads.",
+      "rule_id": "NIFI2-VARIABLES-DEFINED",
+      "severity": "AUTO_FIXABLE",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Convert the variables to a parameter context (flowport migrate variables) and rewrite the references to #{name}.",
+      "title": "Process group defines variables"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/NiFi Flow/Existing Context",
+        "property": "Base Path",
+        "value": "${host}",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e246-01a0-1000-5cae-e4639c3b3600",
+        "kind": "PROCESSOR",
+        "name": "Listen with variable",
+        "path": "/NiFi Flow/Existing Context",
+        "type": "org.apache.nifi.processors.standard.ListenHTTP"
+      },
+      "message": "Property 'Base Path' references variable ${host} (defined in /NiFi Flow/Existing Context). On NiFi 2.x the variable no longer exists, so the expression evaluates to empty unless a FlowFile attribute or environment variable of the same name exists. No validation error will point at this.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE",
+      "severity": "AUTO_FIXABLE",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Replace the reference with a parameter: #{host}.",
+      "title": "Property references a variable"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/NiFi Flow/Existing Context",
+        "property": "Listening Port",
+        "value": "${retries}081",
+        "variable": "retries"
+      },
+      "location": {
+        "id": "a961e246-01a0-1000-5cae-e4639c3b3600",
+        "kind": "PROCESSOR",
+        "name": "Listen with variable",
+        "path": "/NiFi Flow/Existing Context",
+        "type": "org.apache.nifi.processors.standard.ListenHTTP"
+      },
+      "message": "Property 'Listening Port' references variable ${retries} (defined in /NiFi Flow/Existing Context). On NiFi 2.x the variable no longer exists, so the expression evaluates to empty unless a FlowFile attribute or environment variable of the same name exists. No validation error will point at this.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE",
+      "severity": "AUTO_FIXABLE",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Replace the reference with a parameter: #{retries}.",
+      "title": "Property references a variable"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: EncodeContent (org.apache.nifi.processors.standard.EncodeContent)."
+      },
+      "location": {
+        "id": "a961e2cc-01a0-1000-6361-9bbd54d5efff",
+        "kind": "PROCESSOR",
+        "name": "Base64 encode",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.Base64EncodeContent"
+      },
+      "message": "Base64EncodeContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: EncodeContent (org.apache.nifi.processors.standard.EncodeContent).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e383-01a0-1000-c8cf-cc16033f421c",
+        "kind": "PROCESSOR",
+        "name": "Consume Kafka 2.6",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.kafka.pubsub.ConsumeKafka_2_6"
+      },
+      "message": "ConsumeKafka_2_6 does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13489"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e34c-01a0-1000-aa50-2ef51198f596",
+        "kind": "PROCESSOR",
+        "name": "Convert JSON to SQL",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.ConvertJSONToSQL"
+      },
+      "message": "ConvertJSONToSQL does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: DecryptContent (org.apache.nifi.processors.cipher.DecryptContent), DecryptContentAge (org.apache.nifi.processors.cipher.DecryptContentAge), DecryptContentCompatibility (org.apache.nifi.processors.cipher.DecryptContentCompatibility), EncryptContentAge (org.apache.nifi.processors.cipher.EncryptContentAge), DecryptContentPGP (org.apache.nifi.processors.pgp.DecryptContentPGP), EncryptContentPGP (org.apache.nifi.processors.pgp.EncryptContentPGP)."
+      },
+      "location": {
+        "id": "a961e360-01a0-1000-9408-d74f95e3e2e8",
+        "kind": "PROCESSOR",
+        "name": "Encrypt content",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.EncryptContent"
+      },
+      "message": "EncryptContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-12094"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: DecryptContent (org.apache.nifi.processors.cipher.DecryptContent), DecryptContentAge (org.apache.nifi.processors.cipher.DecryptContentAge), DecryptContentCompatibility (org.apache.nifi.processors.cipher.DecryptContentCompatibility), EncryptContentAge (org.apache.nifi.processors.cipher.EncryptContentAge), DecryptContentPGP (org.apache.nifi.processors.pgp.DecryptContentPGP), EncryptContentPGP (org.apache.nifi.processors.pgp.EncryptContentPGP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "a961e261-01a0-1000-1193-5f210abe48e9",
+        "kind": "PROCESSOR",
+        "name": "Fetch checksum",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.GetHTTP"
+      },
+      "message": "GetHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: ConsumeJMS (org.apache.nifi.jms.processors.ConsumeJMS)."
+      },
+      "location": {
+        "id": "a961e329-01a0-1000-a5ad-b0c39c395684",
+        "kind": "PROCESSOR",
+        "name": "Get JMS queue",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.GetJMSQueue"
+      },
+      "message": "GetJMSQueue does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: ConsumeJMS (org.apache.nifi.jms.processors.ConsumeJMS).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: UpdateAttribute (org.apache.nifi.processors.attributes.UpdateAttribute)."
+      },
+      "location": {
+        "id": "a961e2b0-01a0-1000-0420-e0a4d3c96080",
+        "kind": "PROCESSOR",
+        "name": "Hash attribute",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.HashAttribute"
+      },
+      "message": "HashAttribute does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: UpdateAttribute (org.apache.nifi.processors.attributes.UpdateAttribute).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: CryptographicHashContent (org.apache.nifi.processors.standard.CryptographicHashContent)."
+      },
+      "location": {
+        "id": "a961e29b-01a0-1000-c3ad-0c24774e1514",
+        "kind": "PROCESSOR",
+        "name": "Hash content",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.HashContent"
+      },
+      "message": "HashContent does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: CryptographicHashContent (org.apache.nifi.processors.standard.CryptographicHashContent).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "to_bundle": "org.apache.nifi:nifi-jolt-nar",
+        "to_type": "org.apache.nifi.processors.jolt.JoltTransformJSON"
+      },
+      "location": {
+        "id": "a961e3c4-01a0-1000-b874-af9078f4b400",
+        "kind": "PROCESSOR",
+        "name": "Jolt transform",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.JoltTransformJSON"
+      },
+      "message": "JoltTransformJSON does not exist under this class name in NiFi 2.12.0; a component of the same name exists as org.apache.nifi.processors.jolt.JoltTransformJSON in bundle org.apache.nifi:nifi-jolt-nar. NiFi does not map the old name and loads a ghost component.",
+      "rule_id": "NIFI2-RENAMED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features"
+      ],
+      "suggestion": "Change the component type to org.apache.nifi.processors.jolt.JoltTransformJSON and its bundle to org.apache.nifi:nifi-jolt-nar. Check that its properties still match.",
+      "title": "Component type renamed or moved in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e301-01a0-1000-030a-ccb9a1a73a5d",
+        "kind": "PROCESSOR",
+        "name": "Listen RELP",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.ListenRELP"
+      },
+      "message": "ListenRELP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13509"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e2de-01a0-1000-6c02-75c3f2c095dc",
+        "kind": "PROCESSOR",
+        "name": "Listen TCP records",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.ListenTCPRecord"
+      },
+      "message": "ListenTCPRecord does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13509"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e437-01a0-1000-c59a-6e20a6ae21d7",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Map cache client",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.distributed.cache.client.DistributedMapCacheClientService"
+      },
+      "message": "DistributedMapCacheClientService does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13596"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e40f-01a0-1000-e615-7b4bd464e077",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Map cache server",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.distributed.cache.server.map.DistributedMapCacheServer"
+      },
+      "message": "DistributedMapCacheServer does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13596"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": ""
+      },
+      "location": {
+        "id": "a961e2ef-01a0-1000-ecdd-ac7f0325261e",
+        "kind": "PROCESSOR",
+        "name": "Parse CEF",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.ParseCEF"
+      },
+      "message": "ParseCEF does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-13509"
+      ],
+      "suggestion": "Replace it before upgrading.",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: PublishSlack (org.apache.nifi.processors.slack.PublishSlack)."
+      },
+      "location": {
+        "id": "a961e374-01a0-1000-7834-bfbf4f05af71",
+        "kind": "PROCESSOR",
+        "name": "Post to Slack",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.slack.PutSlack"
+      },
+      "message": "PutSlack does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-12331"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: PublishSlack (org.apache.nifi.processors.slack.PublishSlack).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP)."
+      },
+      "location": {
+        "id": "a961e281-01a0-1000-39fe-6a197e86d05c",
+        "kind": "PROCESSOR",
+        "name": "Post to listener",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.PostHTTP"
+      },
+      "message": "PostHTTP does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: InvokeHTTP (org.apache.nifi.processors.standard.InvokeHTTP).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: PutAzureBlobStorage_v12 (org.apache.nifi.processors.azure.storage.PutAzureBlobStorage_v12)."
+      },
+      "location": {
+        "id": "a961e3a4-01a0-1000-0059-d1fe82c1ded1",
+        "kind": "PROCESSOR",
+        "name": "Put Azure blob (v8)",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.azure.storage.PutAzureBlobStorage"
+      },
+      "message": "PutAzureBlobStorage does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11228"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: PutAzureBlobStorage_v12 (org.apache.nifi.processors.azure.storage.PutAzureBlobStorage_v12).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: PutElasticsearchJson (org.apache.nifi.processors.elasticsearch.PutElasticsearchJson)."
+      },
+      "location": {
+        "id": "a961e394-01a0-1000-610a-30b2b7e66b8d",
+        "kind": "PROCESSOR",
+        "name": "Put Elasticsearch HTTP",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.elasticsearch.PutElasticsearchHttp"
+      },
+      "message": "PutElasticsearchHttp does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11168"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: PutElasticsearchJson (org.apache.nifi.processors.elasticsearch.PutElasticsearchJson).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "removed-component",
+      "details": {
+        "alternatives": " Documented alternatives: PublishJMS (org.apache.nifi.jms.processors.PublishJMS)."
+      },
+      "location": {
+        "id": "a961e317-01a0-1000-e330-bb8b0f447763",
+        "kind": "PROCESSOR",
+        "name": "Put JMS",
+        "path": "/NiFi Flow/Removed Components",
+        "type": "org.apache.nifi.processors.standard.PutJMS"
+      },
+      "message": "PutJMS does not exist in NiFi 2.12.0. NiFi loads it as a ghost component that is invalid and cannot run.",
+      "rule_id": "NIFI2-REMOVED-COMPONENT",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://issues.apache.org/jira/browse/NIFI-11174"
+      ],
+      "suggestion": "Replace it before upgrading. Documented alternatives: PublishJMS (org.apache.nifi.jms.processors.PublishJMS).",
+      "title": "Component type removed in NiFi 2.x"
+    },
+    {
+      "category": "templates",
+      "details": {
+        "name": "Removed Components Template"
+      },
+      "location": {
+        "id": "8ca9f628-212e-4737-8c2c-cf81ea7323dc",
+        "kind": "TEMPLATE",
+        "name": "Removed Components Template",
+        "path": "/NiFi Flow/Removed Components",
+        "type": ""
+      },
+      "message": "Template 'Removed Components Template' is stored in this flow. NiFi 2.x removed templates and silently drops them when the flow loads.",
+      "rule_id": "NIFI2-TEMPLATE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12006",
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features"
+      ],
+      "suggestion": "Export the template from the 1.x instance before upgrading, or convert it to a flow definition (flowport migrate templates).",
+      "title": "Template stored in the flow"
+    },
+    {
+      "category": "scheduling",
+      "details": {
+        "expression": "0 0 6 ? * 1",
+        "field": "1"
+      },
+      "location": {
+        "id": "a961f863-01a0-1000-73fb-64cc727cef21",
+        "kind": "PROCESSOR",
+        "name": "Cron with numeric weekday",
+        "path": "/NiFi Flow/Scheduling",
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile"
+      },
+      "message": "Run schedule '0 0 6 ? * 1' uses a number for the day of week ('1'). NiFi 1.x (Quartz) counts 1 as Sunday; NiFi 2.x (Spring) counts 1 as Monday, so the schedule shifts by one day without any error.",
+      "rule_id": "NIFI2-CRON-NUMERIC-DAY-OF-WEEK",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12290",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Use day names (SUN, MON, ...) instead of numbers.",
+      "title": "Cron expression with a numeric day of week"
+    },
+    {
+      "category": "scheduling",
+      "details": {
+        "expression": "0 0 12 * * ? 2030"
+      },
+      "location": {
+        "id": "a961f851-01a0-1000-a399-e607cc9deb8f",
+        "kind": "PROCESSOR",
+        "name": "Cron with year field",
+        "path": "/NiFi Flow/Scheduling",
+        "type": "org.apache.nifi.processors.standard.GenerateFlowFile"
+      },
+      "message": "Run schedule '0 0 12 * * ? 2030' has seven fields. NiFi 2.x uses Spring cron expressions, which have no year field, so the component is invalid.",
+      "rule_id": "NIFI2-CRON-YEAR-FIELD",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12290",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Remove the seventh field. Components can no longer be scheduled for a specific year.",
+      "title": "Cron expression with a year field"
+    },
+    {
+      "category": "scheduling",
+      "details": {},
+      "location": {
+        "id": "a961f83b-01a0-1000-1da9-b178dbbc8e2b",
+        "kind": "PROCESSOR",
+        "name": "Event driven",
+        "path": "/NiFi Flow/Scheduling",
+        "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
+      },
+      "message": "UpdateAttribute uses the EVENT_DRIVEN scheduling strategy. NiFi 2.x does not recognize it and fails to start when the flow contains it.",
+      "rule_id": "NIFI2-EVENT-DRIVEN",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-11813",
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features"
+      ],
+      "suggestion": "Change the scheduling strategy to TIMER_DRIVEN (run schedule 0 sec) before upgrading.",
+      "title": "Event-driven scheduling removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Clojure, Groovy",
+        "engine": "ECMAScript"
+      },
+      "location": {
+        "id": "a961e5af-01a0-1000-839f-a6c1ee46ecc7",
+        "kind": "PROCESSOR",
+        "name": "ECMAScript script",
+        "path": "/NiFi Flow/Scripting",
+        "type": "org.apache.nifi.processors.script.ExecuteScript"
+      },
+      "message": "ExecuteScript uses the ECMAScript script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Clojure, Groovy",
+        "engine": "python"
+      },
+      "location": {
+        "id": "a961e47f-01a0-1000-251f-ee3017827ef3",
+        "kind": "PROCESSOR",
+        "name": "Jython script",
+        "path": "/NiFi Flow/Scripting",
+        "type": "org.apache.nifi.processors.script.ExecuteScript"
+      },
+      "message": "ExecuteScript uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Groovy",
+        "engine": "python"
+      },
+      "location": {
+        "id": "a961eb81-01a0-1000-5e21-0596c6dc2a25",
+        "kind": "CONTROLLER_SERVICE",
+        "name": "Lookup in Jython",
+        "path": "/NiFi Flow/Scripting",
+        "type": "org.apache.nifi.lookup.script.ScriptedLookupService"
+      },
+      "message": "ScriptedLookupService uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Clojure, Groovy",
+        "engine": "lua"
+      },
+      "location": {
+        "id": "a961e5ef-01a0-1000-042c-9f823f88c8b3",
+        "kind": "PROCESSOR",
+        "name": "Lua script",
+        "path": "/NiFi Flow/Scripting",
+        "type": "org.apache.nifi.processors.script.ExecuteScript"
+      },
+      "message": "ExecuteScript uses the lua script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Clojure, Groovy",
+        "engine": "ruby"
+      },
+      "location": {
+        "id": "a961e5db-01a0-1000-b313-6207604323f2",
+        "kind": "PROCESSOR",
+        "name": "Ruby script",
+        "path": "/NiFi Flow/Scripting",
+        "type": "org.apache.nifi.processors.script.ExecuteScript"
+      },
+      "message": "ExecuteScript uses the ruby script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Clojure, Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "script-engine",
+      "details": {
+        "allowed": "Groovy",
+        "engine": "python"
+      },
+      "location": {
+        "id": "a961e61f-01a0-1000-5c6a-b424566ad270",
+        "kind": "PROCESSOR",
+        "name": "Scripted processor in Jython",
+        "path": "/NiFi Flow/Scripting",
+        "type": "org.apache.nifi.processors.script.InvokeScriptedProcessor"
+      },
+      "message": "InvokeScriptedProcessor uses the python script engine, which NiFi 2.12.0 no longer ships for this component (allowed: Groovy). The component is invalid on 2.x.",
+      "rule_id": "NIFI2-SCRIPT-ENGINE",
+      "severity": "BLOCKER",
+      "sources": [
+        "https://cwiki.apache.org/confluence/display/NIFI/Deprecated+Components+and+Features",
+        "https://issues.apache.org/jira/browse/NIFI-11713",
+        "https://issues.apache.org/jira/browse/NIFI-11753",
+        "https://issues.apache.org/jira/browse/NIFI-12378"
+      ],
+      "suggestion": "Rewrite the script in Groovy, or for Python use the native Python processor API of NiFi 2.x.",
+      "title": "Script engine removed in NiFi 2.x"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/NiFi Flow/Variables",
+        "property": "url",
+        "value": "http://${host}:${port}/api",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e115-01a0-1000-546e-6ec5e72cee0c",
+        "kind": "PROCESSOR",
+        "name": "Build URL attribute",
+        "path": "/NiFi Flow/Variables",
+        "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
+      },
+      "message": "Property 'url' references variable ${host} (defined in /NiFi Flow/Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
+      ],
+      "suggestion": "If the value must come from configuration, replace the reference with a parameter #{host}. If a FlowFile attribute is intended, no change is needed.",
+      "title": "Variable reference in a property that also reads FlowFile attributes"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/NiFi Flow/Variables",
+        "property": "url",
+        "value": "http://${host}:${port}/api",
+        "variable": "port"
+      },
+      "location": {
+        "id": "a961e115-01a0-1000-546e-6ec5e72cee0c",
+        "kind": "PROCESSOR",
+        "name": "Build URL attribute",
+        "path": "/NiFi Flow/Variables",
+        "type": "org.apache.nifi.processors.attributes.UpdateAttribute"
+      },
+      "message": "Property 'url' references variable ${port} (defined in /NiFi Flow/Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'port' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
+      ],
+      "suggestion": "If the value must come from configuration, replace the reference with a parameter #{port}. If a FlowFile attribute is intended, no change is needed.",
+      "title": "Variable reference in a property that also reads FlowFile attributes"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/NiFi Flow/Variables",
+        "property": "Attributes to Log",
+        "value": "${host}",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e12d-01a0-1000-cdef-84b31696a260",
+        "kind": "PROCESSOR",
+        "name": "Log literal dollar text",
+        "path": "/NiFi Flow/Variables",
+        "type": "org.apache.nifi.processors.standard.LogAttribute"
+      },
+      "message": "Property 'Attributes to Log' contains ${host} but does not support Expression Language, so the text was never evaluated on 1.x and nothing changes on 2.x.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-NO-EL",
+      "severity": "INFO",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079"
+      ],
+      "suggestion": "No change needed. Check the value if it was meant to be dynamic.",
+      "title": "Variable-like text in a property without Expression Language support"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/NiFi Flow/Variables",
+        "property": "Directory",
+        "value": "/tmp/${host}/out",
+        "variable": "host"
+      },
+      "location": {
+        "id": "a961e0bb-01a0-1000-0a0e-c832baf3769a",
+        "kind": "PROCESSOR",
+        "name": "Put to shadowed directory",
+        "path": "/NiFi Flow/Variables",
+        "type": "org.apache.nifi.processors.standard.PutFile"
+      },
+      "message": "Property 'Directory' references variable ${host} (defined in /NiFi Flow/Variables) and supports FlowFile attributes. On 1.x a FlowFile attribute named 'host' already takes priority over the variable (Expression Language hierarchy); on 2.x only the attribute remains.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+        "https://nifi.apache.org/docs/nifi-docs/html/expression-language-guide.html#expression-language-hierarchy"
+      ],
+      "suggestion": "If the value must come from configuration, replace the reference with a parameter #{host}. If a FlowFile attribute is intended, no change is needed.",
+      "title": "Variable reference in a property that also reads FlowFile attributes"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "defined_in": "/NiFi Flow/Variables",
+        "property": "File to Tail",
+        "value": "${shared:toUpper()}.log",
+        "variable": "shared"
+      },
+      "location": {
+        "id": "a961e141-01a0-1000-88b2-7983d15f9cc0",
+        "kind": "PROCESSOR",
+        "name": "Tail with function",
+        "path": "/NiFi Flow/Variables",
+        "type": "org.apache.nifi.processors.standard.TailFile"
+      },
+      "message": "Property 'File to Tail' applies Expression Language functions to variable ${shared} (defined in /NiFi Flow/Variables). The subject of the expression must change from the variable to a parameter reference.",
+      "rule_id": "NIFI2-VARIABLE-REFERENCE-FUNCTION",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#referencing-parameters"
+      ],
+      "suggestion": "Rewrite the subject as a parameter reference inside the expression, for example ${ #{shared}:toUpper() } (the parameter is substituted before the expression is evaluated), then test the property on 1.x.",
+      "title": "Variable used with Expression Language functions"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "variable": "bad name!"
+      },
+      "location": {
+        "id": "a961df39-01a0-1000-7275-0a4488a407b2",
+        "kind": "PROCESS_GROUP",
+        "name": "Variables",
+        "path": "/NiFi Flow/Variables",
+        "type": ""
+      },
+      "message": "Variable 'bad name!' contains characters that are not allowed in a parameter name (letters, digits, '-', '_', '.' and space).",
+      "rule_id": "NIFI2-VARIABLE-NAME",
+      "severity": "MANUAL",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://nifi.apache.org/docs/nifi-docs/html/user-guide.html#name-parameter-restriction"
+      ],
+      "suggestion": "Choose a valid parameter name and update every reference.",
+      "title": "Variable name is not a valid parameter name"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "value": "characters not allowed in parameter names",
+        "variable": "bad name!"
+      },
+      "location": {
+        "id": "a961df39-01a0-1000-7275-0a4488a407b2",
+        "kind": "PROCESS_GROUP",
+        "name": "Variables",
+        "path": "/NiFi Flow/Variables",
+        "type": ""
+      },
+      "message": "Variable 'bad name!' is defined here but no property in this group or its children references it.",
+      "rule_id": "NIFI2-VARIABLE-UNUSED",
+      "severity": "INFO",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079"
+      ],
+      "suggestion": "Drop it, or keep it as a parameter if other flows depend on it.",
+      "title": "Variable is never referenced"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "value": "never referenced",
+        "variable": "unused.var"
+      },
+      "location": {
+        "id": "a961df39-01a0-1000-7275-0a4488a407b2",
+        "kind": "PROCESS_GROUP",
+        "name": "Variables",
+        "path": "/NiFi Flow/Variables",
+        "type": ""
+      },
+      "message": "Variable 'unused.var' is defined here but no property in this group or its children references it.",
+      "rule_id": "NIFI2-VARIABLE-UNUSED",
+      "severity": "INFO",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079"
+      ],
+      "suggestion": "Drop it, or keep it as a parameter if other flows depend on it.",
+      "title": "Variable is never referenced"
+    },
+    {
+      "category": "variables",
+      "details": {
+        "count": "5",
+        "names": "bad name!, host, port, shared, unused.var"
+      },
+      "location": {
+        "id": "a961df39-01a0-1000-7275-0a4488a407b2",
+        "kind": "PROCESS_GROUP",
+        "name": "Variables",
+        "path": "/NiFi Flow/Variables",
+        "type": ""
+      },
+      "message": "This process group defines 5 variable(s): bad name!, host, port, shared, unused.var. NiFi 2.x removed the Variable Registry and silently drops them when the flow loads.",
+      "rule_id": "NIFI2-VARIABLES-DEFINED",
+      "severity": "AUTO_FIXABLE",
+      "sources": [
+        "https://issues.apache.org/jira/browse/NIFI-12079",
+        "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0"
+      ],
+      "suggestion": "Convert the variables to a parameter context (flowport migrate variables) and rewrite the references to #{name}.",
+      "title": "Process group defines variables"
+    }
+  ],
+  "input": {
+    "kind": "flow",
+    "name": "flow.json.gz"
+  },
+  "summary": {
+    "bundle_versions": {
+      "1.28.1": 52
+    },
+    "by_category": {
+      "custom-nar": 1,
+      "deprecated-property": 1,
+      "removed-component": 20,
+      "scheduling": 3,
+      "script-engine": 6,
+      "templates": 1,
+      "variables": 13
+    },
+    "by_rule": {
+      "NIFI2-CRON-NUMERIC-DAY-OF-WEEK": 1,
+      "NIFI2-CRON-YEAR-FIELD": 1,
+      "NIFI2-EVENT-DRIVEN": 1,
+      "NIFI2-INVOKEHTTP-PROXY-PROPERTIES": 1,
+      "NIFI2-REMOVED-COMPONENT": 19,
+      "NIFI2-RENAMED-COMPONENT": 1,
+      "NIFI2-SCRIPT-ENGINE": 6,
+      "NIFI2-TEMPLATE": 1,
+      "NIFI2-THIRD-PARTY-BUNDLE": 1,
+      "NIFI2-VARIABLE-NAME": 1,
+      "NIFI2-VARIABLE-PARAMETER-COLLISION": 1,
+      "NIFI2-VARIABLE-REFERENCE": 2,
+      "NIFI2-VARIABLE-REFERENCE-ATTRIBUTE-SCOPE": 3,
+      "NIFI2-VARIABLE-REFERENCE-FUNCTION": 1,
+      "NIFI2-VARIABLE-REFERENCE-NO-EL": 1,
+      "NIFI2-VARIABLE-UNUSED": 2,
+      "NIFI2-VARIABLES-DEFINED": 2
+    },
+    "by_severity": {
+      "AUTO_FIXABLE": 4,
+      "BLOCKER": 28,
+      "INFO": 4,
+      "MANUAL": 9
+    },
+    "components": 53,
+    "process_groups": 11,
+    "total": 45
+  },
+  "warnings": []
+}

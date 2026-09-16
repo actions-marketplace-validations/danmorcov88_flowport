@@ -7,9 +7,7 @@ import pytest
 from flowport.catalog import Catalog, load_catalog
 from flowport.loaders import load_flow_document
 from flowport.rules import Finding, analyze
-
-STD = "org.apache.nifi.processors.standard."
-APACHE = {"group": "org.apache.nifi", "artifact": "nifi-standard-nar", "version": "1.28.1"}
+from tests.unit.synthetic import STD, document, group, processor
 
 
 @pytest.fixture(scope="module")
@@ -17,53 +15,8 @@ def catalog() -> Catalog:
     return load_catalog()
 
 
-def processor(
-    name: str,
-    type_name: str,
-    properties: dict[str, str | None] | None = None,
-    *,
-    bundle: dict[str, str] | None = None,
-    scheduling: str = "TIMER_DRIVEN",
-    period: str = "0 sec",
-) -> dict[str, Any]:
-    return {
-        "identifier": f"id-{name}",
-        "instanceIdentifier": f"inst-{name}",
-        "name": name,
-        "type": type_name,
-        "bundle": bundle or APACHE,
-        "properties": properties or {},
-        "schedulingStrategy": scheduling,
-        "schedulingPeriod": period,
-        "componentType": "PROCESSOR",
-    }
-
-
-def group(
-    name: str,
-    processors: list[dict[str, Any]] | None = None,
-    *,
-    variables: dict[str, str] | None = None,
-    groups: list[dict[str, Any]] | None = None,
-    services: list[dict[str, Any]] | None = None,
-) -> dict[str, Any]:
-    return {
-        "identifier": f"id-{name}",
-        "instanceIdentifier": f"inst-{name}",
-        "name": name,
-        "processors": processors or [],
-        "controllerServices": services or [],
-        "processGroups": groups or [],
-        "variables": variables or {},
-        "componentType": "PROCESS_GROUP",
-    }
-
-
 def run(catalog: Catalog, root: dict[str, Any], **extra: Any) -> list[Finding]:
-    document: dict[str, Any] = {"encodingVersion": {"majorVersion": 2, "minorVersion": 0}}
-    document.update(extra)
-    document["rootGroup"] = root
-    return analyze(load_flow_document(document), catalog)
+    return analyze(load_flow_document(document(root, **extra)), catalog)
 
 
 def rule_ids(findings: list[Finding]) -> list[str]:

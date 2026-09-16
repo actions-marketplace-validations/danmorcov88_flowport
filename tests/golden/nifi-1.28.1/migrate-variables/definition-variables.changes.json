@@ -1,0 +1,182 @@
+[
+  {
+    "kind": "rewrite-property",
+    "path": "/Variables",
+    "component_id": "a961e096-01a0-1000-895a-9ebc572fa8c9",
+    "component_name": "Generate with host text",
+    "property": "generate-ff-custom-text",
+    "old": "host=${host} port=${port}",
+    "new": "host=#{host} port=#{port}",
+    "context": "Variables Variables"
+  },
+  {
+    "kind": "rewrite-property",
+    "path": "/Variables",
+    "component_id": "a961dfee-01a0-1000-a8ef-983ea4108282",
+    "component_name": "Listen on variable port",
+    "property": "Listening Port",
+    "old": "${port}",
+    "new": "#{port}",
+    "context": "Variables Variables"
+  },
+  {
+    "kind": "create-context",
+    "path": "/Variables",
+    "component_id": "a961df39-01a0-1000-7275-0a4488a407b2",
+    "component_name": "Variables",
+    "property": null,
+    "old": null,
+    "new": null,
+    "context": "Variables Variables"
+  },
+  {
+    "kind": "add-parameter",
+    "path": "/Variables",
+    "component_id": "a961df39-01a0-1000-7275-0a4488a407b2",
+    "component_name": "Variables",
+    "property": "host",
+    "old": null,
+    "new": "example.org",
+    "context": "Variables Variables"
+  },
+  {
+    "kind": "add-parameter",
+    "path": "/Variables",
+    "component_id": "a961df39-01a0-1000-7275-0a4488a407b2",
+    "component_name": "Variables",
+    "property": "port",
+    "old": null,
+    "new": "8080",
+    "context": "Variables Variables"
+  },
+  {
+    "kind": "add-parameter",
+    "path": "/Variables",
+    "component_id": "a961df39-01a0-1000-7275-0a4488a407b2",
+    "component_name": "Variables",
+    "property": "shared",
+    "old": null,
+    "new": "from-top",
+    "context": "Variables Variables"
+  },
+  {
+    "kind": "assign-context",
+    "path": "/Variables",
+    "component_id": "a961df39-01a0-1000-7275-0a4488a407b2",
+    "component_name": "Variables",
+    "property": null,
+    "old": null,
+    "new": null,
+    "context": "Variables Variables"
+  },
+  {
+    "kind": "create-context",
+    "path": "/Variables/Child",
+    "component_id": "a961e15d-01a0-1000-8ed8-a82f3b8d62ab",
+    "component_name": "Child",
+    "property": null,
+    "old": null,
+    "new": "Variables Variables",
+    "context": "Child Variables"
+  },
+  {
+    "kind": "add-parameter",
+    "path": "/Variables/Child",
+    "component_id": "a961e15d-01a0-1000-8ed8-a82f3b8d62ab",
+    "component_name": "Child",
+    "property": "path",
+    "old": null,
+    "new": "/data/in",
+    "context": "Child Variables"
+  },
+  {
+    "kind": "add-parameter",
+    "path": "/Variables/Child",
+    "component_id": "a961e15d-01a0-1000-8ed8-a82f3b8d62ab",
+    "component_name": "Child",
+    "property": "shared",
+    "old": null,
+    "new": "from-child",
+    "context": "Child Variables"
+  },
+  {
+    "kind": "assign-context",
+    "path": "/Variables/Child",
+    "component_id": "a961e15d-01a0-1000-8ed8-a82f3b8d62ab",
+    "component_name": "Child",
+    "property": null,
+    "old": null,
+    "new": null,
+    "context": "Child Variables"
+  },
+  {
+    "kind": "remove-variable",
+    "path": "/Variables/Child",
+    "component_id": "a961e15d-01a0-1000-8ed8-a82f3b8d62ab",
+    "component_name": "Child",
+    "property": "path",
+    "old": "/data/in",
+    "new": null,
+    "context": "Child Variables"
+  },
+  {
+    "kind": "remove-variable",
+    "path": "/Variables/Child",
+    "component_id": "a961e15d-01a0-1000-8ed8-a82f3b8d62ab",
+    "component_name": "Child",
+    "property": "shared",
+    "old": "from-child",
+    "new": null,
+    "context": "Child Variables"
+  },
+  {
+    "kind": "rewrite-property",
+    "path": "/Variables/Child",
+    "component_id": "a961e18a-01a0-1000-2915-82c2b624b1d3",
+    "component_name": "Generate with parent host",
+    "property": "generate-ff-custom-text",
+    "old": "${host}",
+    "new": "#{host}",
+    "context": "Child Variables"
+  },
+  {
+    "kind": "rewrite-property",
+    "path": "/Variables/Child",
+    "component_id": "a961e177-01a0-1000-652c-6d8cb3d4ced8",
+    "component_name": "Get from variable path",
+    "property": "Input Directory",
+    "old": "${path}",
+    "new": "#{path}",
+    "context": "Child Variables"
+  },
+  {
+    "kind": "rewrite-property",
+    "path": "/Variables/Child/Grandchild",
+    "component_id": "a961e1c6-01a0-1000-f431-a2eaf4289f7e",
+    "component_name": "Generate with inherited host",
+    "property": "generate-ff-custom-text",
+    "old": "${host}",
+    "new": "#{host}",
+    "context": "Child Variables"
+  },
+  {
+    "kind": "rewrite-property",
+    "path": "/Variables/Child/Grandchild",
+    "component_id": "a961e1ae-01a0-1000-69fd-fc4e11c04813",
+    "component_name": "Get from inherited path",
+    "property": "Input Directory",
+    "old": "${path}/${shared}",
+    "new": "#{path}/#{shared}",
+    "context": "Child Variables"
+  },
+  {
+    "kind": "assign-context",
+    "path": "/Variables/Child/Grandchild",
+    "component_id": "a961e1a3-01a0-1000-6a01-3d36cdc8b71f",
+    "component_name": "Grandchild",
+    "property": null,
+    "old": null,
+    "new": null,
+    "context": "Child Variables"
+  }
+]
